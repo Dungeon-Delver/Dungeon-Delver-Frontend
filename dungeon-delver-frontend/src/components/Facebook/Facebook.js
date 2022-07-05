@@ -23,7 +23,7 @@ export default function Facebook() {
   }
   else {
     fbContent = (<FacebookLogin
-      appId="1088597931155576"
+      appId="3192124317669140"
       autoLoad={false}
       fields="name,email,picture"
       onClick={componentClicked}
