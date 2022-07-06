@@ -1,8 +1,10 @@
 import * as React from 'react'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import axios from 'axios'
+
 import './App.css';
 import Facebook from '../Facebook/Facebook';
 
-import axios from 'axios'
 const backendUrl="http://localhost:3001/"
 
 
@@ -43,7 +45,11 @@ function App() {
     );
   }
   else {
-    return <div>{name}</div>;
+    return <div className="app">
+      <BrowserRouter>
+
+      </BrowserRouter>
+    </div>;
   }
 }
 
