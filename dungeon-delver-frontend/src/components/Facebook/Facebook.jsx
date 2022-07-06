@@ -19,10 +19,10 @@ export default function Facebook() {
       const userData = await axios.post(`${backendUrl}user`, {userData: response})
       // Update state variable holding current user
       setLoggedIn(true);
-      setUserId(userData.userID);
-      setName(userData.name);
-      setEmail(userData.email);
-      setPicture(userData.picture.data.url);
+      setUserId(response.userID);
+      setName(response.name);
+      setEmail(response.email);
+      setPicture(response.picture.data.url);
     }
     catch (err) {
       console.log(err);
