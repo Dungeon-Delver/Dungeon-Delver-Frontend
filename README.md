@@ -1,26 +1,70 @@
-# Dungeon-Delver
-User Roles:
-Dungeon Master
-Player
+# Getting Started with Create React App
 
-Users:
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-Stephanie: Stephanie is a new player to dungeons and dragons. She has never played before and is looking for a party of other new players but with an experienced dungeon master to help lead.
+## Available Scripts
 
-Bruce: Bruce is an experienced player who has been with one party for a long time but they recently went their separate ways. He wants to try fresh with a new party of experienced players and an experienced dungeon master.
+In the project directory, you can run:
 
-María González de la Cruz: María is an experienced DM who is looking to add a new party of new players. She enjoys her current party but feels that they have gotten too bogged down with the rules and wants to be with new players who are still learning.
+### `npm start`
 
-Fatima: Fatima has heard about dungeons and dragons and wants to give it a try. As a writer, she leans towards being a dungeon master, and is looking for a party of new players. However, she would ideally like to have at least one experienced player who can help with rules that she hasn’t learned yet.
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-Emmanuel: Emmanuel is an experienced dungeons and dragons player, but he hasn’t been able to play for a few years. He wants to play with a party of new players and a new DM so that he can help out the players while also not feeling pressured to remember all the rules instantly.
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
 
-Joaquin: Joaquin is an experienced dungeons and dragons player but wants to try his hand at being a dungeon master. He’s shy, so he wants a party of new players who will go easy on him with the rules (since they won’t know either)
+### `npm test`
 
-Clarissa: Clarissa has been playing as a dungeon master for many years but, as these things tend to go, once the dungeon master, always the dungeon master. She’s looking to find a new party where she can be a player instead. She’s looking for a party with experienced players and an experienced dungeon master where she can play at a fast, intense pace.
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-Sammy: Sammy is a new dungeons and dragons player, but they believe the best way to learn is to jump into the deep end. They are looking for a party that is new-player friendly but also has many experienced players.
+### `npm run build`
 
-Rasputin: Rasputin and Sunghoon are lifelong friends since they first ice-skated together and are looking for a party together. Rasputin has never played before but Sunghoon is very experienced as a DM. They are looking for a party that is new-player friendly with a mix of experienced and inexperienced people.
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-Sunghoon: Sunghoon is a very experienced DM and is looking for a party with Rasputin. They’re doing a joint party search and are looking for a new player friendly party that has a mix of experienced and inexperienced people.
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm run eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+
+If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+
+You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `npm run build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
