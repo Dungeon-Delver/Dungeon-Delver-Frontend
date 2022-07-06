@@ -4,6 +4,9 @@ import axios from 'axios'
 
 import './App.css';
 import Facebook from '../Facebook/Facebook';
+import Home from "../Home/Home"
+import Navbar from "../Navbar/Navbar"
+import NotFound from "../NotFound/NotFound"
 
 const backendUrl="http://localhost:3001/"
 
@@ -11,17 +14,15 @@ const backendUrl="http://localhost:3001/"
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [userId, setUserId] = React.useState("");
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [picture, setPicture] = React.useState();
 
   const responseFacebook = async (response) => {
     try {
-      const userData = await axios.post(`${backendUrl}user`, {userData: response})
+      await axios.post(`${backendUrl}user`, {userData: response})
       // Update state variable holding current user
       setLoggedIn(true);
-      setUserId(response.userID);
       setName(response.name);
       setEmail(response.email);
       setPicture(response.picture.data.url);
@@ -29,6 +30,11 @@ function App() {
     catch (err) {
       console.log(err);
     }
+  }
+
+  const handleLogout = () => {
+    setLoggedIn(false);
+    window.location.reload(false);
   }
 
   if(!loggedIn) {
@@ -45,9 +51,13 @@ function App() {
     );
   }
   else {
-    return <div className="app">
+    return <div className="App">
       <BrowserRouter>
-        
+          <Navbar handleLogout={handleLogout}/>
+          <Routes>
+            <Route path ="/" element = {<Home />} />
+            <Route path = "*" element={<NotFound />} />
+          </Routes>
       </BrowserRouter>
     </div>;
   }
