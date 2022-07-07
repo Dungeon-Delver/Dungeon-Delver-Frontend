@@ -8,6 +8,10 @@ import Home from "../Home/Home"
 import Navbar from "../Navbar/Navbar"
 import NotFound from "../NotFound/NotFound"
 import Loader from "../Loader/Loader"
+import CreateParty from "../CreateParty/CreateParty"
+import FindParties from "../FindParties/FindParties"
+
+import MyParties from "../MyParties/MyParties"
 
 const backendUrl="http://localhost:3001/"
 
@@ -65,6 +69,9 @@ function App() {
           <Navbar handleLogout={handleLogout}/>
           <Routes>
             <Route path ="/" element = {<Home />} />
+            <Route path="/create-party" element={<CreateParty />}/>
+            <Route path="/find-parties" element={<FindParties />}/>
+            <Route path="/parties" element={<MyParties />} />
             <Route path = "*" element={<NotFound />} />
           </Routes>
       </BrowserRouter>
