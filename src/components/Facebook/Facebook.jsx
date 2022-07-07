@@ -2,10 +2,11 @@ import * as React from 'react'
 import "./Facebook.css"
 import FacebookLogin from 'react-facebook-login' //External library
 
-export default function Facebook({responseFacebook}) {
+export default function Facebook({responseFacebook, setIsLoading}) {
   
 
   const componentClicked = () => {
+    setIsLoading(true);
   }
 
   return (

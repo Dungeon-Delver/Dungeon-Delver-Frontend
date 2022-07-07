@@ -7,6 +7,7 @@ import Facebook from '../Facebook/Facebook';
 import Home from "../Home/Home"
 import Navbar from "../Navbar/Navbar"
 import NotFound from "../NotFound/NotFound"
+import Loader from "../Loader/Loader"
 
 const backendUrl="http://localhost:3001/"
 
@@ -17,6 +18,7 @@ function App() {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [picture, setPicture] = React.useState();
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const responseFacebook = async (response) => {
     try {
@@ -26,6 +28,7 @@ function App() {
       setName(response.name);
       setEmail(response.email);
       setPicture(response.picture.data.url);
+      setIsLoading(false);
     }
     catch (err) {
       console.log(err);
@@ -37,7 +40,12 @@ function App() {
     window.location.reload(false);
   }
 
-  if(!loggedIn) {
+  if(isLoading) {
+    return (
+      <Loader />
+    )
+  }
+  else if(!loggedIn) {
     return (
       <div className="App">
         <h1>
@@ -46,7 +54,7 @@ function App() {
         <p>
           To get started, authenticate with Facebook.
         </p>
-        <Facebook responseFacebook={responseFacebook}/>
+        <Facebook  setIsLoading={setIsLoading} responseFacebook={responseFacebook}/>
       </div>
     );
   }
