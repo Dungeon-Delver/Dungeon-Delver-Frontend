@@ -6,7 +6,7 @@ import './MyParties.css'
 export default function MyParties() {
   const [parties, setParties] = React.useState();
   React.useEffect(() => {
-
+    axios.post()
   }, [])
 
   return (
