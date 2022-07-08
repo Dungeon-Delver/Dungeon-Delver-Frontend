@@ -6,7 +6,7 @@ import axios from 'axios'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { email, isLoadingState, loggedInState, name, picture } from '../../recoil/atoms/atoms'
 
-const backendUrl="http://localhost:3001/"
+const BACKEND_URL="http://localhost:3001/"
 
 export default function Facebook() {
 
