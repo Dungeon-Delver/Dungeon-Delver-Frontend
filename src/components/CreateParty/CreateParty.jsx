@@ -16,6 +16,8 @@ export default function CreateParty() {
   const [missingParams, setMissingParams] = React.useState([])
 
   const [loadingParty, setLoadingParty] = React.useState(false);
+  const [partyFailed, setPartyFailed] = React.useState(false);
+  const [error, setError] = React.useState("");
 
   const URL = useRecoilValue(backendUrl)
 
@@ -64,7 +66,10 @@ export default function CreateParty() {
     }
     catch (error){
       console.error(error);
+      setPartyFailed(true);
+      setError(error);
     }
+    setLoadingParty(false)
   }
 
   const handleSubmit = () => {
@@ -97,6 +102,10 @@ export default function CreateParty() {
         <div className="button__text">Create Dungeon</div>
       </button>
       <div className="missing-params">{missingParams}</div>
+      {partyFailed ?<div className="party-failed"> 
+        <h1 className="party-failed-message">{error.message}</h1>
+        <h2 className="party-failed-status-text">{error.response.statusText}</h2>
+      </div> :""}
     </div>
   )
 }
