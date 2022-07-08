@@ -24,3 +24,8 @@ export const picture = atom({
   key: "picture",
   default: ""
 })
+
+export const userId = atom({
+  key: "userId",
+  default: ""
+})

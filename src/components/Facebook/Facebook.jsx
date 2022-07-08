@@ -4,17 +4,18 @@ import FacebookLogin from 'react-facebook-login' //External library
 import Keys from "../../keys.json"
 import axios from 'axios'
 import { useRecoilState, useSetRecoilState } from 'recoil'
-import { email, isLoadingState, loggedInState, name, picture } from '../../recoil/atoms/atoms'
+import { email, isLoadingState, loggedInState, name, picture, userId } from '../../recoil/atoms/atoms'
 
 const backendUrl="http://localhost:3001/"
 
 export default function Facebook() {
 
   const loggedIn = useSetRecoilState(loggedInState)
-  const [isLoading, setIsLoading] = useRecoilState(isLoadingState)
+  const setIsLoading = useSetRecoilState(isLoadingState)
   const setName = useSetRecoilState(name)
   const setEmail = useSetRecoilState(email)
   const setPicture = useSetRecoilState(picture)
+  const setUserId = useSetRecoilState(userId)
 
   const componentClicked = () => {
     setIsLoading(true);
@@ -23,13 +24,15 @@ export default function Facebook() {
 
   const responseFacebook = async (response) => {
     try {
-      await axios.post(`${backendUrl}user`, {userData: response})
+      const data = await axios.post(`${backendUrl}user`, {userData: response})
+      const userId = data.data.newUser;
       // Update state variable holding current user
 
       loggedIn(true);
       setName(response.name);
       setEmail(response.email);
       setPicture(response.picture.data.url);
+      setUserId(userId)
       setIsLoading(false);
     }
     catch (err) {

@@ -18,11 +18,6 @@ import { isLoadingState, loggedInState } from '../../recoil/atoms/atoms';
 
 
 function App() {
-  const [name, setName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [picture, setPicture] = React.useState();
-
- 
 
   const [loggedIn, setLoggedIn] = useRecoilState(loggedInState)
   const isLoading = useRecoilValue(isLoadingState)
