@@ -4,7 +4,6 @@ import "./CategoryContainer.css"
 import CategorySelector from "../CategorySelector/CategorySelector"
 
 export default function CategoryContainer({ category }) {
-  console.log(category.activeSelector)
   return (
     <div className={category.category}>
       What {category.category} do you want to play with?

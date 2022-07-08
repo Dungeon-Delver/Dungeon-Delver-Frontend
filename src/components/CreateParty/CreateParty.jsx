@@ -9,34 +9,51 @@ export default function CreateParty() {
   const [activeType, setActiveType] = React.useState("")
   const [activeGenre, setActiveGenre] = React.useState("")
   const [activeLevel, setActiveLevel] = React.useState("");
+  const [activeMode, setActiveMode] = React.useState("");
+  const [missingParams, setMissingParams] = React.useState([])
 
   const categories = [{
-      category: "Experience Level",
+      category: "experience level",
       selectors: ["New Players Only", "New Player Friendly", "Experienced Players Only"],
       activeSelector: activeExperience,
       setActiveSelector: setActiveExperience
     }, {
-      category:"Type",
+      category: "type of players",
       selectors: ["Serious", "Casual", "Comedy", "Rules-Oriented", "Homebrew-Friendly"],
       activeSelector: activeType,
       setActiveSelector: setActiveType
       
     }, {
-      category: "Genre",
+      category: "genre",
       selectors: ["Fantasy", "Sci-Fi", "Modern", "Post-Apocalyptic", "Star Wars", "Harry Potter"],
       activeSelector: activeGenre,
       setActiveSelector: setActiveGenre
     }, {
-      category:"Party Level",
+      category: "party level",
       selectors:["1-4", "5-8", "9-12", "13-16", "17-20", "Any"],
       activeSelector: activeLevel,
       setActiveSelector: setActiveLevel
+    }, {
+      category: "privacy mode",
+      selectors:["Closed", "Private", "Public"],
+      activeSelector: activeMode,
+      setActiveSelector: setActiveMode
     }]
 
   const handleSubmit = () => {
-    console.log(partyName);
+    const missingParamsTmp=[];
+    const states = [{value: partyName, category: "party name"}, {value: activeExperience, category: "experience"}, {value: activeType, category: "type"}, {value: activeGenre, category: "genre"}, {value: activeLevel, category: "level"}, {value: activeMode, category: "privacy mode"}]
+    console.log('states: ', states);
+    states.forEach((item) => {
+      if(item.value==='') {
+        missingParamsTmp.push(<div key={item.category}className="missing-param">Please pick something for {item.category}</div>)
+      }
+    })
+    if(missingParamsTmp.length>0) {
+      setMissingParams(missingParamsTmp);
+      return;
+    }
   }
-
   return (
     <div className="create-party">
       <div className="party-name">
@@ -47,7 +64,8 @@ export default function CreateParty() {
           <CategoryContainer key={item.category} category={item} />
         ))}
       </div>
-        <input type="submit" value="Create Dungeon" onClick={handleSubmit}/>
+      <input type="submit" value="Create Dungeon" onClick={handleSubmit}/>
+      <div className="missing-params">{missingParams}</div>
     </div>
   )
 }
