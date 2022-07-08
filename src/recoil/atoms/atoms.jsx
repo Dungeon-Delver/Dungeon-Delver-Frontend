@@ -2,7 +2,7 @@ import { atom } from "recoil";
 
 export const loggedInState = atom({
   key: 'loggedIn',
-  default: false,
+  default: false
 });
 
 export const isLoadingState = atom({
@@ -28,4 +28,10 @@ export const picture = atom({
 export const userId = atom({
   key: "userId",
   default: ""
+})
+
+export const backendUrl = atom({
+  key: "backendUrl",
+  default: "http://localhost:3001/"
+
 })

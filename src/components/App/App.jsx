@@ -9,8 +9,8 @@ import NotFound from "../NotFound/NotFound"
 import Loader from "../Loader/Loader"
 import CreateParty from "../CreateParty/CreateParty"
 import FindParties from "../FindParties/FindParties"
-
 import MyParties from "../MyParties/MyParties"
+
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { isLoadingState, loggedInState } from '../../recoil/atoms/atoms';
 
