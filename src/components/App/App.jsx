@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import axios from 'axios'
 
 import './App.css';
 import Facebook from '../Facebook/Facebook';
@@ -12,33 +11,21 @@ import CreateParty from "../CreateParty/CreateParty"
 import FindParties from "../FindParties/FindParties"
 
 import MyParties from "../MyParties/MyParties"
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { isLoadingState, loggedInState } from '../../recoil/atoms/atoms';
 
-const backendUrl="http://localhost:3001/"
 
 
 
 function App() {
-  const [loggedIn, setLoggedIn] = React.useState(false);
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [picture, setPicture] = React.useState();
-  const [isLoading, setIsLoading] = React.useState(false);
 
-  const responseFacebook = async (response) => {
-    try {
-      await axios.post(`${backendUrl}user`, {userData: response})
-      // Update state variable holding current user
-      setLoggedIn(true);
-      setName(response.name);
-      setEmail(response.email);
-      setPicture(response.picture.data.url);
-      setIsLoading(false);
-    }
-    catch (err) {
-      console.error(err);
-      setIsLoading(false);
-    }
-  }
+ 
+
+  const [loggedIn, setLoggedIn] = useRecoilState(loggedInState)
+  const isLoading = useRecoilValue(isLoadingState)
 
   const handleLogout = () => {
     setLoggedIn(false);
@@ -59,7 +46,7 @@ function App() {
         <p>
           To get started, authenticate with Facebook.
         </p>
-        <Facebook  setIsLoading={setIsLoading} responseFacebook={responseFacebook}/>
+        <Facebook />
       </div>
     );
   }
