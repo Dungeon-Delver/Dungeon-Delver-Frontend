@@ -60,7 +60,7 @@ export default function CreateParty() {
       mode: activeMode
     }
     try {
-      await axios.post(URL, JSON_OBJECT);
+      await axios.post(`${URL}create-party`, JSON_OBJECT);
     }
     catch (error){
       console.error(error);
