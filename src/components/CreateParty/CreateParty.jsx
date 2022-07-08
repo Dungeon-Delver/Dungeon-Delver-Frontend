@@ -43,14 +43,13 @@ export default function CreateParty() {
   const handleSubmit = () => {
     const missingParamsTmp=[];
     const states = [{value: partyName, category: "party name"}, {value: activeExperience, category: "experience"}, {value: activeType, category: "type"}, {value: activeGenre, category: "genre"}, {value: activeLevel, category: "level"}, {value: activeMode, category: "privacy mode"}]
-    console.log('states: ', states);
     states.forEach((item) => {
       if(item.value==='') {
         missingParamsTmp.push(<div key={item.category}className="missing-param">Please pick something for {item.category}</div>)
       }
     })
+    setMissingParams(missingParamsTmp);
     if(missingParamsTmp.length>0) {
-      setMissingParams(missingParamsTmp);
       return;
     }
   }
