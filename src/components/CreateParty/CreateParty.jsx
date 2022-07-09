@@ -4,7 +4,7 @@ import CategoryContainer from "../CategoryContainer/CategoryContainer"
 import axios from 'axios';
 
 import { useRecoilValue } from 'recoil';
-import { backendUrl, userId } from '../../recoil/atoms/atoms';
+import { backendUrl, currentUser } from '../../recoil/atoms/atoms';
 
 export default function CreateParty() {
   const [partyName, setPartyName] = React.useState("");
@@ -21,7 +21,7 @@ export default function CreateParty() {
 
   const URL = useRecoilValue(backendUrl)
 
-   const id = useRecoilValue(userId);
+   const id = useRecoilValue(currentUser);
 
   const categories = [{
       category: "experience level",

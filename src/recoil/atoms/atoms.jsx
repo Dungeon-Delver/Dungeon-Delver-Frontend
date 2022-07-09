@@ -10,24 +10,9 @@ export const isLoadingState = atom({
   default: false
 })
 
-export const name = atom({
-  key: 'name',
-  default: ""
-})
-
-export const email = atom({
-  key: "email",
-  default: ""
-})
-
-export const picture = atom({
-  key: "picture",
-  default: ""
-})
-
-export const userId = atom({
-  key: "userId",
-  default: ""
+export const currentUser = atom({
+  key: 'currentUser',
+  default: null
 })
 
 export const backendUrl = atom({
