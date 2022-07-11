@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
+import Parse from 'parse/dist/parse.min.js';
+
 import './App.css';
 import Facebook from '../Facebook/Facebook';
 import Home from "../Home/Home"
@@ -11,20 +13,50 @@ import CreateParty from "../CreateParty/CreateParty"
 import FindParties from "../FindParties/FindParties"
 import MyParties from "../MyParties/MyParties"
 
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { isLoadingState, loggedInState } from '../../recoil/atoms/atoms';
+import Keys from "../../keys.json"
 
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { currentUser, isLoggingInState, loggedInState } from '../../recoil/atoms/atoms';
 
-
+Parse.initialize(Keys.parse.appId, Keys.parse.javascriptKey)
+Parse.serverURL = 'https://parseapi.back4app.com';
 
 function App() {
 
   const [loggedIn, setLoggedIn] = useRecoilState(loggedInState)
-  const isLoading = useRecoilValue(isLoadingState)
+  const isLoading = useRecoilValue(isLoggingInState)
+  const setCurrentUser = useSetRecoilState(currentUser)
 
-  const handleLogout = () => {
-    setLoggedIn(false);
-    window.location.reload(false);
+
+  const getCurrentUser = () => {
+    const currentUser = Parse.User.current()
+    setCurrentUser(currentUser)
+    if(currentUser == null) {
+      setLoggedIn(false)
+    }
+    else {
+      setLoggedIn(true)
+    }
+}
+
+  const handleLogout = async () => {
+    try {
+      await Parse.User.logOut();
+      // To verify that current user is now empty, currentAsync can be used
+      const currentUser = await Parse.User.current();
+      if (!currentUser === null) {
+        console.error("Logout Failed")
+        return false;
+      }
+      getCurrentUser();
+      // Update state variable holding current user
+      window.location.reload();
+      return true;
+    } catch (error) {
+      setLoggedIn(false);
+      window.location.reload();
+    }
+    
   }
 
   if(isLoading) {

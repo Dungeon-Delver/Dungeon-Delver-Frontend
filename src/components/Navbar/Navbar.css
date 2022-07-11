@@ -1,0 +1,92 @@
+.nav-button-container .nav-button {
+  padding:0.35em 1.2em;
+  border:0.1em solid #FFFFFF;
+  border-radius:0.12em;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:300;
+  color:#FFFFFF;
+  text-align:center;
+  transition: all 0.2s;
+  background-color: #4933ab;
+  align-self: center;
+  margin-left: 1vw;
+  margin-right: 1vw
+}
+
+.nav-button-container, .nav-button-container a {
+  display: flex;
+}
+
+.nav-button:hover{
+  color:#000000;
+  background-color:#FFFFFF;
+  cursor: pointer;
+}
+
+.navbar {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: center;
+  justify-content: left;
+  width: 100vw;
+  margin: 0px;
+  position: relative;
+  background-color: #9966cc
+}
+
+.logout-button-container {
+  margin-left: auto;
+}
+
+.icon {
+  display: none
+}
+
+@media screen and (max-width: 600px) {
+  .navbar div:not(:first-child):not(:last-child) {
+    display: none;
+  }
+  .navbar .icon {
+    position: absolute;
+    right: 0px;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .navbar {
+    display: inline-block;
+  }
+  .navbar.responsive {position: relative;}
+  .navbar.responsive div:not(:first-child):not(:last-child) {
+    float: none;
+    display: block;
+    text-align: left;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  .navbar .icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .nav-button-container .nav-button {
+    margin: 0px
+  }
+
+  .nav-button {
+    margin: 0px;
+    width: 100%;
+  }
+  .logout-button {
+    height: 100%;
+  }
+  .nav-button-container, .nav-button-container a {
+    display: block;
+  }
+}

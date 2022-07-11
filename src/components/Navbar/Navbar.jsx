@@ -2,18 +2,24 @@ import * as React from 'react'
 import {Link} from "react-router-dom"
 
 import "./Navbar.css"
-
 import Logo from "../Logo/Logo"
 
 
 export default function Navbar({handleLogout}) {
+
+  const [openNavbar, setOpenNavbar] = React.useState(false);
+  const toggleNavbar = () => {
+    setOpenNavbar(!openNavbar)
+  }
+
   return (
-    <div className="navbar">
+    <div className={openNavbar ? "navbar responsive" : "navbar"}>
       <Logo id="logo" />
-      <Link to={`/create-party`}><button className="create-party-button">Create Party</button></Link>
-      <Link to={`/find-parties`}><button className="find-parties-button">Find Parties</button></Link>
-      <Link to={`/parties`}><button className="my-parties-button">My Parties</button></Link>
-      <button className="logout-button" onClick={() => {handleLogout()}}>Logout</button>
+      <div className="nav-button-container"><Link to={`/create-party`}><button className="create-party-button nav-button">Create Party</button></Link></div>
+      <div className="nav-button-container"><Link to={`/find-parties`}><button className="find-parties-button nav-button">Find Parties</button></Link></div>
+      <div className="nav-button-container"><Link to={`/parties`}><button className="my-parties-button nav-button">My Parties</button></Link></div>
+      <div className="nav-button-container logout-button-container"><button className="logout-button nav-button" onClick={() => {handleLogout()}}>Logout</button></div>
+      <div className="icon" onClick={toggleNavbar}>☰</div>
     </div>
   )
 }
