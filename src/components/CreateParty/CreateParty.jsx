@@ -3,6 +3,8 @@ import './CreateParty.css'
 import CategoryContainer from "../CategoryContainer/CategoryContainer"
 import axios from 'axios';
 
+import { useNavigate } from 'react-router-dom';
+
 import { useRecoilValue } from 'recoil';
 import { backendUrl, currentUser } from '../../recoil/atoms/atoms';
 
@@ -19,9 +21,9 @@ export default function CreateParty() {
   const [partyFailed, setPartyFailed] = React.useState(false);
   const [error, setError] = React.useState("");
 
-  const URL = useRecoilValue(backendUrl)
-
-   const id = useRecoilValue(currentUser);
+  const URL = useRecoilValue(backendUrl);
+  const id = useRecoilValue(currentUser);
+  const navigate = useNavigate();
 
   const categories = [{
       category: "experience level",
@@ -64,14 +66,17 @@ export default function CreateParty() {
       mode: activeMode
     }
     try {
-      await axios.post(`${URL}party/create-party`, JSON_OBJECT);
+      const data = await axios.post(`${URL}party/create-party`, JSON_OBJECT);
+      const partyId = data.data.newParty
+      setLoadingParty(false);
+      setPartyFailed(false);
+      navigate(`/product/${partyId}`, {replace : false})
     }
     catch (error){
       console.error(error);
       setPartyFailed(true);
       setError(error);
     }
-    setLoadingParty(false)
   }
 
   const handleSubmit = () => {
