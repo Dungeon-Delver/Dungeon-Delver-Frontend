@@ -12,6 +12,7 @@ import Loader from "../Loader/Loader"
 import CreateParty from "../CreateParty/CreateParty"
 import FindParties from "../FindParties/FindParties"
 import MyParties from "../MyParties/MyParties"
+import PartyPage from "../PartyPage/PartyPage"
 
 import Keys from "../../keys.json"
 
@@ -86,6 +87,7 @@ function App() {
             <Route path="/create-party" element={<CreateParty />}/>
             <Route path="/find-parties" element={<FindParties />}/>
             <Route path="/parties" element={<MyParties />} />
+            <Route path="/party/:partyId" element={<PartyPage />}/>
             <Route path = "*" element={<NotFound />} />
           </Routes>
       </BrowserRouter>
