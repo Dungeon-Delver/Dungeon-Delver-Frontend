@@ -45,7 +45,7 @@ function App() {
       // To verify that current user is now empty, currentAsync can be used
       const currentUser = await Parse.User.current();
       if (!currentUser === null) {
-        console.log("Logout Failed")
+        console.error("Logout Failed")
         return false;
       }
       getCurrentUser();

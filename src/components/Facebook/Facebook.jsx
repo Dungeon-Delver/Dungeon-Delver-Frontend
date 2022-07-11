@@ -36,12 +36,12 @@ export default function FacebookOAuth() {
   const handleFacebookLogin = async (response) => {
     // Check if response has an error
     if(!response.hasOwnProperty("userData")) {
-      console.log("No User Data");
+      console.error("No User Data");
     }
     
     response = response.userData;
     if (response.error !== undefined) {
-      console.log(`Error: ${response.error}`);
+      console.error(`Error: ${response.error}`);
     } else {
       try {
         // Gather Facebook user info

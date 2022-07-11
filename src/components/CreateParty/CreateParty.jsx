@@ -74,7 +74,7 @@ export default function CreateParty() {
       navigate(`/party/${partyId}`, {replace : false})
     }
     catch (error){
-      console.log(error);
+      console.error(error);
       setPartyFailed(true);
       setLoadingParty(false)
       setError(error);
