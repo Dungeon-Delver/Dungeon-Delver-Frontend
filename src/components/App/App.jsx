@@ -53,8 +53,8 @@ function App() {
       window.location.reload();
       return true;
     } catch (error) {
-      console.log(`Error! ${error.message}`);
-      return false;
+      setLoggedIn(false);
+      window.location.reload();
     }
     
   }

@@ -55,10 +55,12 @@ export default function CreateParty() {
     const JSON_OBJECT = {
       name: partyName,
       dm: id,
-      experience: activeExperience,
-      type: activeType,
-      genre: activeGenre,
-      level: activeLevel,
+      searchParameters: {
+        experience: activeExperience,
+        type: activeType,
+        genre: activeGenre,
+        level: activeLevel,
+      },
       mode: activeMode
     }
     try {
@@ -90,8 +92,9 @@ export default function CreateParty() {
 
   return (
     <div className="create-party">
-      <div className="party-name">
-        <input className="party-name-input" name="name" placeholder="Dungeoneers" value={partyName} onChange={(event) => setPartyName(event.target.value)}></input>
+      <div className="party-name form__group field">
+        <input className="party-name-input form__field" id="name" name="Party Name" placeholder="Dungeoneers" value={partyName} onChange={(event) => setPartyName(event.target.value)}></input>
+        <label htmlFor="name" className="form__label">Party Name</label>
       </div>
       <div className="categories">
         {categories.map((item) => (
