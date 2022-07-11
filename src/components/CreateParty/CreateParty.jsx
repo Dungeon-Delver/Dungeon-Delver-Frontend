@@ -6,7 +6,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import { useRecoilValue } from 'recoil';
-import { backendUrl, currentUser } from '../../recoil/atoms/atoms';
+import { currentUser } from '../../recoil/atoms/atoms';
+import constants from '../../constants/appConstants'
 
 export default function CreateParty() {
   const [partyName, setPartyName] = React.useState("");
@@ -21,7 +22,7 @@ export default function CreateParty() {
   const [partyFailed, setPartyFailed] = React.useState(false);
   const [error, setError] = React.useState("");
 
-  const URL = useRecoilValue(backendUrl);
+  const URL = constants().URL;
   const id = useRecoilValue(currentUser);
   const navigate = useNavigate();
 
@@ -70,16 +71,17 @@ export default function CreateParty() {
       const partyId = data.data.newParty
       setLoadingParty(false);
       setPartyFailed(false);
-      navigate(`/product/${partyId}`, {replace : false})
+      navigate(`/party/${partyId}`, {replace : false})
     }
     catch (error){
-      console.error(error);
+      console.log(error);
       setPartyFailed(true);
+      setLoadingParty(false)
       setError(error);
     }
   }
 
-  const handleSubmit = () => {
+  const validateForm = () => {
     const missingParamsTmp=[];
     const states = [{value: partyName, category: "party name"}, {value: activeExperience, category: "experience"}, {value: activeType, category: "type"}, {value: activeGenre, category: "genre"}, {value: activeLevel, category: "level"}, {value: activeMode, category: "privacy mode"}]
     states.forEach((item) => {
@@ -89,6 +91,14 @@ export default function CreateParty() {
     })
     setMissingParams(missingParamsTmp);
     if(missingParamsTmp.length>0) {
+      return false;
+    }
+    return true;
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if(!validateForm()) {
       return;
     }
     setLoadingParty(true);
@@ -96,7 +106,7 @@ export default function CreateParty() {
   }
 
   return (
-    <div className="create-party">
+    <form className="create-party">
       <div className="party-name form__group field">
         <input className="party-name-input form__field" id="name" name="Party Name" placeholder="Dungeoneers" value={partyName} onChange={(event) => setPartyName(event.target.value)}></input>
         <label htmlFor="name" className="form__label">Party Name</label>
@@ -106,7 +116,7 @@ export default function CreateParty() {
           <CategoryContainer key={item.category} category={item} />
         ))}
       </div>
-      <button className={loadingParty ? "button button--loading" : "button"} onClick={handleSubmit}>
+      <button className={loadingParty ? "button button--loading" : "button"} onClick={(event) => handleSubmit(event)}>
         <div className="button__text">Create Dungeon</div>
       </button>
       <div className="missing-params">{missingParams}</div>
@@ -114,6 +124,6 @@ export default function CreateParty() {
         <h1 className="party-failed-message">{error.message}</h1>
         <h2 className="party-failed-status-text">{error.response.statusText}</h2>
       </div> :""}
-    </div>
+    </form>
   )
 }

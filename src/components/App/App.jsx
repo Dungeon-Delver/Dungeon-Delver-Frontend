@@ -16,7 +16,7 @@ import MyParties from "../MyParties/MyParties"
 import Keys from "../../keys.json"
 
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { currentUser, isLoadingState, loggedInState } from '../../recoil/atoms/atoms';
+import { currentUser, isLoggingInState, loggedInState } from '../../recoil/atoms/atoms';
 
 Parse.initialize(Keys.parse.appId, Keys.parse.javascriptKey)
 Parse.serverURL = 'https://parseapi.back4app.com';
@@ -24,7 +24,7 @@ Parse.serverURL = 'https://parseapi.back4app.com';
 function App() {
 
   const [loggedIn, setLoggedIn] = useRecoilState(loggedInState)
-  const isLoading = useRecoilValue(isLoadingState)
+  const isLoading = useRecoilValue(isLoggingInState)
   const setCurrentUser = useSetRecoilState(currentUser)
 
 
