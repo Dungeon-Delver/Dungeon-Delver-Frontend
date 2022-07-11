@@ -115,9 +115,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
   font-size: 1.5rem;
-  background-color: #FAF9F6
 }
 
 .party-name {
