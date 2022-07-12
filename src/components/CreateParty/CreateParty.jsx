@@ -121,8 +121,8 @@ export default function CreateParty() {
       </button>
       <div className="missing-params">{missingParams}</div>
       {partyFailed ?<div className="party-failed"> 
-        <h1 className="party-failed-message">{error.message}</h1>
-        <h2 className="party-failed-status-text">{error.response.statusText}</h2>
+        <h1 className="party-failed-message">{error.response.data ? error.response.data.error.message : error.message}</h1>
+        <h2 className="party-failed-status-text">{error.statusText}</h2>
       </div> :""}
     </form>
   )
