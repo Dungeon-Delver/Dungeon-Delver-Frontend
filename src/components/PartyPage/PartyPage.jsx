@@ -26,11 +26,16 @@ export default function PartyPage() {
   React.useEffect(() => {
     const checkPermissions = async (result) => {
       await getCurrentUser();
+<<<<<<< party-page-layout
       if(result.dm.objectId===user.id) {
         setInParty("dm");
       }//Also check if player
       else {
         setInParty(false);
+=======
+      if (result.dm.objectId === user.id) {
+        setInParty(true);
+>>>>>>> party-page
       }
     }
     const fetchData = async () => {
