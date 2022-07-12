@@ -23,7 +23,7 @@ export default function PartyPage() {
   React.useEffect(() => {
     const checkPermissions = async (result) => {
       await getCurrentUser();
-      if(result.dm.objectId===user.id) {
+      if (result.dm.objectId === user.id) {
         setInParty(true);
       }
 }
