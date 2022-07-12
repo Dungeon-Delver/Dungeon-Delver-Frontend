@@ -5,6 +5,9 @@ import { useRecoilValue } from 'recoil';
 import Constants from '../../constants/appConstants';
 import { currentUser } from '../../recoil/atoms/atoms';
 import Loader from '../Loader/Loader';
+import PartySidebar from "../PartySidebar/PartySidebar.jsx"
+import PartyChat from "../PartyChat/PartyChat"
+import PartyPanel from '../PartyPanel/PartyPanel';
 import "./PartyPage.css"
 
 
@@ -24,9 +27,12 @@ export default function PartyPage() {
     const checkPermissions = async (result) => {
       await getCurrentUser();
       if(result.dm.objectId===user.id) {
-        setInParty(true);
+        setInParty("dm");
+      }//Also check if player
+      else {
+        setInParty(false);
       }
-}
+    }
     const fetchData = async () => {
       try {
         const response = await axios.get(`${URL}party/${params.partyId}`);
@@ -49,16 +55,20 @@ export default function PartyPage() {
   
 
   if(loadingParty) {
-    <Loader />
+    return(
+      <Loader />
+    )
   }
 
   if(party==null) {
     return <h1>{error.response.data ? error.response.data.error.message : error.message}</h1>
   }
-  
+
   return(
     <div className="party-page">
-      <h1>{party.name}</h1>
+      <PartySidebar party={party} inParty={inParty} />
+      <PartyChat party={party} inParty={inParty} />
+      <PartyPanel party={party} inParty={inParty} />
     </div>
   )
 }
