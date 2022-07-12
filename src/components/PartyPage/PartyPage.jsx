@@ -37,7 +37,7 @@ export default function PartyPage() {
       catch (e) {
         console.log(e);
         setParty(null);
-        setError(e.message)
+        setError(e)
       }
       setLoadingParty(false);
     }
@@ -53,9 +53,9 @@ export default function PartyPage() {
   }
 
   if(party==null) {
-    return <h1>{error.message}</h1>
+    return <h1>{error.response.data ? error.response.data.error.message : error.message}</h1>
   }
-  console.log(party);
+  
   return(
     <div className="party-page">
       <h1>{party.name}</h1>
