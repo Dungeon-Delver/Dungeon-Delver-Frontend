@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Constants from '../../constants/appConstants';
 
 import Parse from 'parse/dist/parse.min.js';
 
@@ -16,8 +17,8 @@ import PartyPage from "../PartyPage/PartyPage"
 
 import Keys from "../../keys.json"
 
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { currentUser, isLoggingInState, loggedInState } from '../../recoil/atoms/atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { isLoggingInState, loggedInState } from '../../recoil/atoms/atoms';
 
 Parse.initialize(Keys.parse.appId, Keys.parse.javascriptKey)
 Parse.serverURL = 'https://parseapi.back4app.com';
@@ -26,19 +27,8 @@ function App() {
 
   const [loggedIn, setLoggedIn] = useRecoilState(loggedInState)
   const isLoading = useRecoilValue(isLoggingInState)
-  const setCurrentUser = useSetRecoilState(currentUser)
 
-
-  const getCurrentUser = () => {
-    const currentUser = Parse.User.current()
-    setCurrentUser(currentUser)
-    if(currentUser == null) {
-      setLoggedIn(false)
-    }
-    else {
-      setLoggedIn(true)
-    }
-}
+  const getCurrentUser = Constants().getCurrentUser
 
   const handleLogout = async () => {
     try {

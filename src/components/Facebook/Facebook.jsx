@@ -4,6 +4,7 @@ import FacebookLogin from 'react-facebook-login' //External library
 import Keys from "../../keys.json"
 
 import Parse from 'parse/dist/parse.min.js';
+import Constants from '../../constants/appConstants';
 
 
 import { useSetRecoilState } from 'recoil'
@@ -22,16 +23,8 @@ export default function FacebookOAuth() {
     setIsLoading(true);
   }
 
-  const getCurrentUser = async () => {
-      const currentUser = await Parse.User.currentAsync()
-      setCurrentUser(currentUser)
-      if(currentUser == null) {
-        setLoggedIn(false)
-      }
-      else {
-        setLoggedIn(true)
-      }
-  }
+  const getCurrentUser = Constants().getCurrentUser;
+
 
   const handleFacebookLogin = async (response) => {
     // Check if response has an error
