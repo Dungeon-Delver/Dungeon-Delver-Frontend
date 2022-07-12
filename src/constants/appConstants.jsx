@@ -14,7 +14,7 @@ export default function Constants() {
 
   return {
     URL: LOCALHOST_SERVER_URL,
-    getCurrentUser: () => {
+    getCurrentUser: async () => {
       const currentUser = Parse.User.current()
       setCurrentUser(currentUser)
       if(currentUser == null) {

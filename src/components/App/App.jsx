@@ -39,7 +39,7 @@ function App() {
         console.error("Logout Failed")
         return false;
       }
-      getCurrentUser();
+      await getCurrentUser();
       // Update state variable holding current user
       window.location.reload();
       return true;

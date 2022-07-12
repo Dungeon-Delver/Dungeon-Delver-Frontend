@@ -1,7 +1,10 @@
 import axios from 'axios';
 import * as React from 'react'
 import { useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import Constants from '../../constants/appConstants';
+import { currentUser } from '../../recoil/atoms/atoms';
+import Loader from '../Loader/Loader';
 import "./PartyPage.css"
 
 
@@ -10,26 +13,52 @@ export default function PartyPage() {
   const params = useParams();
 
   const [party, setParty] = React.useState(0)
+  const [inParty, setInParty] = React.useState(false);
+  const [error, setError] = React.useState("")
+  const [loadingParty, setLoadingParty] = React.useState(true);
   const URL = Constants().URL;
+  const getCurrentUser = Constants().getCurrentUser;
+  const user = useRecoilValue(currentUser)
 
-  React.useEffect( () => {
+  React.useEffect(() => {
+    const checkPermissions = async (result) => {
+      await getCurrentUser();
+      if(result.dm.objectId===user.id) {
+        setInParty(true);
+      }
+}
     const fetchData = async () => {
       try {
         const response = await axios.get(`${URL}party/${params.partyId}`);
-        console.log('response: ', response);
-        //setParty(result);
+        const result = response.data.party
+        setParty(result);
+        checkPermissions(result);
       }
       catch (e) {
         console.log(e);
         setParty(null);
+        setError(e.message)
       }
+      setLoadingParty(false);
     }
+    setLoadingParty(true);
     fetchData();
-  }, [params.partyId, URL]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
+  
+
+  if(loadingParty) {
+    <Loader />
+  }
+
+  if(party==null) {
+    return <h1>{error.message}</h1>
+  }
+  console.log(party);
   return(
     <div className="party-page">
-      <h1></h1>
+      <h1>{party.name}</h1>
     </div>
   )
 }
