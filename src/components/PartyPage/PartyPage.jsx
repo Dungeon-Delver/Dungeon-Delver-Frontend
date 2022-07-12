@@ -15,9 +15,9 @@ export default function PartyPage() {
   React.useEffect( () => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${URL}${[params.partyId]}`);
-        const result = response.data.product;
-        setParty(result);
+        const response = await axios.get(`${URL}party/${params.partyId}`);
+        console.log('response: ', response);
+        //setParty(result);
       }
       catch (e) {
         console.log(e);
