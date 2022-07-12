@@ -14,6 +14,7 @@ import CreateParty from "../CreateParty/CreateParty"
 import FindParties from "../FindParties/FindParties"
 import MyParties from "../MyParties/MyParties"
 import PartyPage from "../PartyPage/PartyPage"
+import Logo from "../../images/Logo.png"
 
 import Keys from "../../keys.json"
 
@@ -76,9 +77,9 @@ function App() {
   else if(!loggedIn) {
     return (
       <div className="App">
-        <h1>
-          Dungeon Delver
-        </h1>
+        <div className="logo-container">
+          <img src={Logo} alt="Dungeon Delver"/>
+        </div>
         <p>
           To get started, authenticate with Facebook.
         </p>
@@ -91,6 +92,9 @@ function App() {
       return (
         <div className="disabled-user">
           <BrowserRouter><Navbar handleLogout={handleLogout}/></BrowserRouter>
+          <div className="logo-container">
+            <img src={Logo} alt="Dungeon Delver"/>
+          </div>
           <h1>Your account is disabled. Would you like to re-enable it?</h1>
           <button className="enable-account" onClick={enableAccount}>Enable Account</button>
           <h1>Alternatively, log in with a different facebook account</h1>
