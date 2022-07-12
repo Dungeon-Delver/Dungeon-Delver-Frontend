@@ -8,7 +8,7 @@ import Constants from '../../constants/appConstants';
 
 
 import { useSetRecoilState } from 'recoil'
-import { isLoggingInState, loggedInState, currentUser } from '../../recoil/atoms/atoms'
+import { isLoggingInState, loggedInState } from '../../recoil/atoms/atoms'
 
 Parse.initialize(Keys.parse.appId, Keys.parse.javascriptKey)
 Parse.serverURL = 'https://parseapi.back4app.com';
@@ -17,7 +17,6 @@ export default function FacebookOAuth() {
 
   const setLoggedIn = useSetRecoilState(loggedInState)
   const setIsLoading = useSetRecoilState(isLoggingInState)
-  const setCurrentUser = useSetRecoilState(currentUser)
 
   const componentClicked = () => {
     setIsLoading(true);
