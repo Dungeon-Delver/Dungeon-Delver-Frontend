@@ -29,6 +29,7 @@ function App() {
   const isLoading = useRecoilValue(isLoggingInState)
 
   const getCurrentUser = Constants().getCurrentUser
+  const URL = Constants().URL;
 
   const handleLogout = async () => {
     try {
@@ -50,6 +51,23 @@ function App() {
     
   }
 
+  const enableAccount = async () => {
+    try {
+      const currentUser = await Parse.User.current();
+      const query = new Parse.Query("User");
+      const user = await query.get(currentUser.id);
+      user.set("enabled", true)
+      await user.save();
+      const currUser = await getCurrentUser();
+      if(!currUser.get("enabled")) {
+        throw new Error("Failed to re-enable user")
+      }
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
   if(isLoading) {
     return (
       <Loader />
@@ -68,6 +86,19 @@ function App() {
       </div>
     );
   }
+
+  if(loggedIn==="disabled") {
+      return (
+        <div className="disabled-user">
+          <BrowserRouter><Navbar handleLogout={handleLogout}/></BrowserRouter>
+          <h1>Your account is disabled. Would you like to re-enable it?</h1>
+          <button className="enable-account" onClick={enableAccount}>Enable Account</button>
+          <h1>Alternatively, log in with a different facebook account</h1>
+          <Facebook />
+        </div>
+      )
+  }
+
   else {
     return <div className="App">
       <BrowserRouter>

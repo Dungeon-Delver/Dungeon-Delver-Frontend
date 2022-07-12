@@ -21,7 +21,10 @@ export default function Constants() {
         setLoggedIn(false)
       }
       else {
-        setLoggedIn(true)
+        if(currentUser.get("enabled")){
+          setLoggedIn(true)
+        }
+        return currentUser;
       }
     }
   }

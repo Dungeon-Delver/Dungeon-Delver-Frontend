@@ -17,7 +17,6 @@ export default function FacebookOAuth() {
 
   const setLoggedIn = useSetRecoilState(loggedInState)
   const setIsLoading = useSetRecoilState(isLoggingInState)
-  const [disabledUser, setDisabledUser] = React.useState();
 
   const componentClicked = () => {
     setIsLoading(true);
@@ -56,9 +55,12 @@ export default function FacebookOAuth() {
           // logIn returns the corresponding ParseUser object
           const user = await getCurrentUser();
           if(!user.get("enabled")) {
-            setDisabledUser(true);
+            console.log("disabled user")
+            setLoggedIn("disabled")
           }
-          setLoggedIn(true)
+          else {
+            setLoggedIn(true)
+          }
         } catch (error) {
           // Error can be caused by wrong parameters or lack of Internet connection
           console.error(`Error! ${error.message}`);
@@ -73,7 +75,6 @@ export default function FacebookOAuth() {
   const responseFacebook = async (response) => {
     try {
       await handleFacebookLogin({userData: response})
-      // Update state variable holding current user
       setIsLoading(false)
     }
     catch (err) {
