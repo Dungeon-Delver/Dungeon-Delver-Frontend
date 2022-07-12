@@ -4,10 +4,11 @@ import FacebookLogin from 'react-facebook-login' //External library
 import Keys from "../../keys.json"
 
 import Parse from 'parse/dist/parse.min.js';
+import Constants from '../../constants/appConstants';
 
 
 import { useSetRecoilState } from 'recoil'
-import { isLoggingInState, loggedInState, currentUser } from '../../recoil/atoms/atoms'
+import { isLoggingInState, loggedInState } from '../../recoil/atoms/atoms'
 
 Parse.initialize(Keys.parse.appId, Keys.parse.javascriptKey)
 Parse.serverURL = 'https://parseapi.back4app.com';
@@ -16,22 +17,13 @@ export default function FacebookOAuth() {
 
   const setLoggedIn = useSetRecoilState(loggedInState)
   const setIsLoading = useSetRecoilState(isLoggingInState)
-  const setCurrentUser = useSetRecoilState(currentUser)
 
   const componentClicked = () => {
     setIsLoading(true);
   }
 
-  const getCurrentUser = async () => {
-      const currentUser = await Parse.User.currentAsync()
-      setCurrentUser(currentUser)
-      if(currentUser == null) {
-        setLoggedIn(false)
-      }
-      else {
-        setLoggedIn(true)
-      }
-  }
+  const getCurrentUser = Constants().getCurrentUser;
+
 
   const handleFacebookLogin = async (response) => {
     // Check if response has an error
@@ -61,8 +53,14 @@ export default function FacebookOAuth() {
             authData: {id: userId, access_token: userAccessToken},
           });
           // logIn returns the corresponding ParseUser object
-          await getCurrentUser();
-          setLoggedIn(true)
+          const user = await getCurrentUser();
+          if(!user.get("enabled")) {
+            console.log("disabled user")
+            setLoggedIn("disabled")
+          }
+          else {
+            setLoggedIn(true)
+          }
         } catch (error) {
           // Error can be caused by wrong parameters or lack of Internet connection
           console.error(`Error! ${error.message}`);
@@ -77,7 +75,6 @@ export default function FacebookOAuth() {
   const responseFacebook = async (response) => {
     try {
       await handleFacebookLogin({userData: response})
-      // Update state variable holding current user
       setIsLoading(false)
     }
     catch (err) {

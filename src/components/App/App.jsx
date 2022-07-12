@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Constants from '../../constants/appConstants';
 
 import Parse from 'parse/dist/parse.min.js';
 
@@ -12,11 +13,12 @@ import Loader from "../Loader/Loader"
 import CreateParty from "../CreateParty/CreateParty"
 import FindParties from "../FindParties/FindParties"
 import MyParties from "../MyParties/MyParties"
+import PartyPage from "../PartyPage/PartyPage"
 
 import Keys from "../../keys.json"
 
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { currentUser, isLoggingInState, loggedInState } from '../../recoil/atoms/atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { isLoggingInState, loggedInState } from '../../recoil/atoms/atoms';
 
 Parse.initialize(Keys.parse.appId, Keys.parse.javascriptKey)
 Parse.serverURL = 'https://parseapi.back4app.com';
@@ -25,19 +27,9 @@ function App() {
 
   const [loggedIn, setLoggedIn] = useRecoilState(loggedInState)
   const isLoading = useRecoilValue(isLoggingInState)
-  const setCurrentUser = useSetRecoilState(currentUser)
 
-
-  const getCurrentUser = () => {
-    const currentUser = Parse.User.current()
-    setCurrentUser(currentUser)
-    if(currentUser == null) {
-      setLoggedIn(false)
-    }
-    else {
-      setLoggedIn(true)
-    }
-}
+  const getCurrentUser = Constants().getCurrentUser
+  const URL = Constants().URL;
 
   const handleLogout = async () => {
     try {
@@ -48,7 +40,7 @@ function App() {
         console.error("Logout Failed")
         return false;
       }
-      getCurrentUser();
+      await getCurrentUser();
       // Update state variable holding current user
       window.location.reload();
       return true;
@@ -57,6 +49,23 @@ function App() {
       window.location.reload();
     }
     
+  }
+
+  const enableAccount = async () => {
+    try {
+      const currentUser = await Parse.User.current();
+      const query = new Parse.Query("User");
+      const user = await query.get(currentUser.id);
+      user.set("enabled", true)
+      await user.save();
+      const currUser = await getCurrentUser();
+      if(!currUser.get("enabled")) {
+        throw new Error("Failed to re-enable user")
+      }
+    }
+    catch (error) {
+      console.log(error)
+    }
   }
 
   if(isLoading) {
@@ -77,6 +86,19 @@ function App() {
       </div>
     );
   }
+
+  if(loggedIn==="disabled") {
+      return (
+        <div className="disabled-user">
+          <BrowserRouter><Navbar handleLogout={handleLogout}/></BrowserRouter>
+          <h1>Your account is disabled. Would you like to re-enable it?</h1>
+          <button className="enable-account" onClick={enableAccount}>Enable Account</button>
+          <h1>Alternatively, log in with a different facebook account</h1>
+          <Facebook />
+        </div>
+      )
+  }
+
   else {
     return <div className="App">
       <BrowserRouter>
@@ -86,6 +108,7 @@ function App() {
             <Route path="/create-party" element={<CreateParty />}/>
             <Route path="/find-parties" element={<FindParties />}/>
             <Route path="/parties" element={<MyParties />} />
+            <Route path="/party/:partyId" element={<PartyPage />}/>
             <Route path = "*" element={<NotFound />} />
           </Routes>
       </BrowserRouter>
