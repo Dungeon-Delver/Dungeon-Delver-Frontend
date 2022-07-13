@@ -1,12 +1,10 @@
-import Parse from 'parse/dist/parse.min.js';
+import Parse from "./parseInitialize"
 import { useSetRecoilState } from 'recoil';
-import Keys from "../keys.json"
 import { currentUser, loggedInState  } from '../recoil/atoms/atoms';
 
 const LOCALHOST_SERVER_URL = "http://localhost:3001/"
 
-Parse.initialize(Keys.parse.appId, Keys.parse.javascriptKey)
-Parse.serverURL = 'https://parseapi.back4app.com';
+
 
 export default function Constants() {
   const setCurrentUser = useSetRecoilState(currentUser)
