@@ -30,17 +30,37 @@ function App() {
   const isLoading = useRecoilValue(isLoggingInState)
 
   const getCurrentUser = Constants().getCurrentUser
-  const URL = Constants().URL;
+
+  React.useEffect( () => {
+    const login = async (user) => {
+    try {
+      await Parse.User.become(user.sessionToken)
+      await getCurrentUser()
+    }
+     catch (error) {
+      console.error(`Error! ${error.message}`);
+    }
+  }
+    const localStorageValue = (localStorage.getItem("user"));
+    if (localStorageValue === null) {
+      return;
+    }
+    const user = JSON.parse(localStorageValue)
+    login(user)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleLogout = async () => {
     try {
       await Parse.User.logOut();
       // To verify that current user is now empty, currentAsync can be used
       const currentUser = await Parse.User.current();
+      localStorage.removeItem("user")
       if (!currentUser === null) {
         console.error("Logout Failed")
         return false;
       }
+      setLoggedIn(false);
       await getCurrentUser();
       // Update state variable holding current user
       window.location.reload();

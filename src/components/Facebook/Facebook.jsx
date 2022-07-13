@@ -54,6 +54,7 @@ export default function FacebookOAuth() {
           });
           // logIn returns the corresponding ParseUser object
           const user = await getCurrentUser();
+          localStorage.setItem('user',JSON.stringify(user));
           if(!user.get("enabled")) {
             console.log("disabled user")
             setLoggedIn("disabled")
