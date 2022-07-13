@@ -1,11 +1,9 @@
 import * as React from 'react'
 import "./PartyCard.css"
-import Keys from "../../keys.json"
-import Parse from 'parse/dist/parse.min.js';
+import Parse from "../../constants/parseInitialize"
 import { Link } from 'react-router-dom';
 
-Parse.initialize(Keys.parse.appId, Keys.parse.javascriptKey)
-Parse.serverURL = 'https://parseapi.back4app.com';
+
 
 export default function PartyCard({party, role}) {
   const [dm, setDm] = React.useState("")
@@ -37,12 +35,12 @@ export default function PartyCard({party, role}) {
       </div>
       <div className="party-title">{party.name}</div>
       <div className="role">{role}</div>
-      <div className="members">
-        <div className="dm">{dm}</div>
+      <ul className="members">
+        <li className="dm">{dm}</li>
         {players.map((item, i) => {
-          return <div key={i} className="player">{item}</div>
+          return <li key={i} className="player">{item}</li>
         })}
-      </div>
+      </ul>
       <div className="enter-dungeon-button-container"><Link to={`/party/${party.objectId}`}>
         <button className="enter-dungeon-button">Enter Dungeon</button>
         </Link></div>

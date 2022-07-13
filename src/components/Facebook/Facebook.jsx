@@ -2,16 +2,14 @@ import * as React from 'react'
 import "./Facebook.css"
 import FacebookLogin from 'react-facebook-login' //External library
 import Keys from "../../keys.json"
+import Parse from "../../constants/parseInitialize"
 
-import Parse from 'parse/dist/parse.min.js';
+
 import Constants from '../../constants/appConstants';
 
 
 import { useSetRecoilState } from 'recoil'
 import { isLoggingInState, loggedInState } from '../../recoil/atoms/atoms'
-
-Parse.initialize(Keys.parse.appId, Keys.parse.javascriptKey)
-Parse.serverURL = 'https://parseapi.back4app.com';
 
 export default function FacebookOAuth() {
 
@@ -54,7 +52,7 @@ export default function FacebookOAuth() {
           });
           // logIn returns the corresponding ParseUser object
           const user = await getCurrentUser();
-          localStorage.setItem('user',JSON.stringify(user));
+          localStorage.setItem('user', JSON.stringify(user));
           if(!user.get("enabled")) {
             console.log("disabled user")
             setLoggedIn("disabled")

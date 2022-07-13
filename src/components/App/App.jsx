@@ -2,8 +2,6 @@ import * as React from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Constants from '../../constants/appConstants';
 
-import Parse from 'parse/dist/parse.min.js';
-
 import './App.css';
 import Facebook from '../Facebook/Facebook';
 import Home from "../Home/Home"
@@ -15,14 +13,10 @@ import FindParties from "../FindParties/FindParties"
 import MyParties from "../MyParties/MyParties"
 import PartyPage from "../PartyPage/PartyPage"
 import Logo from "../../images/Logo.png"
-
-import Keys from "../../keys.json"
+import Parse from "../../constants/parseInitialize"
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { isLoggingInState, loggedInState } from '../../recoil/atoms/atoms';
-
-Parse.initialize(Keys.parse.appId, Keys.parse.javascriptKey)
-Parse.serverURL = 'https://parseapi.back4app.com';
 
 function App() {
 
