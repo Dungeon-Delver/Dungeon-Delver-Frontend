@@ -1,0 +1,46 @@
+.party-card {
+    display: grid;
+    grid-template-columns: 2fr 2fr 2fr 2fr;
+    grid-template-rows: 1fr 1fr;
+    grid-gap: 10px;
+    align-items: center;
+    background-color: #e9e8e9;
+}
+
+.party-card div {
+  padding: 3px;
+}
+
+.party-members {
+  max-height: 100px;
+}
+
+ul {
+  margin: 0px;
+  padding: 0px;
+}
+
+.party-image {
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 2;
+}
+
+.party-title {
+  grid-column: 2 / span 1;
+  grid-row: 1 / span 1;
+}
+
+.party-role {
+  grid-column: 2 / span 1;
+  grid-row: 2 / span 1;
+}
+
+.party-members {
+  grid-column: 3 / span 1;
+  grid-row: 1 / span 2;
+}
+
+.enter-dungeon-button-container {
+  grid-column: 4 / span 1;
+  grid-row: 1 / span 2;
+}

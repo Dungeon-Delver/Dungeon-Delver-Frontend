@@ -34,16 +34,18 @@ export default function PartyCard({party, role}) {
         <img src={party.image} alt={party.name}/>
       </div>
       <div className="party-title">{party.name}</div>
-      <div className="role">{role}</div>
-      <ul className="members">
+      <div className="party-role">{role}</div>
+      <ul className="party-members">
         <li className="dm">{dm}</li>
         {players.map((item, i) => {
           return <li key={i} className="player">{item}</li>
         })}
       </ul>
-      <div className="enter-dungeon-button-container"><Link to={`/party/${party.objectId}`}>
-        <button className="enter-dungeon-button">Enter Dungeon</button>
-        </Link></div>
+      <div className="enter-dungeon-button-container">
+          <Link to={`/party/${party.objectId}`}>
+            <button className="enter-dungeon-button">Enter Dungeon</button>
+        </Link>
+        </div>
       </div>
   )
 }
