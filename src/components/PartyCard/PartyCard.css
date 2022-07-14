@@ -132,6 +132,10 @@ ul {
 	outline: none;
 }
 
+.enter-dungeon-button span {
+  white-space: nowrap;
+}
+
 @media screen and (max-width: 600px) {
   .party-card {
     display: flex;
@@ -140,9 +144,5 @@ ul {
   }
   .party-image {
     width: 100px;
-  }
-
-  .enter-dungeon-button {
-    white-space: nowrap;
   }
 }
