@@ -131,3 +131,18 @@ ul {
 .enter-dungeon-button:focus {
 	outline: none;
 }
+
+@media screen and (max-width: 600px) {
+  .party-card {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+  }
+  .party-image {
+    width: 100px;
+  }
+
+  .enter-dungeon-button {
+    white-space: nowrap;
+  }
+}
