@@ -9,8 +9,6 @@ export default function PartyCard({party, role}) {
   const [dm, setDm] = React.useState("")
   const [players, setPlayers] = React.useState([])
 
-  const [hovering, setHovering] = React.useState(false);
-
   React.useEffect(() => {
     //Use parse to find dm, players of party
     const getDM = async () => {
@@ -38,7 +36,20 @@ export default function PartyCard({party, role}) {
       </div>
       <div className="party-title">{party.name}</div>
       <div className={"party-role " + role==="Player" ? "green" : "purple"}>{role}</div>
-      <ul className="party-members" onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}>
+      <MembersList dm={dm} players={players}/>
+      <div className="enter-dungeon-button-container">
+          <Link to={`/party/${party.objectId}`}>
+            <button className="enter-dungeon-button"><span>Enter Dungeon</span></button>
+        </Link>
+        </div>
+      </div>
+  )
+}
+
+function MembersList({dm, players}) {
+  const [hovering, setHovering] = React.useState(false);
+  return (
+    <ul className="party-members" onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}>
         <li className="dm">👑 {dm}</li>
         {players.map((item, i) => {
           if(!hovering && i <=2 )
@@ -46,11 +57,5 @@ export default function PartyCard({party, role}) {
           else {return ""}
         })}
       </ul>
-      <div className="enter-dungeon-button-container">
-          <Link to={`/party/${party.objectId}`}>
-            <button className="enter-dungeon-button"><span>Enter Dungeon</span></button>
-        </Link>
-        </div>
-      </div>
   )
 }
