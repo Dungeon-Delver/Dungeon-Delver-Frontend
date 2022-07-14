@@ -6,19 +6,33 @@ import axios from 'axios'
 import Constants from '../../constants/appConstants'
 
 export default function PartyPanel({party, inParty}) {
+  const URL = Constants().URL;
+  const [requestedUsers, setRequestedUsers]  = React.useState([])
+  React.useEffect( () => {
+    const getRequestedUsers = async () => {
+      const response = await axios.get(`${URL}party/${party.objectId}/requested`)
+      const users = response.data.users
+      const userIds = users.map((item) => {
+        return item.objectId
+      })
+      setRequestedUsers(userIds)
+    }
+    getRequestedUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
   return (
     <div className="party-panel">
       <MembersList party={party} visible={!inParty && (party.status==="Closed")} maxDisplay={-1} />
       <CategoriesDisplay party={party} />
-      <PanelButton party={party} inParty={inParty}/>
+      <PanelButton party={party} inParty={inParty} requestedUsers={requestedUsers}/>
     </div>
   )
 }
 
-function PanelButton({party, inParty}) {
+function PanelButton({party, inParty, requestedUsers}) {
   const [buttonText, setButtonText] = React.useState("Loading...")
-  const [buttonDisabled, setButtonDisabled] = React.useState(false)
+  const [buttonDisabled, setButtonDisabled] = React.useState(true)
   const [onPress, setOnPress] = React.useState(() => {})
 
   const [error, setError] = React.useState("");
@@ -29,14 +43,11 @@ function PanelButton({party, inParty}) {
   React.useEffect(() => {
     const haveRequested = async () => {
       try {
-        const response = await axios.get(`${URL}party/${party.objectId}/requested`)
-        const users = response.data.users
-        const userIds = users.map((item) => {
-          return item.objectId
-        })
-        console.log('userIds: ', userIds);
+        if(requestedUsers.length == 0) {
+          return;
+        }
         const currentUser = await getCurrentUser();
-        if(userIds.includes(currentUser.id)) {
+        if(requestedUsers.includes(currentUser.id)) {
           setButtonDisabled(true)
           setButtonText("Request Sent")
         }
@@ -65,7 +76,7 @@ function PanelButton({party, inParty}) {
       haveRequested();
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [requestedUsers])
 
   const requestJoin = async () => {
     try {
