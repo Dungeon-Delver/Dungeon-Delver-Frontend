@@ -10,7 +10,7 @@ import { currentUser } from '../../recoil/atoms/atoms'
 
 export default function MyParties() {
   const URL = Constants().URL;
-  const [parties, setParties] = React.useState([]);
+  const [parties, setParties] = React.useState(null);
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const getCurrentUser = Constants().getCurrentUser;
@@ -23,7 +23,6 @@ export default function MyParties() {
         const res = await axios.get(`${URL}user/${user.id}/parties`)
         setParties(res.data.parties)
         setLoading(false)
-
       }
       catch (err) {
         console.log(err)
@@ -51,7 +50,7 @@ export default function MyParties() {
       </div>
     )
   }
-  if(parties.length === 0) {
+  if(parties===null) {
     return(<Loader />)
   }
 
