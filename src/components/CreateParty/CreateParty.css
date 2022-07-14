@@ -7,10 +7,6 @@
   cursor: pointer;
 }
 
-.button:active {
-
-}
-
 .button__text {
   font: bold 20px "Quicksand", san-serif;
   transition: all 0.2s;

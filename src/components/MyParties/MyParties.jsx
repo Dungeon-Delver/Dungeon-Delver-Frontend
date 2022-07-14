@@ -10,7 +10,7 @@ import { currentUser } from '../../recoil/atoms/atoms'
 
 export default function MyParties() {
   const URL = Constants().URL;
-  const [parties, setParties] = React.useState([]);
+  const [parties, setParties] = React.useState(null);
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const getCurrentUser = Constants().getCurrentUser;
@@ -23,7 +23,6 @@ export default function MyParties() {
         const res = await axios.get(`${URL}user/${user.id}/parties`)
         setParties(res.data.parties)
         setLoading(false)
-
       }
       catch (err) {
         console.log(err)
@@ -51,17 +50,17 @@ export default function MyParties() {
       </div>
     )
   }
-  if(parties.length === 0) {
+  if(parties===null) {
     return(<Loader />)
   }
 
   return (
     <div className="my-parties">
-      <Link to={`/create-party`}><button className="create-party-button">Create a Party</button></Link>
+      <Link to={`/create-party`}><button className="create-new-party-button">Create a Party</button></Link>
       <div className="parties">
-        {parties.map((item, i) => {
+        {parties.length>0 ? parties.map((item, i) => {
           return <PartyCard key={`${i}${item.objectId}`} party={item} role={item.dm.objectId===curUser.id ? "Dungeon Master" : "Player"}/>
-        })}
+        }) : <h2 className="no-parties">You are not currently in any parties. Find or create one to begin!</h2>}
       </div>
     </div>
   )
