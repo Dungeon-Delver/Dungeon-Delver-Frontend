@@ -9,6 +9,8 @@ export default function PartyCard({party, role}) {
   const [dm, setDm] = React.useState("")
   const [players, setPlayers] = React.useState([])
 
+  const [hovering, setHovering] = React.useState(false);
+
   React.useEffect(() => {
     //Use parse to find dm, players of party
     const getDM = async () => {
@@ -28,22 +30,25 @@ export default function PartyCard({party, role}) {
     getDM()
     getPlayers()
   })
+
   return (
     <div className="party-card">
       <div className="party-image">
         <img src={party.image} alt={party.name}/>
       </div>
       <div className="party-title">{party.name}</div>
-      <div className="party-role">{role}</div>
-      <ul className="party-members">
-        <li className="dm">{dm}</li>
+      <div className={"party-role " + role==="Player" ? "green" : "purple"}>{role}</div>
+      <ul className="party-members" onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}>
+        <li className="dm">👑 {dm}</li>
         {players.map((item, i) => {
-          return <li key={i} className="player">{item}</li>
+          if(!hovering && i <=2 )
+            return <li key={i} className="player">{item}</li>
+          else {return ""}
         })}
       </ul>
       <div className="enter-dungeon-button-container">
           <Link to={`/party/${party.objectId}`}>
-            <button className="enter-dungeon-button">Enter Dungeon</button>
+            <button className="enter-dungeon-button"><span>Enter Dungeon</span></button>
         </Link>
         </div>
       </div>
