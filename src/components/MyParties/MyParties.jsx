@@ -50,17 +50,16 @@ export default function MyParties() {
   if(parties===null) {
     return(<Loader />)
   }
-
   return (
     <div className="my-parties">
       <Link to={`/create-party`}><button className="create-new-party-button">Create a Party</button></Link>
         {parties!=null ? 
          <div className="parties">
           {parties.dmParties.slice(0).reverse().map((item, i) => {
-            return <PartyCard key={`${i}${item.objectId}`} party={item} role={"Dungeon Master"}/>
+            return <PartyCard key={i} party={item} role={"Dungeon Master"}/>
           })}
           {parties.playerParties.slice(0).reverse().map((item, i) => {
-            return <PartyCard key={`${i}${item.objectId}`} party={item} role={"Player"}/>
+            return <PartyCard key={i} party={item} role={"Player"}/>
           })}
         </div>
         : <h2 className="no-parties">You are not currently in any parties. Find or create one to begin!</h2>}
