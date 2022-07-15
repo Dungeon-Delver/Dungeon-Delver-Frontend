@@ -4,7 +4,7 @@ import MyParties from "../MyParties/MyParties"
 
 export default function Home() {
   return(
-    <div className="Home">
+    <div className="home">
       <MyParties />
     </div>
   )
