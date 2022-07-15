@@ -99,7 +99,6 @@ function PanelButton({party, inParty, requestedUsers}) {
       haveRequested();
     }
 
-    haveRequested();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requestedUsers])
 
