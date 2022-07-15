@@ -15,20 +15,16 @@ export default function PartyPanel({party, inParty}) {
   const [players, setPlayers] = React.useState([])
 
   React.useEffect( () => {
-    const getDM = async () => {
+    const getMembers = async () => {
       try {
-        const query = new Parse.Query("User");
-        const dungeonMaster = await query.get(party.dm.objectId);
-        const name = dungeonMaster.get("username");
-        setDm(name)
+        const response = await axios.get(`${URL}party/${party.objectId}/members`);
+        console.log('response: ', response);
+        setDm(response.data.result.dm)
+        setPlayers(response.data.result.players)
       }
       catch (err) {
         console.error(err)
       }
-    }
-
-    const getPlayers = async () => {
-      //Get players from relation
     }
 
     const getRequestedUsers = async () => {
@@ -36,8 +32,7 @@ export default function PartyPanel({party, inParty}) {
       const users = response.data.users
       setRequestedUsers(users)
     }
-    getDM()
-    getPlayers()
+    getMembers()
     getRequestedUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
