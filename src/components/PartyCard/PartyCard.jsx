@@ -1,44 +1,32 @@
 import * as React from 'react'
 import "./PartyCard.css"
-import Parse from "../../constants/parseInitialize"
 import { Link } from 'react-router-dom';
-import MembersList from '../MembersList/MembersList';
-
-
+import MembersList from '../PartyCardMembersList/PartyCardMembersList';
+import axios from 'axios';
+import Constants from '../../constants/appConstants';
 
 export default function PartyCard({party, role}) {
-  const [dm, setDm] = React.useState("")
-  const [players, setPlayers] = React.useState([])
-
+  const URL = Constants().URL
+  const [members, setMembers] = React.useState(null)
   React.useEffect(() => {
-    //Use parse to find dm, players of party
-    const getDM = async () => {
-      try {
-        const query = new Parse.Query("User");
-        const dungeonMaster = await query.get(party.dm.objectId);
-        const name = dungeonMaster.get("username");
-        setDm(name)
-      }
-      catch (err) {
-        console.error(err)
-      }
+    const setup = async () => {
+      const result = await axios.get(`${URL}party/${party.objectId}/members`)
+      const members = result.data.result
+      setMembers(members);
     }
-    const getPlayers = async () => {
-      //Get players from relation
-    }
-    getDM()
-    getPlayers()
-  })
-
-
+    setup()
+  }, [])
+  if(members === null) {
+    return null;
+  }
   return (
     <div className="party-card">
       <div className="party-image">
         <img src={party.image} alt={party.name}/>
       </div>
       <div className="party-title">{party.name}</div>
-      <div className={"party-role " + role==="Player" ? "green" : "purple"}>{role}</div>
-      <MembersList dm={dm} players={players} maxDisplay={2}/>
+      <div className={"party-role " + (role==="Player" ? "green" : "purple")}>{role}</div>
+      <MembersList dm={members.dm} players={members.players} visible={true}/>
       <div className="enter-dungeon-button-container">
           <Link to={`/party/${party.objectId}`}>
             <button className="enter-dungeon-button"><span>Enter Dungeon</span></button>

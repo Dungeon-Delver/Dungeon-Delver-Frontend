@@ -1,48 +1,20 @@
 import * as React from 'react'
 import "./PartyPanel.css"
-import MembersList from "../MembersList/MembersList"
+import MembersList from "../PartyPanelMembersList/PartyPanelMembersList"
 import RequestedUsers from "../RequestedUsers/RequestedUsers"
 import CategoriesDisplay from "../CategoriesDisplay/CategoriesDisplay.jsx"
 import axios from 'axios'
 import Constants from '../../constants/appConstants'
-import Parse from '../../constants/parseInitialize'
 
-export default function PartyPanel({party, inParty}) {
-  const URL = Constants().URL;
-  const [requestedUsers, setRequestedUsers]  = React.useState(null)
-
-  const [dm, setDm] = React.useState("")
-  const [players, setPlayers] = React.useState([])
-
-  React.useEffect( () => {
-    const getMembers = async () => {
-      try {
-        const response = await axios.get(`${URL}party/${party.objectId}/members`);
-        console.log('response: ', response);
-        setDm(response.data.result.dm)
-        setPlayers(response.data.result.players)
-      }
-      catch (err) {
-        console.error(err)
-      }
-    }
-
-    const getRequestedUsers = async () => {
-      const response = await axios.get(`${URL}party/${party.objectId}/requested`)
-      const users = response.data.users
-      setRequestedUsers(users)
-    }
-    getMembers()
-    getRequestedUsers();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+export default function PartyPanel({party, inParty, fetchData}) {
+  console.log('party: ', party);
 
   return (
     <div className="party-panel">
-      {party.status==="Public" || inParty==="player" || inParty==="dm" ? <MembersList dm={dm} players={players} visible={!inParty && (party.status==="Closed")} maxDisplay={-1} /> : ""}
-      {inParty==="dm" ? <RequestedUsers party={party} requestedUsers={requestedUsers}/> : ""}
+      <MembersList dm={party.members.dm} players={party.members.players} visible={inParty || (party.party.status!=="Closed")} maxDisplay={-1} />
+      {inParty==="dm" ? <RequestedUsers party={party} requestedUsers={party.requestedUsers}/> : ""}
       <CategoriesDisplay party={party} />
-      <PanelButton party={party} inParty={inParty} requestedUsers={requestedUsers}/>
+      <PanelButton party={party} inParty={inParty} requestedUsers={party.requestedUsers}/>
     </div>
   )
 }

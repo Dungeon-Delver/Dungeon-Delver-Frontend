@@ -1,0 +1,17 @@
+.member-picture {
+  height: 40px;
+  width: 40px;
+  border-radius: 15px;
+}
+
+.panel-party-members {
+  margin: 0px;
+  display: inline-block;
+  padding: 0px;
+}
+
+.panel-party-members li {
+  display: grid;
+  grid-template-rows: 3fr 1fr;
+  grid-template-columns: 1fr 1fr;
+}

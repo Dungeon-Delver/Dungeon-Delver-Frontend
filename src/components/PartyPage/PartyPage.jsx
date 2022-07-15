@@ -1,14 +1,14 @@
 import axios from 'axios';
 import * as React from 'react'
 import { useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
 import Constants from '../../constants/appConstants';
-import { currentUser } from '../../recoil/atoms/atoms';
 import Loader from '../Loader/Loader';
 import PartySidebar from "../PartySidebar/PartySidebar.jsx"
 import PartyChat from "../PartyChat/PartyChat"
 import PartyPanel from '../PartyPanel/PartyPanel';
 import "./PartyPage.css"
+import { currentUser } from '../../recoil/atoms/atoms';
+import { useRecoilValue } from 'recoil';
 
 
 
@@ -19,40 +19,53 @@ export default function PartyPage() {
   const [inParty, setInParty] = React.useState(false);
   const [error, setError] = React.useState("")
   const [loadingParty, setLoadingParty] = React.useState(true);
-  const URL = Constants().URL;
-  const getCurrentUser = Constants().getCurrentUser;
+  const URL = Constants().URL
   const user = useRecoilValue(currentUser)
 
   React.useEffect(() => {
-    const checkPermissions = async (result) => {
-      await getCurrentUser();
-      if(result.dm.objectId===user.id) {
-        setInParty("dm");
-      }//Also check if player
-      else {
-        setInParty(false);
-      }
-    }
-    const fetchData = async () => {
+
+    const setup = async () => {
       try {
-        const response = await axios.get(`${URL}party/${params.partyId}`);
-        const result = response.data.party
-        setParty(result);
-        checkPermissions(result);
+        await fetchData()
+        setLoadingParty(false)
       }
-      catch (e) {
-        console.log(e);
-        setParty(null);
-        setError(e)
+      catch (err) {
+        console.log(error)
       }
-      setLoadingParty(false);
+      
     }
-    setLoadingParty(true);
-    fetchData();
+    setup()
+    
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  
+  const checkPermissions = (members) => {
+    var inPartyVal = 0;
+    if(user.id === members.dm.objectId) {
+      inPartyVal = "dm"
+    }
+    members.players.forEach((item) => {
+      if(item.objectId === user.id) {
+        inPartyVal = "player"
+      }
+    })
+    setInParty(inPartyVal)
+  }
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(`${URL}party/${params.partyId}`);
+      const result = response.data.party
+      setParty(result)
+      checkPermissions(result.members)
+      return
+    }
+    catch (e) {
+      console.log(e);
+      setParty(null);
+      setError(e)
+    }
+  }
 
   if(loadingParty) {
     return(
@@ -60,15 +73,14 @@ export default function PartyPage() {
     )
   }
 
-  if(party==null) {
+  if(party===null) {
     return <h1>{error.response.data ? error.response.data.error.message : error.message}</h1>
   }
-
   return(
     <div className="party-page">
       <PartySidebar party={party} inParty={inParty} />
       <PartyChat party={party} inParty={inParty} />
-      <PartyPanel party={party} inParty={inParty} />
+      <PartyPanel party={party} inParty={inParty} fetchData={fetchData} />
     </div>
   )
 }

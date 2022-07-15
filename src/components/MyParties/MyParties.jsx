@@ -5,8 +5,6 @@ import './MyParties.css'
 import Constants from '../../constants/appConstants'
 import Loader from '../Loader/Loader'
 import PartyCard from "../PartyCard/PartyCard.jsx"
-import { useRecoilValue } from 'recoil'
-import { currentUser } from '../../recoil/atoms/atoms'
 
 export default function MyParties() {
   const URL = Constants().URL;
@@ -14,7 +12,6 @@ export default function MyParties() {
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
   const getCurrentUser = Constants().getCurrentUser;
-  const curUser = useRecoilValue(currentUser)
 
   React.useEffect( () => {
     const getParties = async () => {
@@ -57,11 +54,16 @@ export default function MyParties() {
   return (
     <div className="my-parties">
       <Link to={`/create-party`}><button className="create-new-party-button">Create a Party</button></Link>
-      <div className="parties">
-        {parties.length>0 ? parties.slice(0).reverse().map((item, i) => {
-          return <PartyCard key={`${i}${item.objectId}`} party={item} role={item.dm.objectId===curUser.id ? "Dungeon Master" : "Player"}/>
-        }) : <h2 className="no-parties">You are not currently in any parties. Find or create one to begin!</h2>}
-      </div>
+        {parties!=null ? 
+         <div className="parties">
+          {parties.dmParties.slice(0).reverse().map((item, i) => {
+            return <PartyCard key={`${i}${item.objectId}`} party={item} role={"Dungeon Master"}/>
+          })}
+          {parties.playerParties.slice(0).reverse().map((item, i) => {
+            return <PartyCard key={`${i}${item.objectId}`} party={item} role={"Player"}/>
+          })}
+        </div>
+        : <h2 className="no-parties">You are not currently in any parties. Find or create one to begin!</h2>}
     </div>
   )
 }

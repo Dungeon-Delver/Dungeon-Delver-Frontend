@@ -1,0 +1,9 @@
+.party-members {
+  margin: 0px;
+  display: inline-block;
+  padding: 0px;
+}
+
+.party-members:hover {
+  cursor: pointer;
+}
