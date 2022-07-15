@@ -7,12 +7,10 @@ import axios from 'axios'
 import Constants from '../../constants/appConstants'
 
 export default function PartyPanel({party, inParty, fetchData}) {
-  console.log('party: ', party);
-
   return (
     <div className="party-panel">
       <MembersList dm={party.members.dm} players={party.members.players} visible={inParty || (party.party.status!=="Closed")} maxDisplay={-1} />
-      {inParty==="dm" ? <RequestedUsers party={party} requestedUsers={party.requestedUsers}/> : ""}
+      {inParty==="dm" ? <RequestedUsers party={party} requestedUsers={party.requestedUsers} fetchData={fetchData}/> : ""}
       <CategoriesDisplay party={party} />
       <PanelButton party={party} inParty={inParty} requestedUsers={party.requestedUsers}/>
     </div>
@@ -55,7 +53,7 @@ function PanelButton({party, inParty, requestedUsers}) {
       }      
     }
 
-    if(!inParty && (party.status==="Closed"||party.full)) {
+    if(!inParty && (party.party.status==="Closed"||party.party.full)) {
       setButtonText("Party Closed")
       setButtonDisabled(true)
     }
@@ -77,7 +75,7 @@ function PanelButton({party, inParty, requestedUsers}) {
   const requestJoin = async () => {
     try {
       const currentUser = await getCurrentUser();
-      await axios.post(`${URL}user/${party.objectId}/join`, {userId: currentUser})
+      await axios.post(`${URL}user/${party.party.objectId}/join`, {userId: currentUser})
       setButtonDisabled(true)
       setButtonText("Request Sent")
     }

@@ -1,9 +1,9 @@
-.party-members {
+.party-card-members {
   margin: 0px;
   display: inline-block;
   padding: 0px;
 }
 
-.party-members:hover {
+.party-card-members:hover {
   cursor: pointer;
 }

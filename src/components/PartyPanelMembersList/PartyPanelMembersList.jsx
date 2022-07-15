@@ -8,7 +8,7 @@ export default function MembersList({players, dm}) {
   }
 
   return (
-    <ul className="party-members">
+    <ul className="panel-party-members">
         <li className="dm">
           <div className="dm-picture member-picture"><img src={dm.picture} alt={dm.name}/></div>
           <div className="dm-name member-name">👑 {dm.username}</div>

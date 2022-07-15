@@ -12,7 +12,7 @@ export default function MembersList({visible, players, dm}) {
   }
 
   return (
-    <ul className="party-members" onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}>
+    <ul className="party-card-members" onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}>
         <li className="dm">
           <div className="dm-name member-name">👑 {dm.username}</div>
         </li>
