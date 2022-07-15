@@ -2,6 +2,7 @@ import * as React from 'react'
 import "./PartyCard.css"
 import Parse from "../../constants/parseInitialize"
 import { Link } from 'react-router-dom';
+import MembersList from '../MembersList/MembersList';
 
 
 
@@ -29,6 +30,7 @@ export default function PartyCard({party, role}) {
     getPlayers()
   })
 
+
   return (
     <div className="party-card">
       <div className="party-image">
@@ -36,26 +38,12 @@ export default function PartyCard({party, role}) {
       </div>
       <div className="party-title">{party.name}</div>
       <div className={"party-role " + role==="Player" ? "green" : "purple"}>{role}</div>
-      <MembersList dm={dm} players={players}/>
+      <MembersList dm={dm} players={players} maxDisplay={2}/>
       <div className="enter-dungeon-button-container">
           <Link to={`/party/${party.objectId}`}>
             <button className="enter-dungeon-button"><span>Enter Dungeon</span></button>
         </Link>
         </div>
       </div>
-  )
-}
-
-function MembersList({dm, players}) {
-  const [hovering, setHovering] = React.useState(false);
-  return (
-    <ul className="party-members" onMouseEnter={() => setHovering(true)} onMouseLeave={() => setHovering(false)}>
-        <li className="dm">👑 {dm}</li>
-        {players.map((item, i) => {
-          if(!hovering && i <=2 )
-            return <li key={i} className="player">{item}</li>
-          else {return ""}
-        })}
-      </ul>
   )
 }

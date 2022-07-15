@@ -1,29 +1,51 @@
 import * as React from 'react'
 import "./PartyPanel.css"
 import MembersList from "../MembersList/MembersList"
+import RequestedUsers from "../RequestedUsers/RequestedUsers"
 import CategoriesDisplay from "../CategoriesDisplay/CategoriesDisplay.jsx"
 import axios from 'axios'
 import Constants from '../../constants/appConstants'
+import Parse from '../../constants/parseInitialize'
 
 export default function PartyPanel({party, inParty}) {
   const URL = Constants().URL;
-  const [requestedUsers, setRequestedUsers]  = React.useState([])
+  const [requestedUsers, setRequestedUsers]  = React.useState(null)
+
+  const [dm, setDm] = React.useState("")
+  const [players, setPlayers] = React.useState([])
+
   React.useEffect( () => {
+    const getDM = async () => {
+      try {
+        const query = new Parse.Query("User");
+        const dungeonMaster = await query.get(party.dm.objectId);
+        const name = dungeonMaster.get("username");
+        setDm(name)
+      }
+      catch (err) {
+        console.error(err)
+      }
+    }
+
+    const getPlayers = async () => {
+      //Get players from relation
+    }
+
     const getRequestedUsers = async () => {
       const response = await axios.get(`${URL}party/${party.objectId}/requested`)
       const users = response.data.users
-      const userIds = users.map((item) => {
-        return item.objectId
-      })
-      setRequestedUsers(userIds)
+      setRequestedUsers(users)
     }
+    getDM()
+    getPlayers()
     getRequestedUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
   return (
     <div className="party-panel">
-      <MembersList party={party} visible={!inParty && (party.status==="Closed")} maxDisplay={-1} />
+      {party.status==="Public" || inParty==="player" || inParty==="dm" ? <MembersList dm={dm} players={players} visible={!inParty && (party.status==="Closed")} maxDisplay={-1} /> : ""}
+      {inParty==="dm" ? <RequestedUsers party={party} requestedUsers={requestedUsers}/> : ""}
       <CategoriesDisplay party={party} />
       <PanelButton party={party} inParty={inParty} requestedUsers={requestedUsers}/>
     </div>
@@ -43,17 +65,21 @@ function PanelButton({party, inParty, requestedUsers}) {
   React.useEffect(() => {
     const haveRequested = async () => {
       try {
-        if(requestedUsers.length == 0) {
+        if(requestedUsers=== null) {
           return;
         }
+        const userIds = requestedUsers.map((item) => {
+          return item.objectId
+        })
         const currentUser = await getCurrentUser();
-        if(requestedUsers.includes(currentUser.id)) {
+        if(userIds.includes(currentUser.id)) {
           setButtonDisabled(true)
           setButtonText("Request Sent")
         }
         else {
           setButtonText("Request to Join")
           setOnPress(() => requestJoin)
+          setButtonDisabled(false)
         }
       }
       catch (err) {
@@ -68,13 +94,17 @@ function PanelButton({party, inParty, requestedUsers}) {
     }
     else if(inParty==="player") {
       setButtonText("Leave Party")
+      setButtonDisabled(false)
     }
     else if(inParty==="dm") {
       setButtonText("Delete Party")
+      setButtonDisabled(false)
     }
     else {
       haveRequested();
     }
+
+    haveRequested();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [requestedUsers])
 
@@ -82,6 +112,8 @@ function PanelButton({party, inParty, requestedUsers}) {
     try {
       const currentUser = await getCurrentUser();
       await axios.post(`${URL}user/${party.objectId}/join`, {userId: currentUser})
+      setButtonDisabled(true)
+      setButtonText("Request Sent")
     }
     catch (err) {
       setError(err);
