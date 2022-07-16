@@ -1,6 +1,6 @@
 .party-page {
   display: grid;
-  grid-template-columns: 2fr 5fr 2fr
+  grid-template-columns: 200px 1fr 200px
 }
 
 .party-list {
