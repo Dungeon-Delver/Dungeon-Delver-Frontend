@@ -78,7 +78,7 @@ export default function PartyPage() {
   }
   return(
     <div className="party-page">
-      <PartySidebar party={party} inParty={inParty} />
+      <PartySidebar party={party} />
       <PartyChat party={party} inParty={inParty} />
       <PartyPanel party={party} inParty={inParty} fetchData={fetchData} />
     </div>
