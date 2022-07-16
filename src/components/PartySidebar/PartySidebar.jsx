@@ -5,7 +5,7 @@ import Constants from '../../constants/appConstants'
 import Loader from '../Loader/Loader'
 import PartySidebarCard from "../PartySidebarCard/PartySidebarCard"
 
-export default function PartySidebar() {
+export default function PartySidebar({currentParty}) {
   const URL = Constants().URL;
   const [parties, setParties] = React.useState(null);
   const [error, setError] = React.useState("");
@@ -53,10 +53,10 @@ export default function PartySidebar() {
         {parties!=null ? 
          <div className="parties-list">
           {parties.dmParties.slice(0).reverse().map((item, i) => {
-            return <PartySidebarCard key={i} party={item} role={"Dungeon Master"}/>
+            return <PartySidebarCard key={i} currentParty={currentParty} party={item} role={"Dungeon Master"}/>
           })}
           {parties.playerParties.slice(0).reverse().map((item, i) => {
-            return <PartySidebarCard key={i} party={item} role={"Player"}/>
+            return <PartySidebarCard key={i} currentParty={currentParty} party={item} role={"Player"}/>
           })}
         </div>
         : <h2 className="no-parties">You are not currently in any parties. Find or create one to begin!</h2>}

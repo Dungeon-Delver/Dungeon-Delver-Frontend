@@ -37,7 +37,7 @@ export default function PartyPage() {
     setup()
     
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [params.partyId]);
 
   const checkPermissions = (members) => {
     var inPartyVal = 0;
@@ -78,7 +78,7 @@ export default function PartyPage() {
   }
   return(
     <div className="party-page">
-      <PartySidebar party={party} />
+      <PartySidebar currentParty={party} />
       <PartyChat party={party} inParty={inParty} />
       <PartyPanel party={party} inParty={inParty} fetchData={fetchData} />
     </div>
