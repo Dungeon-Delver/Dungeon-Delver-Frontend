@@ -30,7 +30,7 @@ export default function PartyPage() {
         setLoadingParty(false)
       }
       catch (err) {
-        console.log(error)
+        console.error(err)
       }
       
     }
@@ -61,7 +61,7 @@ export default function PartyPage() {
       return
     }
     catch (e) {
-      console.log(e);
+      console.error(e);
       setParty(null);
       setError(e)
     }

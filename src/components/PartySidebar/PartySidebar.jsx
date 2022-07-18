@@ -21,7 +21,7 @@ export default function PartySidebar({currentParty}) {
         setLoading(false)
       }
       catch (err) {
-        console.log(err)
+        console.error(err)
         setError(err);
         setLoading(false)
       }

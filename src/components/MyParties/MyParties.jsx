@@ -22,7 +22,7 @@ export default function MyParties() {
         setLoading(false)
       }
       catch (err) {
-        console.log(err)
+        console.error(err)
         setError(err);
         setLoading(false)
       }
@@ -54,14 +54,14 @@ export default function MyParties() {
     <div className="my-parties">
       <Link to={`/create-party`}><button className="create-new-party-button">Create a Party</button></Link>
         {parties!=null ? 
-         <div className="parties">
+         <ul className="parties">
           {parties.dmParties.slice(0).reverse().map((item, i) => {
             return <PartyCard key={i} party={item} role={"Dungeon Master"}/>
           })}
           {parties.playerParties.slice(0).reverse().map((item, i) => {
             return <PartyCard key={i} party={item} role={"Player"}/>
           })}
-        </div>
+        </ul>
         : <h2 className="no-parties">You are not currently in any parties. Find or create one to begin!</h2>}
     </div>
   )

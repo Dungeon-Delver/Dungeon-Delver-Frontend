@@ -49,7 +49,7 @@ function PanelButton({party, inParty, requestedUsers}) {
       }
       catch (err) {
         setError(err);
-        console.log(err);
+        console.error(err);
       }      
     }
 
@@ -81,7 +81,7 @@ function PanelButton({party, inParty, requestedUsers}) {
     }
     catch (err) {
       setError(err);
-      console.log(err)
+      console.error(err)
     }
   }
 

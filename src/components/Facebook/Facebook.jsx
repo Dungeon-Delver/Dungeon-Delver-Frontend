@@ -50,12 +50,11 @@ export default function FacebookOAuth() {
           .linkWith('facebook', {
             authData: {id: userId, access_token: userAccessToken},
           });
-          console.log(newUser.toJSON())
           // logIn returns the corresponding ParseUser object
           const user = await getCurrentUser();
           localStorage.setItem('user', JSON.stringify(user));
           if(!user.get("enabled")) {
-            console.log("disabled user")
+            console.error("disabled user")
             setLoggedIn("disabled")
           }
           else {
