@@ -1,8 +1,14 @@
+.party-panel-icon {
+  display: none;
+}
+
+
 @media screen and (max-width: 800px) {
   .party-panel div:not(:last-child), .party-panel ul{
     display: none;
   }
   .party-panel .party-panel-icon {
+    display: block;
     position: absolute;
     top: 2px;
     right: 0;
