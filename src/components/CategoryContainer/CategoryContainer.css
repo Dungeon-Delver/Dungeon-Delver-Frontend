@@ -42,13 +42,13 @@ ul.ks-cboxtags li label::before {
   font-weight: 900;
   font-size: 18px;
   padding: 2px 6px 2px 2px;
-  content: "☐";
+  content: "□";
   transition: transform .3s ease-in-out;
 }
 
 ul.ks-cboxtags li input[type="checkbox"]:checked + label::before {
   font-size: 18px;
-  content: "◾";
+  content: "■";
   transform: rotate(-360deg);
   transition: transform .3s ease-in-out;
 }

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as React from 'react'
+import {useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
 import Constants from '../../constants/appConstants';
 import Loader from '../Loader/Loader';
@@ -15,14 +15,14 @@ import { useRecoilValue } from 'recoil';
 export default function PartyPage() {
   const params = useParams();
 
-  const [party, setParty] = React.useState(0)
-  const [inParty, setInParty] = React.useState(false);
-  const [error, setError] = React.useState("")
-  const [loadingParty, setLoadingParty] = React.useState(true);
+  const [party, setParty] = useState(0)
+  const [inParty, setInParty] = useState(false);
+  const [error, setError] = useState("")
+  const [loadingParty, setLoadingParty] = useState(true);
   const URL = Constants().URL
   const user = useRecoilValue(currentUser)
 
-  React.useEffect(() => {
+  useEffect(() => {
 
     const setup = async () => {
       try {
@@ -78,7 +78,7 @@ export default function PartyPage() {
   }
   return(
     <div className="party-page">
-      <PartySidebar currentParty={party} />
+      <PartySidebar party={party} />
       <PartyChat party={party} inParty={inParty} />
       <PartyPanel party={party} inParty={inParty} fetchData={fetchData} />
     </div>

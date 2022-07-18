@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { currentUser } from '../../recoil/atoms/atoms';
 import constants from '../../constants/appConstants'
+import classNames from 'classnames';
 
 export default function CreateParty() {
   const [partyName, setPartyName] = React.useState("");
@@ -116,7 +117,7 @@ export default function CreateParty() {
           <CategoryContainer key={item.category} category={item} />
         ))}
       </div>
-      <button className={loadingParty ? "button button--loading" : "button"} onClick={(event) => handleSubmit(event)}>
+      <button className={classNames({"button": true, "button--loading": loadingParty})} onClick={(event) => handleSubmit(event)}>
         <div className="button__text">Create Dungeon</div>
       </button>
       <div className="missing-params">{missingParams}</div>

@@ -1,8 +1,8 @@
-import * as React from 'react'
+import {useState} from 'react'
 import "./PartyCardMembersList.css"
 
 export default function MembersList({visible, players, dm}) {
-  const [hovering, setHovering] = React.useState(false);
+  const [hovering, setHovering] = useState(false);
   if(!visible) {
     return;
   }

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import {useState, useEffect}from 'react'
 import "./PartyPanel.css"
 import MembersList from "../PartyPanelMembersList/PartyPanelMembersList"
 import RequestedUsers from "../RequestedUsers/RequestedUsers"
@@ -18,16 +18,16 @@ export default function PartyPanel({party, inParty, fetchData}) {
 }
 
 function PanelButton({party, inParty, requestedUsers}) {
-  const [buttonText, setButtonText] = React.useState("Loading...")
-  const [buttonDisabled, setButtonDisabled] = React.useState(true)
-  const [onPress, setOnPress] = React.useState(() => {})
+  const [buttonText, setButtonText] = useState("Loading...")
+  const [buttonDisabled, setButtonDisabled] = useState(true)
+  const [onPress, setOnPress] = useState(() => {})
 
-  const [error, setError] = React.useState("");
+  const [error, setError] = useState("");
 
   const URL = Constants().URL;
   const getCurrentUser = Constants().getCurrentUser;
 
-  React.useEffect(() => {
+  useEffect(() => {
     const haveRequested = async () => {
       try {
         if(requestedUsers=== null) {

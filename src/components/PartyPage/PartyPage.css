@@ -3,7 +3,7 @@
   grid-template-columns: 200px 1fr 200px
 }
 
-.party-list {
+.party-sidebar {
   grid-column: 1 / span 1;
 }
 
