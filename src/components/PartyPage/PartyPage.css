@@ -1,9 +1,9 @@
 .party-page {
   display: grid;
-  grid-template-columns: 2fr 5fr 2fr
+  grid-template-columns: 200px 1fr 200px
 }
 
-.party-list {
+.party-sidebar {
   grid-column: 1 / span 1;
 }
 
@@ -13,4 +13,10 @@
 
 .party-panel {
   grid-column: 3 / span 1;
+}
+
+@media screen and (max-width: 600px) {
+  .party-page {
+    display: block
+  }
 }

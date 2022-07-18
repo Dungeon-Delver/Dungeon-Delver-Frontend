@@ -3,6 +3,7 @@ import {Link} from "react-router-dom"
 
 import "./Navbar.css"
 import Logo from "../Logo/Logo"
+import classNames from 'classnames';
 
 
 export default function Navbar({handleLogout}) {
@@ -13,7 +14,7 @@ export default function Navbar({handleLogout}) {
   }
 
   return (
-    <div className={openNavbar ? "navbar responsive" : "navbar"}>
+    <div className={classNames({"navbar": true, "responsive": openNavbar})}>
       <Logo id="logo" />
       <div className="nav-button-container"><Link to={`/create-party`}><button className="create-party-button nav-button">Create Party</button></Link></div>
       <div className="nav-button-container"><Link to={`/find-parties`}><button className="find-parties-button nav-button">Find Parties</button></Link></div>

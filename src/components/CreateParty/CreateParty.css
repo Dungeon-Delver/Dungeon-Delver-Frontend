@@ -54,7 +54,7 @@
   font-family: inherit;
   width: 100%;
   border: 0;
-  border-bottom: 2px solid #9b9b9b;
+  border-bottom: 1px solid #9b9b9b;
   outline: 0;
   font-size: 1.3rem;
   color: #4933ab;
@@ -86,7 +86,7 @@
 .form__field:focus {
   padding-bottom: 6px;  
   font-weight: 700;
-  border-width: 3px;
+  border-width: 1px;
   border-image-source: linear-gradient(to right, #7f00f5, black);
   border-image-slice: 1;
 }

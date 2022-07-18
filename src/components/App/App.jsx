@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Constants from '../../constants/appConstants';
 
@@ -25,7 +25,7 @@ function App() {
 
   const getCurrentUser = Constants().getCurrentUser
 
-  React.useEffect( () => {
+  useEffect( () => {
     const login = async (user) => {
     try {
       await Parse.User.become(user.sessionToken)
@@ -79,7 +79,7 @@ function App() {
       }
     }
     catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 

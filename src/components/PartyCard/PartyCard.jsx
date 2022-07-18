@@ -5,7 +5,7 @@ import MembersList from '../PartyCardMembersList/PartyCardMembersList';
 
 export default function PartyCard({party, role}) {
   return (
-    <div className="party-card">
+    <li className="party-card">
       <div className="party-image">
         <img src={party.party.image} alt={party.party.name}/>
       </div>
@@ -17,6 +17,6 @@ export default function PartyCard({party, role}) {
             <button className="enter-dungeon-button"><span>Enter Dungeon</span></button>
         </Link>
         </div>
-      </div>
+      </li>
   )
 }

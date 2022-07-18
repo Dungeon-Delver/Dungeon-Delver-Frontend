@@ -1,18 +1,18 @@
 import axios from 'axios'
-import * as React from 'react'
+import {useState, useEffect} from 'react'
 import './PartySidebar.css'
 import Constants from '../../constants/appConstants'
 import Loader from '../Loader/Loader'
 import PartySidebarCard from "../PartySidebarCard/PartySidebarCard"
 
-export default function PartySidebar({currentParty}) {
+export default function PartySidebar({party}) {
   const URL = Constants().URL;
-  const [parties, setParties] = React.useState(null);
-  const [error, setError] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
+  const [parties, setParties] = useState(null);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const getCurrentUser = Constants().getCurrentUser;
 
-  React.useEffect( () => {
+  useEffect( () => {
     const getParties = async () => {
       try{
         const user = await getCurrentUser();
@@ -21,7 +21,7 @@ export default function PartySidebar({currentParty}) {
         setLoading(false)
       }
       catch (err) {
-        console.log(err)
+        console.error(err)
         setError(err);
         setLoading(false)
       }
@@ -49,16 +49,16 @@ export default function PartySidebar({currentParty}) {
     return(<Loader />)
   }
   return (
-    <div className="party-list">
+    <div className="party-sidebar">
         {parties!=null ? 
-         <div className="parties-list">
+         <ul className="parties-list">
           {parties.dmParties.slice(0).reverse().map((item, i) => {
-            return <PartySidebarCard key={i} currentParty={currentParty} party={item} role={"Dungeon Master"}/>
+            return <PartySidebarCard key={i} currentParty={party} party={item} role={"Dungeon Master"}/>
           })}
           {parties.playerParties.slice(0).reverse().map((item, i) => {
-            return <PartySidebarCard key={i} currentParty={currentParty} party={item} role={"Player"}/>
+            return <PartySidebarCard key={i} currentParty={party} party={item} role={"Player"}/>
           })}
-        </div>
+        </ul>
         : <h2 className="no-parties">You are not currently in any parties. Find or create one to begin!</h2>}
     </div>
   )
