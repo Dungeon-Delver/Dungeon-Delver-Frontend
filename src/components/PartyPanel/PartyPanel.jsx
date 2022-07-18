@@ -9,6 +9,7 @@ import { useRecoilValue } from 'recoil'
 import { navbarOpen } from '../../recoil/atoms/atoms'
 import classNames from 'classnames'
 
+
 export default function PartyPanel({party, inParty, fetchData}) {
   const openNavbar = useRecoilValue(navbarOpen);
   const [panelOpen, setOpenPanel] = useState(false);
@@ -16,6 +17,8 @@ export default function PartyPanel({party, inParty, fetchData}) {
   const togglePanel = () => {
     setOpenPanel(!panelOpen)
   }
+
+  
 
   return (
     <div className={classNames({"party-panel": true, "responsive": panelOpen, "navbar-is-open": openNavbar})}>

@@ -5,6 +5,7 @@ import Logo from "../Logo/Logo"
 import classNames from 'classnames';
 import { useRecoilState } from 'recoil';
 import { navbarOpen } from '../../recoil/atoms/atoms';
+import { getWidth } from "../../constants/ScreenDimensions";
 
 
 export default function Navbar({handleLogout}) {
@@ -13,6 +14,15 @@ export default function Navbar({handleLogout}) {
   const toggleNavbar = () => {
     setOpenNavbar(!openNavbar)
   }
+
+  const onResize = () => {
+    if(getWidth() >600 && openNavbar) {
+      setOpenNavbar(false);
+    }
+  }
+
+  window.addEventListener("resize", onResize);
+
 
   return (
     <div className={classNames({"navbar": true, "responsive": openNavbar})}>
