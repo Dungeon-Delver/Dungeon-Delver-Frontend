@@ -1,5 +1,4 @@
 .member-picture {
-  height: 100%;
   width: auto;
 }
 
@@ -7,15 +6,7 @@
   margin: 0px;
   display: inline-block;
   padding: 10px;
-  grid-template-rows: 3fr 1fr;
-  grid-template-columns: 1fr 1fr;
-  margin-bottom: 20px;
   background-color: #d5d5d5;
-}
-
-.panel-party-members .player {
-  display: grid;
-  grid-template-columns: 2fr 3fr;
 }
 
 .panel-party-members li {
@@ -24,10 +15,37 @@
   align-items: center;
   justify-items: left;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 7fr;
+  grid-template-rows: 1fr 25px;
 }
 
 .member-name {
   padding-left: 5px;
   text-align: left;
+}
+
+.user-image-container {
+  height: 100%;
+  width: auto;
+}
+
+.requested-user-name {
+  padding-left: 5px;
+  text-align: left;
+  grid-column: 2 / span 2;
+}
+
+.accept-user-button {
+  grid-column: 1 / span 2;
+  width: 100%;
+  align-self: stretch;
+  justify-self: stretch;
+
+}
+
+.reject-user-button {
+  grid-column: 3 / span 1;
+  width: 100%;
+  align-self: stretch;
+  justify-self: stretch;
 }

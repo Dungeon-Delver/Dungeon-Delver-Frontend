@@ -58,7 +58,7 @@ export default function PartySidebar({party}) {
     return(<Loader />)
   }
   return (
-    <div className={classNames({"party-sidebar": true, "navbar-is-open": openNavbar})}>
+    <div className={classNames({"party-sidebar": true, "responsive": openSidebar, "navbar-is-open": openNavbar,})}>
         {parties!=null ? 
          <ul className="parties-list">
           {parties.dmParties.slice(0).reverse().map((item, i) => {

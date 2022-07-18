@@ -1,5 +1,10 @@
+.party-panel {
+  min-height: 100vh;
+}
+
 .party-panel-icon {
   display: none;
+  cursor: pointer;
 }
 
 
@@ -12,7 +17,7 @@
     position: absolute;
     top: 2px;
     right: 0;
-    z-index: 2;
+    z-index: 5;
   }
 
   .party-panel.navbar-is-open .party-panel-icon {
@@ -24,12 +29,12 @@
   .party-panel {
     position: absolute;
     max-width: 250px;
-    top: 78px;
-    right: 2px;
+    top: 76px;
+    right: 0px;
   }
 
   .party-panel.navbar-is-open {
-    top: 188px;
+    top: 186px;
   }
   .party-panel.responsive div:not(:last-child), .party-panel.responsive ul{
     display: block;
