@@ -1,0 +1,16 @@
+.party-page {
+  display: grid;
+  grid-template-columns: 2fr 5fr 2fr
+}
+
+.party-list {
+  grid-column: 1 / span 1;
+}
+
+.party-chat {
+  grid-column: 2 / span 1;
+}
+
+.party-panel {
+  grid-column: 3 / span 1;
+}

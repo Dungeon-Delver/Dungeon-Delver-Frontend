@@ -1,0 +1,35 @@
+.party-sidebar-card {
+  background-color: #e9e8e9;
+  border-radius: 20px;
+  margin-left: 10px;
+  margin-top: 10px;
+  z-index: 3
+}
+
+.party-sidebar-card.active {
+  border: 1px solid #9966cc
+}
+
+.party-sidebar-card a {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  justify-items: left;
+  align-items: center;
+}
+
+.party-sidebar-card .party-image {
+  height: 100%;
+  width: auto;
+}
+
+.party-sidebar-card .party-title {
+  padding-left: 5px;
+  text-align: left;
+}
+
+.party-sidebar-card .party-image img {
+  overflow: hidden;
+}
+
+
+

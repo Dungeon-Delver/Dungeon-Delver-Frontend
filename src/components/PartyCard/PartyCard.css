@@ -5,22 +5,23 @@
     grid-gap: 10px;
     align-items: center;
     background-color: #e9e8e9;
+    text-align: center;
 }
 
 .party-card div {
   padding: 3px;
 }
 
-.party-members {
+.party-card .party-members {
   max-height: 100px;
 }
 
-.party-image {
+.party-card .party-image {
   grid-column: 1 / span 1;
   grid-row: 1 / span 2;
 }
 
-.party-title {
+.party-card .party-title {
   grid-column: 2 / span 1;
   grid-row: 1 / span 1;
   font-weight: bold;
@@ -28,7 +29,7 @@
   font-family: "Palatino"
 }
 
-.party-role {
+.party-card .party-role {
   grid-column: 2 / span 1;
   grid-row: 2 / span 1;
 }
