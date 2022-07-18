@@ -1,0 +1,27 @@
+@media screen and (max-width: 800px) {
+  .party-panel div:not(:last-child), .party-panel ul{
+    display: none;
+  }
+  .party-panel .party-panel-icon {
+    position: absolute;
+    top: 78px;
+    right: 0;
+    z-index: 2;
+  }
+
+  .party-panel.navbar-is-open .party-panel-icon {
+    top: 188px;
+    right: 2px;
+  }
+
+  .party-panel {
+    display: absolute;
+    width: 250px;
+    top: 78px;
+    right: 2px;
+
+  }
+  .party-panel.responsive div:not(:last-child), .party-panel.responsive ul{
+    display: block;
+  }
+}

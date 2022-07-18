@@ -4,6 +4,9 @@ import './PartySidebar.css'
 import Constants from '../../constants/appConstants'
 import Loader from '../Loader/Loader'
 import PartySidebarCard from "../PartySidebarCard/PartySidebarCard"
+import classNames from 'classnames'
+import { useRecoilValue } from 'recoil'
+import { navbarOpen } from '../../recoil/atoms/atoms'
 
 export default function PartySidebar({party}) {
   const URL = Constants().URL;
@@ -11,6 +14,12 @@ export default function PartySidebar({party}) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const getCurrentUser = Constants().getCurrentUser;
+  const openNavbar = useRecoilValue(navbarOpen)
+
+  const [openSidebar, setOpenSidebar] = useState(false);
+  const toggleSidebar = () => {
+    setOpenSidebar(!openSidebar)
+  }
 
   useEffect( () => {
     const getParties = async () => {
@@ -49,7 +58,7 @@ export default function PartySidebar({party}) {
     return(<Loader />)
   }
   return (
-    <div className="party-sidebar">
+    <div className={classNames({"party-sidebar": true, "navbar-is-open": openNavbar})}>
         {parties!=null ? 
          <ul className="parties-list">
           {parties.dmParties.slice(0).reverse().map((item, i) => {
@@ -59,7 +68,8 @@ export default function PartySidebar({party}) {
             return <PartySidebarCard key={i} currentParty={party} party={item} role={"Player"}/>
           })}
         </ul>
-        : <h2 className="no-parties">You are not currently in any parties. Find or create one to begin!</h2>}
+        : ""}
+        <div className="sidebar-icon" onClick={toggleSidebar}>☰</div>
     </div>
   )
 }

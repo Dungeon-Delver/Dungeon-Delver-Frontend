@@ -1,14 +1,15 @@
-import * as React from 'react'
 import {Link} from "react-router-dom"
 
 import "./Navbar.css"
 import Logo from "../Logo/Logo"
 import classNames from 'classnames';
+import { useRecoilState } from 'recoil';
+import { navbarOpen } from '../../recoil/atoms/atoms';
 
 
 export default function Navbar({handleLogout}) {
 
-  const [openNavbar, setOpenNavbar] = React.useState(false);
+  const [openNavbar, setOpenNavbar] = useRecoilState(navbarOpen);
   const toggleNavbar = () => {
     setOpenNavbar(!openNavbar)
   }

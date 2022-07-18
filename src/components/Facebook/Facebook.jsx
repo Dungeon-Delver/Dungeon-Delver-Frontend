@@ -46,7 +46,7 @@ export default function FacebookOAuth() {
         userToLogin.set('email', userEmail);
         userToLogin.set('picture', response.picture.data.url);        
         try {
-         const newUser = await userToLogin
+         await userToLogin
           .linkWith('facebook', {
             authData: {id: userId, access_token: userAccessToken},
           });

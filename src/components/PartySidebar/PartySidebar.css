@@ -1,3 +1,8 @@
 ul {
   padding: 0;
 }
+
+.sidebar-icon {
+  display: none;
+}
+

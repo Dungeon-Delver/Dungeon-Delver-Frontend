@@ -1,7 +1,6 @@
 .member-picture {
-  height: 30px;
-  width: 30px;
-  border-radius: 15px;
+  height: 100%;
+  width: auto;
 }
 
 .panel-party-members {
@@ -16,12 +15,19 @@
 
 .panel-party-members .player {
   display: grid;
-  grid-template-rows: 3fr 1fr;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 3fr;
 }
 
 .panel-party-members li {
   margin-top: 10px;
+  margin-right: 10px;
+  align-items: center;
+  justify-items: left;
   display: grid;
   grid-template-columns: 1fr 1fr;
+}
+
+.member-name {
+  padding-left: 5px;
+  text-align: left;
 }

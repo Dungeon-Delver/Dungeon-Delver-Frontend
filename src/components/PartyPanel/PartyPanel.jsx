@@ -5,14 +5,25 @@ import RequestedUsers from "../RequestedUsers/RequestedUsers"
 import CategoriesDisplay from "../CategoriesDisplay/CategoriesDisplay.jsx"
 import axios from 'axios'
 import Constants from '../../constants/appConstants'
+import { useRecoilValue } from 'recoil'
+import { navbarOpen } from '../../recoil/atoms/atoms'
+import classNames from 'classnames'
 
 export default function PartyPanel({party, inParty, fetchData}) {
+  const openNavbar = useRecoilValue(navbarOpen);
+  const [panelOpen, setOpenPanel] = useState(false);
+  
+  const togglePanel = () => {
+    setOpenPanel(!panelOpen)
+  }
+
   return (
-    <div className="party-panel">
+    <div className={classNames({"party-panel": true, "responsive": panelOpen, "navbar-is-open": openNavbar})}>
       <MembersList dm={party.members.dm} players={party.members.players} visible={inParty || (party.party.status!=="Closed")} maxDisplay={-1} />
       {inParty==="dm" ? <RequestedUsers party={party} requestedUsers={party.requestedUsers} fetchData={fetchData}/> : ""}
       <CategoriesDisplay party={party} />
       <PanelButton party={party} inParty={inParty} requestedUsers={party.requestedUsers}/>
+      <div className="party-panel-icon" onClick={togglePanel}>👤</div>
     </div>
   )
 }

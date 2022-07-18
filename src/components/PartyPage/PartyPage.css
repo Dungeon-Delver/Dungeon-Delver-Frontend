@@ -1,6 +1,6 @@
 .party-page {
   display: grid;
-  grid-template-columns: 200px 1fr 200px
+  grid-template-columns: 200px 1fr 250px
 }
 
 .party-sidebar {
@@ -15,8 +15,15 @@
   grid-column: 3 / span 1;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   .party-page {
-    display: block
+    display: grid;
+    grid-template-columns: 200px 1fr;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .party-page {
+    display: block;
   }
 }
