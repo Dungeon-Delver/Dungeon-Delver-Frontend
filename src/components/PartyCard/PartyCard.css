@@ -15,11 +15,6 @@
   max-height: 100px;
 }
 
-ul {
-  margin: 0px;
-  padding: 0px;
-}
-
 .party-image {
   grid-column: 1 / span 1;
   grid-row: 1 / span 2;
@@ -46,7 +41,7 @@ ul {
   background-color: rgba(95, 77, 172, 0.7);
 }
 
-.party-members {
+.party-card-members {
   grid-column: 3 / span 1;
   grid-row: 1 / span 2;
   background-color: #d5d5d5

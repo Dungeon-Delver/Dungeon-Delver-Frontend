@@ -46,10 +46,11 @@ export default function FacebookOAuth() {
         userToLogin.set('email', userEmail);
         userToLogin.set('picture', response.picture.data.url);        
         try {
-         await userToLogin
+         const newUser = await userToLogin
           .linkWith('facebook', {
             authData: {id: userId, access_token: userAccessToken},
           });
+          console.log(newUser.toJSON())
           // logIn returns the corresponding ParseUser object
           const user = await getCurrentUser();
           localStorage.setItem('user', JSON.stringify(user));

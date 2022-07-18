@@ -1,0 +1,27 @@
+.member-picture {
+  height: 30px;
+  width: 30px;
+  border-radius: 15px;
+}
+
+.panel-party-members {
+  margin: 0px;
+  display: inline-block;
+  padding: 10px;
+  grid-template-rows: 3fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 20px;
+  background-color: #d5d5d5;
+}
+
+.panel-party-members .player {
+  display: grid;
+  grid-template-rows: 3fr 1fr;
+  grid-template-columns: 1fr 1fr;
+}
+
+.panel-party-members li {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}

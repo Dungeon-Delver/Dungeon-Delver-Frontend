@@ -1,0 +1,7 @@
+.user-image-container {
+  max-width: 50px;
+}
+
+.requested-user-card {
+  display: flex;
+}
