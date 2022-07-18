@@ -15,8 +15,8 @@ import PartyPage from "../PartyPage/PartyPage"
 import Logo from "../../images/Logo.png"
 import Parse from "../../constants/parseInitialize"
 
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
-import { isLoggingInState, loggedInState, screenWidth } from '../../recoil/atoms/atoms';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { isLoggingInState, loggedInState } from '../../recoil/atoms/atoms';
 import ScrollToTop from '../../constants/scrollToTop';
 
 function App() {
