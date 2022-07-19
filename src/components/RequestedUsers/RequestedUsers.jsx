@@ -8,11 +8,12 @@ export default function RequestedUsers({requestedUsers, party, fetchData}) {
     return
   }
   return (
-    <li className="requested-users">
+    <ul className="requested-users">
+      <h3 className="requested-users-title">Join Requests</h3>
       {requestedUsers.map((item, i) => {
         return <RequestedUserCard party={party.party} fetchData={fetchData} key={i} user={item}/>
       })}
-    </li>
+    </ul>
   )
 }
 
@@ -37,11 +38,11 @@ function RequestedUserCard({user, party, fetchData}) {
     fetchData();
   }
   return (
-    <ul className="requested-user-card">
+    <li className="requested-user-card">
       <div className="user-image-container"><img className="user-image" src={user.picture} alt={user.username} /></div>
       <div className="requested-user-name">{user.username}</div>
       <button className="accept-user-button" disabled={buttonsDisabled} onClick={acceptUser}>{acceptButtonText}</button>
       <button className="reject-user-button" disabled={buttonsDisabled} onClick={rejectUser}>{rejectButtonText}</button>
-    </ul>
+    </li>
   )
 }

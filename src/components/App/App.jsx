@@ -17,6 +17,7 @@ import Parse from "../../constants/parseInitialize"
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { isLoggingInState, loggedInState } from '../../recoil/atoms/atoms';
+import ScrollToTop from '../sharedComponents/scrollToTop';
 
 function App() {
 
@@ -121,14 +122,16 @@ function App() {
     return <div className="App">
       <BrowserRouter>
           <Navbar handleLogout={handleLogout}/>
-          <Routes>
-            <Route path ="/" element = {<Home />} />
-            <Route path="/create-party" element={<CreateParty />}/>
-            <Route path="/find-parties" element={<FindParties />}/>
-            <Route path="/parties" element={<MyParties />} />
-            <Route path="/party/:partyId" element={<PartyPage />}/>
-            <Route path = "*" element={<NotFound />} />
-          </Routes>
+          <ScrollToTop>
+            <Routes>
+              <Route path ="/" element = {<Home />} />
+              <Route path="/create-party" element={<CreateParty />}/>
+              <Route path="/find-parties" element={<FindParties />}/>
+              <Route path="/parties" element={<MyParties />} />
+              <Route path="/party/:partyId" element={<PartyPage />}/>
+              <Route path = "*" element={<NotFound />} />
+            </Routes>
+          </ScrollToTop>
       </BrowserRouter>
     </div>;
   }

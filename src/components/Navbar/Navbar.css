@@ -40,7 +40,8 @@
 }
 
 .icon {
-  display: none
+  display: none;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 600px) {

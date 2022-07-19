@@ -14,3 +14,8 @@ export const currentUser = atom({
   key: 'currentUser',
   default: null
 })
+
+export const navbarOpen = atom({
+  key: "navbarOpen",
+  default: false
+})

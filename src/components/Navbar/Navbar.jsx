@@ -1,17 +1,37 @@
-import * as React from 'react'
 import {Link} from "react-router-dom"
 
 import "./Navbar.css"
 import Logo from "../Logo/Logo"
 import classNames from 'classnames';
+import { useRecoilState } from 'recoil';
+import { navbarOpen } from '../../recoil/atoms/atoms';
+import { getWidth } from "../../constants/ScreenDimensions";
+import { useEffect } from "react";
 
 
 export default function Navbar({handleLogout}) {
 
-  const [openNavbar, setOpenNavbar] = React.useState(false);
+  const [openNavbar, setOpenNavbar] = useRecoilState(navbarOpen);
   const toggleNavbar = () => {
     setOpenNavbar(!openNavbar)
   }
+
+  useEffect(() => {
+    window.addEventListener("resize", onResize);
+    return function cleanupListener() {
+      window.removeEventListener('resize', onResize)
+    }
+  })
+
+  const onResize = () => {
+    if(getWidth() >600 && openNavbar) {
+      setOpenNavbar(false);
+    }
+  }
+
+  
+
+
 
   return (
     <div className={classNames({"navbar": true, "responsive": openNavbar})}>
