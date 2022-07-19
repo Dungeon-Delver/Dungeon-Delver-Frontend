@@ -22,7 +22,7 @@ export default function PartyPanel({party, inParty, fetchData}) {
 
   return (
     <div className={classNames({"party-panel": true, "responsive": panelOpen, "navbar-is-open": openNavbar})}>
-      <MembersList dm={party.members.dm} players={party.members.players} visible={inParty || (party.party.status!=="Closed")} maxDisplay={-1} />
+      <MembersList dm={party.members.dm} players={party.members.players} inParty={inParty} visible={inParty || (party.party.status!=="Closed")} maxDisplay={-1} />
       {inParty==="dm" ? <RequestedUsers party={party} requestedUsers={party.requestedUsers} fetchData={fetchData}/> : ""}
       <CategoriesDisplay party={party} />
       <PanelButton party={party} inParty={inParty} requestedUsers={party.requestedUsers}/>
