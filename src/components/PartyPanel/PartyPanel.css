@@ -41,7 +41,7 @@
   }
 
   .party-panel.party-panel.responsive {
-    padding-left: 10px;
+    padding: 10px;
   }
 
   .party-panel.responsive div:not(:last-child), .party-panel.responsive ul{
@@ -54,6 +54,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: auto;
   width: 200px;
   height: 50px;
   background: #fff;
