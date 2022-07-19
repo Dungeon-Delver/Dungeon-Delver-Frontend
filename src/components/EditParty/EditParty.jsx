@@ -5,7 +5,7 @@ import Constants from "../../constants/appConstants";
 import CategoryContainer from "../CategoryContainer/CategoryContainer";
 import "./EditParty.css"
 
-export default function EditParty({party, activeSelectors}) {
+export default function EditParty({party, activeSelectors, fetchData}) {
 
   const getCurrentUser = Constants().getCurrentUser
 
@@ -21,7 +21,7 @@ export default function EditParty({party, activeSelectors}) {
   const [error, setError] = useState("");
 
   const handleSaveParty = async() => {
-    const user = getCurrentUser();
+    const user = await getCurrentUser();
     const JSON_OBJECT = {
       name: partyName,
       dm: user.id,
@@ -35,6 +35,9 @@ export default function EditParty({party, activeSelectors}) {
     }
     try {
       await axios.post(`${URL}party/${party.party.objectId}/modify`, JSON_OBJECT);
+      setLoadingParty(false)
+      fetchData();
+      setError("")
     }
     catch (error){
       console.error(error);
@@ -113,8 +116,8 @@ export default function EditParty({party, activeSelectors}) {
       </button>
       <div className="missing-params">{missingParams}</div>
       {error!=="" ?<div className="party-failed"> 
-        <h1 className="party-failed-message">{error.response.data ? error.response.data.error.message : error.message}</h1>
-        <h2 className="party-failed-status-text">{error.statusText}</h2>
+        <h3 className="party-failed-message">{error.response.data ? error.response.data.error.message : error.message}</h3>
+        <h4 className="party-failed-status-text">{error.statusText}</h4>
       </div> :""}
     </form>
   )
