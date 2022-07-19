@@ -17,7 +17,7 @@ import Parse from "../../constants/parseInitialize"
 
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { isLoggingInState, loggedInState } from '../../recoil/atoms/atoms';
-import ScrollToTop from '../../constants/scrollToTop';
+import ScrollToTop from '../sharedComponents/scrollToTop';
 
 function App() {
 
