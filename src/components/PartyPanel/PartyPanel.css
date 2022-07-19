@@ -1,7 +1,7 @@
 .party-panel {
   min-height: 100vh;
   background-color: #d5d5d5;
-  padding-left: 10px;
+  padding: 10px;
 }
 
 .party-panel-icon {

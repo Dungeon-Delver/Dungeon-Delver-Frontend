@@ -6,10 +6,10 @@
   margin: 0px;
   display: inline-block;
   padding: 10px;
-  background-color: #d5d5d5;
 }
 
 .panel-party-members li {
+  background-color: #bcbcbc;
   margin-top: 10px;
   margin-right: 10px;
   align-items: center;
@@ -18,7 +18,7 @@
   grid-template-columns: 1fr 7fr;
 }
 
-.panel-party-members-dm li {
+.panel-party-members-dm .player {
   grid-template-rows: 1fr 25px;
 }
 
@@ -30,27 +30,6 @@
 .user-image-container {
   height: 100%;
   width: auto;
-}
-
-.requested-user-name {
-  padding-left: 5px;
-  text-align: left;
-  grid-column: 2 / span 2;
-}
-
-.accept-user-button {
-  grid-column: 1 / span 2;
-  width: 100%;
-  align-self: stretch;
-  justify-self: stretch;
-
-}
-
-.reject-user-button {
-  grid-column: 3 / span 1;
-  width: 100%;
-  align-self: stretch;
-  justify-self: stretch;
 }
 
 .panel-party-members-dm .player button {

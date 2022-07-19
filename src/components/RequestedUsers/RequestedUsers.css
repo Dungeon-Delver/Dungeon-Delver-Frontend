@@ -1,5 +1,6 @@
 .requested-users {
-  background-color: #d5d5d5;
+  padding-bottom: 10px;
+  padding-top: 10px;
 }
 
 .user-image-container {
@@ -13,6 +14,7 @@
   justify-items: left;
   align-items: center;
   margin-top: 10px;
+  background-color: #bcbcbc;
 }
 
 .requested-user-name {
