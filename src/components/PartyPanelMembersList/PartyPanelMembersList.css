@@ -16,6 +16,7 @@
   justify-items: left;
   display: grid;
   grid-template-columns: 1fr 7fr;
+  border-radius: 10px;
 }
 
 .panel-party-members-dm .player {

@@ -15,6 +15,7 @@
   align-items: center;
   margin-top: 10px;
   background-color: #bcbcbc;
+  border-radius: 10px;
 }
 
 .requested-user-name {
