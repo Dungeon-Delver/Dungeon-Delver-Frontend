@@ -1,11 +1,13 @@
 import axios from "axios";
 import classNames from "classnames";
 import { useState } from "react";
+import { useRecoilValue } from "recoil";
 import Constants from "../../constants/appConstants";
+import { navbarOpen } from "../../recoil/atoms/atoms";
 import CategoryContainer from "../CategoryContainer/CategoryContainer";
 import "./EditParty.css"
 
-export default function EditParty({party, activeSelectors, fetchData}) {
+export default function EditParty({party, activeSelectors, fetchData, modifyParams}) {
 
   const getCurrentUser = Constants().getCurrentUser
 
@@ -19,6 +21,8 @@ export default function EditParty({party, activeSelectors, fetchData}) {
 
   const [loadingParty, setLoadingParty] = useState(false);
   const [error, setError] = useState("");
+
+  const openNavbar = useRecoilValue(navbarOpen)
 
   const handleSaveParty = async() => {
     const user = await getCurrentUser();
@@ -38,6 +42,7 @@ export default function EditParty({party, activeSelectors, fetchData}) {
       setLoadingParty(false)
       fetchData();
       setError("")
+      modifyParams(false)
     }
     catch (error){
       console.error(error);
@@ -101,7 +106,8 @@ export default function EditParty({party, activeSelectors, fetchData}) {
   }
 
   return (
-    <form className="create-party">
+    <form className={classNames({"edit-party": true, "navbar-is-open": openNavbar})}>
+       <div className="close-modify-params" onClick={modifyParams}>✖</div>
       <div className="party-name form__group field">
         <input className="party-name-input form__field" id="name" name="Party Name" placeholder="Dungeoneers" value={partyName} onChange={(event) => setPartyName(event.target.value)}></input>
         <label htmlFor="name" className="form__label">Party Name</label>
