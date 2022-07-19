@@ -3,7 +3,7 @@ import * as React from 'react'
 import EditParty from '../EditParty/EditParty';
 import "./CategoriesDisplay.css"
 
-export default function CategoriesDisplay({party, inParty}) {
+export default function CategoriesDisplay({party, inParty, fetchData}) {
 
   const [editingParty, setEditingParty] = React.useState(false);
 
@@ -23,7 +23,7 @@ export default function CategoriesDisplay({party, inParty}) {
           {item[0]}: {item[1]}
           </div>)
       })}
-      {editingParty ? <EditParty party={party} activeSelectors={parameters}/> : ""}
+      {editingParty ? <EditParty party={party} activeSelectors={parameters} fetchData={fetchData}/> : ""}
     </div>
   )
 }

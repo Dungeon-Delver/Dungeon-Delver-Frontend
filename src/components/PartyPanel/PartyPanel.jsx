@@ -25,7 +25,7 @@ export default function PartyPanel({party, inParty, fetchData}) {
       <div><h1 className="party-title">{party.party.name}</h1></div>
       <MembersList party={party} dm={party.members.dm} players={party.members.players} inParty={inParty} visible={inParty || (party.party.status!=="Closed")} maxDisplay={-1} />
       {inParty==="dm" ? <RequestedUsers party={party} requestedUsers={party.requestedUsers} fetchData={fetchData}/> : ""}
-      <CategoriesDisplay party={party} inParty={inParty}/>
+      <CategoriesDisplay party={party} inParty={inParty} fetchData={fetchData}/>
       <PanelButton party={party} inParty={inParty} requestedUsers={party.requestedUsers}/>
       <div className="party-panel-icon" onClick={togglePanel}>👤</div>
     </div>
