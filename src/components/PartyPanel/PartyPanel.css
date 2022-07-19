@@ -59,6 +59,7 @@
   background: #fff;
   border-radius: 999px;
   cursor: pointer;
+  margin-top: 20px;
 }
 .panel-button button:hover {
   box-shadow: 0 0 20px 10px rgba(230, 30, 10, 0.6);

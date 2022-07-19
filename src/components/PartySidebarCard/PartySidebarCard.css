@@ -1,8 +1,9 @@
 .party-sidebar-card {
-  background-color: #e9e8e9;
   border-radius: 20px;
+  background-color: #bcbcbc;
   margin-left: 10px;
   margin-top: 10px;
+  margin-right: 10px;
   z-index: 3
 }
 

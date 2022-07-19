@@ -11,7 +11,7 @@
   display: grid;
   grid-template-columns: 1fr 3fr 4fr;
   grid-template-rows: 1fr 25px;
-  justify-items: left;
+  justify-items: center;
   align-items: center;
   margin-top: 10px;
   background-color: #bcbcbc;
@@ -20,8 +20,8 @@
 
 .requested-user-name {
   padding-left: 5px;
-  text-align: left;
-  grid-column: 2 / span 2;
+  text-align: center;
+    grid-column: 2 / span 2;
 }
 
 .accept-user-button {
@@ -37,4 +37,38 @@
   width: 100%;
   align-self: stretch;
   justify-self: stretch;
+}
+
+.requested-user-card .accept-user-button {
+
+  display: inline-block;
+  outline: 0;
+  cursor: pointer;
+  text-align: center;
+  border: 0;
+  color: #ffffff;
+  background: #008060;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+}
+
+.requested-user-card .accept-user-button:hover {
+  background: #006e52;
+}
+
+.requested-user-card .reject-user-button {
+
+  display: inline-block;
+  outline: 0;
+  cursor: pointer;
+  text-align: center;
+  border: 0;
+  color: #ffffff;
+  background: #800022;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+}
+
+.requested-user-card .reject-user-button:hover {
+  background: #6e0016;
 }

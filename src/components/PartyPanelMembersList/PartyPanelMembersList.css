@@ -13,7 +13,7 @@
   margin-top: 10px;
   margin-right: 10px;
   align-items: center;
-  justify-items: left;
+  justify-items: center;
   display: grid;
   grid-template-columns: 1fr 7fr;
   border-radius: 10px;
@@ -25,7 +25,7 @@
 
 .member-name {
   padding-left: 5px;
-  text-align: left;
+  text-align: center;
 }
 
 .user-image-container {
