@@ -1,4 +1,4 @@
-import * as React from 'react'
+import {useState} from 'react'
 import './CreateParty.css'
 import CategoryContainer from "../CategoryContainer/CategoryContainer"
 import axios from 'axios';
@@ -11,17 +11,17 @@ import constants from '../../constants/appConstants'
 import classNames from 'classnames';
 
 export default function CreateParty() {
-  const [partyName, setPartyName] = React.useState("");
-  const [activeExperience, setActiveExperience] = React.useState("")
-  const [activeType, setActiveType] = React.useState("")
-  const [activeGenre, setActiveGenre] = React.useState("")
-  const [activeLevel, setActiveLevel] = React.useState("");
-  const [activeMode, setActiveMode] = React.useState("");
-  const [missingParams, setMissingParams] = React.useState([])
+  const [partyName, setPartyName] = useState("");
+  const [activeExperience, setActiveExperience] = useState("")
+  const [activeType, setActiveType] = useState("")
+  const [activeGenre, setActiveGenre] = useState("")
+  const [activeLevel, setActiveLevel] = useState("");
+  const [activeMode, setActiveMode] = useState("");
+  const [missingParams, setMissingParams] = useState([])
 
-  const [loadingParty, setLoadingParty] = React.useState(false);
-  const [partyFailed, setPartyFailed] = React.useState(false);
-  const [error, setError] = React.useState("");
+  const [loadingParty, setLoadingParty] = useState(false);
+  const [partyFailed, setPartyFailed] = useState(false);
+  const [error, setError] = useState("");
 
   const URL = constants().URL;
   const id = useRecoilValue(currentUser);
