@@ -1,8 +1,44 @@
-ul {
-  padding: 0;
+.party-sidebar {
+  min-height: 100vh;
+  background-color: #d5d5d5;
 }
 
 .sidebar-icon {
   display: none;
+  cursor: pointer;
 }
 
+
+@media screen and (max-width: 500px) {
+  .party-sidebar ul{
+    display: none;
+  }
+  .party-sidebar .sidebar-icon {
+    display: block;
+    position: absolute;
+    top: 2px;
+    left: 0;
+    z-index: 2;
+  }
+
+  .party-sidebar.navbar-is-open .sidebar-icon {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+  }
+
+  .party-sidebar {
+    position: absolute;
+    max-width: 200px;
+    top: 76px;
+    left: 0px;
+  }
+
+  .party-sidebar.navbar-is-open {
+    top: 186px;
+  }
+  .party-sidebar.responsive ul{
+    display: grid;
+    z-index: 1;
+  }
+}

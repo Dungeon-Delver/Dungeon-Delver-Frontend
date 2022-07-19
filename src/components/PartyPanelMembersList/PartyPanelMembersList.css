@@ -1,5 +1,4 @@
 .member-picture {
-  height: 100%;
   width: auto;
 }
 
@@ -7,27 +6,86 @@
   margin: 0px;
   display: inline-block;
   padding: 10px;
-  grid-template-rows: 3fr 1fr;
-  grid-template-columns: 1fr 1fr;
-  margin-bottom: 20px;
-  background-color: #d5d5d5;
-}
-
-.panel-party-members .player {
-  display: grid;
-  grid-template-columns: 2fr 3fr;
 }
 
 .panel-party-members li {
+  background-color: #bcbcbc;
   margin-top: 10px;
   margin-right: 10px;
   align-items: center;
-  justify-items: left;
+  justify-items: center;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 7fr;
+  border-radius: 10px;
+}
+
+.panel-party-members-dm .player {
+  grid-template-rows: 1fr 25px;
 }
 
 .member-name {
   padding-left: 5px;
-  text-align: left;
+  text-align: center;
+}
+
+.user-image-container {
+  height: 100%;
+  width: auto;
+}
+
+.panel-party-members-dm .player button {
+  grid-column: 1 / span 2;
+  align-self: stretch;
+  justify-self: center;
+  width: 180px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	background: red;
+	border: none;
+	border-radius: 5px;
+	box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+	background: #e62222;
+}
+
+.panel-party-members-dm .player button, button span {
+	transition: 200ms;
+}
+
+.panel-party-members-dm .player button .text {
+	transform: translateX(35px);
+	color: white;
+	font-weight: bold;
+}
+
+.panel-party-members-dm .player button .icon {
+	position: absolute;
+	transform: translateX(110px);
+	height: 40px;
+	width: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.panel-party-members-dm .player button svg {
+	width: 15px;
+	fill: #eee;
+}
+
+.panel-party-members-dm .player button:hover {
+	background: #ff3636;
+}
+
+.panel-party-members-dm .player button:hover .text {
+	color: transparent;
+}
+
+.panel-party-members-dm .player button:hover .icon {
+	border-left: none;
+	transform: translateX(0);
+}
+
+.panel-party-members-dm .player button:focus {
+	outline: none;
 }

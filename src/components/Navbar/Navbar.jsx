@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { useRecoilState } from 'recoil';
 import { navbarOpen } from '../../recoil/atoms/atoms';
 import { getWidth } from "../../constants/ScreenDimensions";
+import { useEffect } from "react";
 
 
 export default function Navbar({handleLogout}) {
@@ -15,13 +16,21 @@ export default function Navbar({handleLogout}) {
     setOpenNavbar(!openNavbar)
   }
 
+  useEffect(() => {
+    window.addEventListener("resize", onResize);
+    return function cleanupListener() {
+      window.removeEventListener('resize', onResize)
+    }
+  })
+
   const onResize = () => {
     if(getWidth() >600 && openNavbar) {
       setOpenNavbar(false);
     }
   }
 
-  window.addEventListener("resize", onResize);
+  
+
 
 
   return (
