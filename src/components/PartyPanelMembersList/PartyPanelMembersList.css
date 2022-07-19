@@ -53,7 +53,7 @@
 }
 
 .panel-party-members-dm .player button .text {
-	transform: translateX(35px);
+	transform: translateX(15px);
 	color: white;
 	font-weight: bold;
 }
@@ -66,6 +66,10 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+
+.remove-failed-message {
+	grid-column: 1 / span 2;
 }
 
 .panel-party-members-dm .player button svg {
