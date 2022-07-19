@@ -5,6 +5,7 @@
 
 .user-image-container {
   width: auto;
+  height: auto;
 }
 
 .requested-user-card {
@@ -21,7 +22,7 @@
 .requested-user-name {
   padding-left: 5px;
   text-align: center;
-    grid-column: 2 / span 2;
+  grid-column: 2 / span 2;
 }
 
 .accept-user-button {
@@ -29,7 +30,6 @@
   width: 100%;
   align-self: stretch;
   justify-self: stretch;
-
 }
 
 .reject-user-button {
