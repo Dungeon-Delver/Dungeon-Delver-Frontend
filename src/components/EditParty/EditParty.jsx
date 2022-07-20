@@ -1,13 +1,16 @@
 import axios from "axios";
 import classNames from "classnames";
 import { useState } from "react";
-import Constants from "../../constants/appConstants";
+import { useRecoilValue } from "recoil";
+import { BACKEND_URL } from "../../constants/constants";
+import GetCurrentUser from "../../constants/GetCurrentUser";
+import { navbarOpen } from "../../recoil/atoms/atoms";
 import CategoryContainer from "../CategoryContainer/CategoryContainer";
 import "./EditParty.css"
 
-export default function EditParty({party, activeSelectors, fetchData}) {
+export default function EditParty({party, activeSelectors, fetchData, modifyParams}) {
 
-  const getCurrentUser = Constants().getCurrentUser
+  const getCurrentUser = GetCurrentUser()
 
   const [partyName, setPartyName] = useState(party.party.name);
   const [activeExperience, setActiveExperience] = useState(activeSelectors[0][1])
@@ -20,34 +23,8 @@ export default function EditParty({party, activeSelectors, fetchData}) {
   const [loadingParty, setLoadingParty] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSaveParty = async() => {
-    const user = await getCurrentUser();
-    const JSON_OBJECT = {
-      name: partyName,
-      dm: user.id,
-      searchParameters: {
-        experience: activeExperience,
-        type: activeType,
-        genre: activeGenre,
-        level: activeLevel,
-      },
-      mode: activeMode
-    }
-    try {
-      await axios.post(`${URL}party/${party.party.objectId}/modify`, JSON_OBJECT);
-      setLoadingParty(false)
-      fetchData();
-      setError("")
-    }
-    catch (error){
-      console.error(error);
-      setLoadingParty(false)
-      setError(error);
-    }
-  }
+  const openNavbar = useRecoilValue(navbarOpen)
 
-  const URL = Constants().URL;
-    
   const categories = [{
     category: "experience level",
     selectors: ["New Players Only", "New Player Friendly", "Experienced Players Only"],
@@ -76,6 +53,33 @@ export default function EditParty({party, activeSelectors, fetchData}) {
     setActiveSelector: setActiveMode
   }]
 
+  const handleSaveParty = async() => {
+    const user = await getCurrentUser();
+    const JSON_OBJECT = {
+      name: partyName,
+      dm: user.id,
+      searchParameters: {
+        experience: activeExperience,
+        type: activeType,
+        genre: activeGenre,
+        level: activeLevel,
+      },
+      mode: activeMode
+    }
+    try {
+      await axios.post(`${BACKEND_URL}party/${party.party.objectId}/modify`, JSON_OBJECT);
+      setLoadingParty(false)
+      fetchData();
+      setError("")
+      modifyParams(false)
+    }
+    catch (error){
+      console.error(error);
+      setLoadingParty(false)
+      setError(error);
+    }
+  }
+
   const validateForm = () => {
     const missingParamsTmp=[];
     const states = [{value: partyName, category: "party name"}, {value: activeExperience, category: "experience"}, {value: activeType, category: "type"}, {value: activeGenre, category: "genre"}, {value: activeLevel, category: "level"}, {value: activeMode, category: "privacy mode"}]
@@ -101,7 +105,8 @@ export default function EditParty({party, activeSelectors, fetchData}) {
   }
 
   return (
-    <form className="create-party">
+    <form className={classNames({"edit-party": true, "navbar-is-open": openNavbar})}>
+       <div className="close-modify-params" onClick={modifyParams}>✖</div>
       <div className="party-name form__group field">
         <input className="party-name-input form__field" id="name" name="Party Name" placeholder="Dungeoneers" value={partyName} onChange={(event) => setPartyName(event.target.value)}></input>
         <label htmlFor="name" className="form__label">Party Name</label>

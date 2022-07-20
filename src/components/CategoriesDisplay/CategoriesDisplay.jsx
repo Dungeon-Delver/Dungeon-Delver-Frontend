@@ -16,14 +16,16 @@ export default function CategoriesDisplay({party, inParty, fetchData}) {
   }
   return(
     <div className="categories-display">
-      <h1 className="search-params-heading">Search Parameters</h1>
-      {inParty==="dm" ? <div onClick={() => modifyParams()}>⚙️</div> : ""}
-      {parameters.map(item => {
-        return (<div key={item} className={classNames({"category": true, "dm": inParty==="dm"})}>
-          {item[0]}: {item[1]}
-          </div>)
-      })}
-      {editingParty ? <EditParty party={party} activeSelectors={parameters} fetchData={fetchData}/> : ""}
+      <h2 className="search-params-heading">Search Parameters</h2>
+      {inParty==="dm" ? <div className="open-modify-party" onClick={() => modifyParams()}>⚙️</div> : ""}
+      <div className="categories-list">
+        {parameters.map(item => {
+          return (<div key={item} className={classNames({"category": true})}>
+            {item[0]}: {item[1]}
+            </div>)
+        })}
+      </div>
+      {editingParty ? <EditParty party={party} activeSelectors={parameters} fetchData={fetchData} modifyParams={modifyParams}/> : ""}
     </div>
   )
 }
