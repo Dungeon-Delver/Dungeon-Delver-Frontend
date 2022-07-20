@@ -7,8 +7,8 @@ export default function CategoriesDisplay({party, inParty, fetchData}) {
 
   const [editingParty, setEditingParty] = React.useState(false);
 
-  const parameters = [["Experience", party.party.searchParameters.experience], ["Genre", party.party.searchParameters.genre], ["Level", party.party.searchParameters.level], ["Type", party.party.searchParameters.type
-], ["Status", party.party.status]]
+  const parameters = [["Experience", party.party.searchParameters.experience], ["Type", party.party.searchParameters.type
+], ["Genre", party.party.searchParameters.genre], ["Level", party.party.searchParameters.level], ["Status", party.party.status]]
 
 
   const modifyParams = () => {
