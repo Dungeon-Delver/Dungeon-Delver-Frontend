@@ -1,0 +1,16 @@
+.search-params-heading {
+  display: inline-block;
+  width: 90%;
+}
+
+.open-modify-party {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.categories-display .categories-list{
+  background-color: #bcbcbc;
+  border-radius: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

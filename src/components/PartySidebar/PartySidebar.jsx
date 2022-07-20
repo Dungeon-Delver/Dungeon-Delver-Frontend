@@ -1,19 +1,19 @@
 import axios from 'axios'
 import {useState, useEffect} from 'react'
 import './PartySidebar.css'
-import Constants from '../../constants/appConstants'
+import GetCurrentUser from '../../constants/GetCurrentUser'
 import Loader from '../Loader/Loader'
 import PartySidebarCard from "../PartySidebarCard/PartySidebarCard"
 import classNames from 'classnames'
 import { useRecoilValue } from 'recoil'
 import { navbarOpen } from '../../recoil/atoms/atoms'
+import { BACKEND_URL } from '../../constants/constants'
 
 export default function PartySidebar({party}) {
-  const URL = Constants().URL;
   const [parties, setParties] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const getCurrentUser = Constants().getCurrentUser;
+  const getCurrentUser = GetCurrentUser();
   const openNavbar = useRecoilValue(navbarOpen)
 
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -25,7 +25,7 @@ export default function PartySidebar({party}) {
     const getParties = async () => {
       try{
         const user = await getCurrentUser();
-        const res = await axios.get(`${URL}user/${user.id}/parties`)
+        const res = await axios.get(`${BACKEND_URL}user/${user.id}/parties`)
         setParties(res.data.parties)
         setLoading(false)
       }
@@ -58,7 +58,7 @@ export default function PartySidebar({party}) {
     return(<Loader />)
   }
   return (
-    <div className={classNames({"party-sidebar": true, "responsive": openSidebar, "navbar-is-open": openNavbar,})}>
+    <div className={classNames({"party-sidebar": true, "responsive": openSidebar, "navbar-is-open": openNavbar})}>
         {parties!=null ? 
          <ul className="parties-list">
           {parties.dmParties.slice(0).reverse().map((item, i) => {

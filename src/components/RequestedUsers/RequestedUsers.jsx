@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {useState} from 'react'
-import Constants from '../../constants/appConstants'
+import { BACKEND_URL } from '../../constants/constants'
+import GetCurrentUser from '../../constants/GetCurrentUser'
 import "./RequestedUsers.css"
 
 export default function RequestedUsers({requestedUsers, party, fetchData}) {
@@ -18,23 +19,22 @@ export default function RequestedUsers({requestedUsers, party, fetchData}) {
 }
 
 function RequestedUserCard({user, party, fetchData}) {
-  const URL = Constants().URL
   const [acceptButtonText, setAcceptButtonText] = useState("Accept Request")
   const [rejectButtonText, setRejectButtonText] = useState("Reject Request")
   const [buttonsDisabled, setButtonsDisabled] = useState(false)
-  const getCurrentUser = Constants().getCurrentUser;
+  const getCurrentUser = GetCurrentUser()
   const acceptUser = async () => {
     setAcceptButtonText("Accepting...")
     const currentUser = await getCurrentUser();
     setButtonsDisabled(true)
-    await axios.post(`${URL}party/${party.objectId}/accept/${user.objectId}`, {dm: currentUser})
+    await axios.post(`${BACKEND_URL}party/${party.objectId}/accept/${user.objectId}`, {dm: currentUser})
     fetchData();
   }
   const rejectUser = async () => {
     setRejectButtonText("Rejecting...")
     setButtonsDisabled(true)
     const currentUser = await getCurrentUser();
-    await axios.post(`${URL}party/${party.objectId}/reject/${user.objectId}`, {dm: currentUser})
+    await axios.post(`${BACKEND_URL}party/${party.objectId}/reject/${user.objectId}`, {dm: currentUser})
     fetchData();
   }
   return (

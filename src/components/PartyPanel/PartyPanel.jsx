@@ -4,10 +4,11 @@ import MembersList from "../PartyPanelMembersList/PartyPanelMembersList"
 import RequestedUsers from "../RequestedUsers/RequestedUsers"
 import CategoriesDisplay from "../CategoriesDisplay/CategoriesDisplay.jsx"
 import axios from 'axios'
-import Constants from '../../constants/appConstants'
+import GetCurrentUser from '../../constants/GetCurrentUser'
 import { useRecoilValue } from 'recoil'
 import { navbarOpen } from '../../recoil/atoms/atoms'
 import classNames from 'classnames'
+import { BACKEND_URL } from '../../constants/constants'
 
 
 export default function PartyPanel({party, inParty, fetchData}) {
@@ -17,15 +18,13 @@ export default function PartyPanel({party, inParty, fetchData}) {
   const togglePanel = () => {
     setOpenPanel(!panelOpen)
   }
-
-  
-
   return (
     <div className={classNames({"party-panel": true, "responsive": panelOpen, "navbar-is-open": openNavbar})}>
       <div><h1 className="party-title">{party.party.name}</h1></div>
-      <MembersList party={party} dm={party.members.dm} players={party.members.players} inParty={inParty} visible={inParty || (party.party.status!=="Closed")} maxDisplay={-1} />
+      {inParty!==0 || party.party.status === "Public" ?
+        <MembersList party={party} dm={party.members.dm} players={party.members.players} inParty={inParty} visible={inParty || (party.party.status!=="Closed")} maxDisplay={-1} /> : ""}
       {inParty==="dm" ? <RequestedUsers party={party} requestedUsers={party.requestedUsers} fetchData={fetchData}/> : ""}
-      <CategoriesDisplay party={party} />
+      <CategoriesDisplay party={party} inParty={inParty} fetchData={fetchData}/>
       <PanelButton party={party} inParty={inParty} requestedUsers={party.requestedUsers}/>
       <div className="party-panel-icon" onClick={togglePanel}>👤</div>
     </div>
@@ -40,8 +39,7 @@ function PanelButton({party, inParty, requestedUsers}) {
 
   const [error, setError] = useState("");
 
-  const URL = Constants().URL;
-  const getCurrentUser = Constants().getCurrentUser;
+  const getCurrentUser = GetCurrentUser()
 
   useEffect(() => {
     const haveRequested = async () => {
@@ -96,7 +94,7 @@ function PanelButton({party, inParty, requestedUsers}) {
       setButtonDisabled(true)
       setButtonText("Sending Request")
       const currentUser = await getCurrentUser();
-      await axios.post(`${URL}user/${party.party.objectId}/join`, {userId: currentUser})
+      await axios.post(`${BACKEND_URL}user/${party.party.objectId}/join`, {userId: currentUser})
       setButtonDisabled(false)
       setOnPress(() => cancelRequest)
       setButtonText("Cancel Request")
@@ -112,7 +110,7 @@ function PanelButton({party, inParty, requestedUsers}) {
       setButtonText("Leaving party")
       setButtonDisabled(true)
       const currentUser = await getCurrentUser();
-      await axios.post(`${URL}user/${party.party.objectId}/leave`, {userId: currentUser})
+      await axios.post(`${BACKEND_URL}user/${party.party.objectId}/leave`, {userId: currentUser})
       setButtonText("Successfully left party")
     }
     catch (err) {
@@ -126,7 +124,7 @@ function PanelButton({party, inParty, requestedUsers}) {
       setButtonText("Cancelling Request")
       setButtonDisabled(true)
       const currentUser = await getCurrentUser();
-      await axios.post(`${URL}user/${party.party.objectId}/cancel-join`, {userId: currentUser})
+      await axios.post(`${BACKEND_URL}user/${party.party.objectId}/cancel-join`, {userId: currentUser})
       setButtonText("Successfully cancelled request")
       setJustRequested(false)
     }
@@ -141,7 +139,7 @@ function PanelButton({party, inParty, requestedUsers}) {
       setButtonText("Deleting Party")
       setButtonDisabled(true)
       const currentUser = await getCurrentUser();
-      await axios.post(`${URL}party/${party.party.objectId}/delete`, {dm: currentUser})
+      await axios.post(`${BACKEND_URL}party/${party.party.objectId}/delete`, {dm: currentUser})
       setButtonText("Successfully deleted party")
       setJustRequested(false)
     }
