@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { useRecoilValue } from 'recoil';
 import { currentUser } from '../../recoil/atoms/atoms';
-import constants from '../../constants/appConstants'
 import classNames from 'classnames';
+import { URL } from '../../constants/constants';
 
 export default function CreateParty() {
   const [partyName, setPartyName] = useState("");
@@ -23,7 +23,6 @@ export default function CreateParty() {
   const [partyFailed, setPartyFailed] = useState(false);
   const [error, setError] = useState("");
 
-  const URL = constants().URL;
   const id = useRecoilValue(currentUser);
   const navigate = useNavigate();
 

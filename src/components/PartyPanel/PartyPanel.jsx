@@ -4,10 +4,11 @@ import MembersList from "../PartyPanelMembersList/PartyPanelMembersList"
 import RequestedUsers from "../RequestedUsers/RequestedUsers"
 import CategoriesDisplay from "../CategoriesDisplay/CategoriesDisplay.jsx"
 import axios from 'axios'
-import Constants from '../../constants/appConstants'
+import GetCurrentUser from '../../constants/GetCurrentUser'
 import { useRecoilValue } from 'recoil'
 import { navbarOpen } from '../../recoil/atoms/atoms'
 import classNames from 'classnames'
+import { URL } from '../../constants/constants'
 
 
 export default function PartyPanel({party, inParty, fetchData}) {
@@ -38,8 +39,7 @@ function PanelButton({party, inParty, requestedUsers}) {
 
   const [error, setError] = useState("");
 
-  const URL = Constants().URL;
-  const getCurrentUser = Constants().getCurrentUser;
+  const getCurrentUser = GetCurrentUser()
 
   useEffect(() => {
     const haveRequested = async () => {

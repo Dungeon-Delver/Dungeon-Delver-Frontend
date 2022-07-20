@@ -2,14 +2,15 @@ import axios from "axios";
 import classNames from "classnames";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
-import Constants from "../../constants/appConstants";
+import { URL } from "../../constants/constants";
+import GetCurrentUser from "../../constants/GetCurrentUser";
 import { navbarOpen } from "../../recoil/atoms/atoms";
 import CategoryContainer from "../CategoryContainer/CategoryContainer";
 import "./EditParty.css"
 
 export default function EditParty({party, activeSelectors, fetchData, modifyParams}) {
 
-  const getCurrentUser = Constants().getCurrentUser
+  const getCurrentUser = GetCurrentUser()
 
   const [partyName, setPartyName] = useState(party.party.name);
   const [activeExperience, setActiveExperience] = useState(activeSelectors[0][1])
@@ -24,35 +25,6 @@ export default function EditParty({party, activeSelectors, fetchData, modifyPara
 
   const openNavbar = useRecoilValue(navbarOpen)
 
-  const handleSaveParty = async() => {
-    const user = await getCurrentUser();
-    const JSON_OBJECT = {
-      name: partyName,
-      dm: user.id,
-      searchParameters: {
-        experience: activeExperience,
-        type: activeType,
-        genre: activeGenre,
-        level: activeLevel,
-      },
-      mode: activeMode
-    }
-    try {
-      await axios.post(`${URL}party/${party.party.objectId}/modify`, JSON_OBJECT);
-      setLoadingParty(false)
-      fetchData();
-      setError("")
-      modifyParams(false)
-    }
-    catch (error){
-      console.error(error);
-      setLoadingParty(false)
-      setError(error);
-    }
-  }
-
-  const URL = Constants().URL;
-    
   const categories = [{
     category: "experience level",
     selectors: ["New Players Only", "New Player Friendly", "Experienced Players Only"],
@@ -80,6 +52,33 @@ export default function EditParty({party, activeSelectors, fetchData, modifyPara
     activeSelector: activeMode,
     setActiveSelector: setActiveMode
   }]
+
+  const handleSaveParty = async() => {
+    const user = await getCurrentUser();
+    const JSON_OBJECT = {
+      name: partyName,
+      dm: user.id,
+      searchParameters: {
+        experience: activeExperience,
+        type: activeType,
+        genre: activeGenre,
+        level: activeLevel,
+      },
+      mode: activeMode
+    }
+    try {
+      await axios.post(`${URL}party/${party.party.objectId}/modify`, JSON_OBJECT);
+      setLoadingParty(false)
+      fetchData();
+      setError("")
+      modifyParams(false)
+    }
+    catch (error){
+      console.error(error);
+      setLoadingParty(false)
+      setError(error);
+    }
+  }
 
   const validateForm = () => {
     const missingParamsTmp=[];

@@ -1,19 +1,19 @@
 import axios from 'axios'
 import {useState, useEffect} from 'react'
 import './PartySidebar.css'
-import Constants from '../../constants/appConstants'
+import GetCurrentUser from '../../constants/GetCurrentUser'
 import Loader from '../Loader/Loader'
 import PartySidebarCard from "../PartySidebarCard/PartySidebarCard"
 import classNames from 'classnames'
 import { useRecoilValue } from 'recoil'
 import { navbarOpen } from '../../recoil/atoms/atoms'
+import { URL } from '../../constants/constants'
 
 export default function PartySidebar({party}) {
-  const URL = Constants().URL;
   const [parties, setParties] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const getCurrentUser = Constants().getCurrentUser;
+  const getCurrentUser = GetCurrentUser();
   const openNavbar = useRecoilValue(navbarOpen)
 
   const [openSidebar, setOpenSidebar] = useState(false);

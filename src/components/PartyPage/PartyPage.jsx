@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
-import Constants from '../../constants/appConstants';
 import Loader from '../Loader/Loader';
 import PartySidebar from "../PartySidebar/PartySidebar.jsx"
 import PartyChat from "../PartyChat/PartyChat"
@@ -9,6 +8,7 @@ import PartyPanel from '../PartyPanel/PartyPanel';
 import "./PartyPage.css"
 import { currentUser } from '../../recoil/atoms/atoms';
 import { useRecoilValue } from 'recoil';
+import { URL } from '../../constants/constants';
 
 
 
@@ -19,7 +19,6 @@ export default function PartyPage() {
   const [inParty, setInParty] = useState(false);
   const [error, setError] = useState("")
   const [loadingParty, setLoadingParty] = useState(true);
-  const URL = Constants().URL
   const user = useRecoilValue(currentUser)
 
   useEffect(() => {
