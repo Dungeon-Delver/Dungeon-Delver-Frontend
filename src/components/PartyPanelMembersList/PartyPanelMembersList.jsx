@@ -41,10 +41,7 @@ function RemoveUserButton({item, dm, party}) {
     try {
       setButtonText("Removing User")
       const currentUser = await getCurrentUser();
-      if(currentUser.id !== dm.objectId) {
-        throw new Error("Can only remove players as the dm")
-      }
-      await axios.post(`${URL}user/${party.party.objectId}/leave`, {userId : {objectId: playerId}})
+      await axios.post(`${URL}party/${party.party.objectId}/remove/${playerId}`, {dm : currentUser})
       setButtonText("Removed User")
     }
     catch (err) {
