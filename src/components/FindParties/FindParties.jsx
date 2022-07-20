@@ -31,18 +31,18 @@ export default function CreateParty() {
       setActiveSelector: setActiveExperience
     }, {
       category: "type of players",
-      selectors: ["Serious", "Casual", "Comedy", "Rules-Oriented", "Homebrew-Friendly"],
+      selectors: ["Serious", "Casual", "Comedy", "Rules-Oriented", "Homebrew-Friendly", "Any Type"],
       activeSelector: activeType,
       setActiveSelector: setActiveType
       
     }, {
       category: "genre",
-      selectors: ["Fantasy", "Sci-Fi", "Modern", "Post-Apocalyptic", "Star Wars", "Harry Potter"],
+      selectors: ["Fantasy", "Sci-Fi", "Modern", "Post-Apocalyptic", "Star Wars", "Harry Potter", "Any Genre"],
       activeSelector: activeGenre,
       setActiveSelector: setActiveGenre
     }, {
       category: "party level",
-      selectors:["1-4", "5-8", "9-12", "13-16", "17-20", "Any"],
+      selectors:["1-4", "5-8", "9-12", "13-16", "17-20", "Any Level"],
       activeSelector: activeLevel,
       setActiveSelector: setActiveLevel
     }
