@@ -3,10 +3,11 @@ import './FindParties.css'
 import CategoryContainer from "../CategoryContainer/CategoryContainer"
 import axios from 'axios';
 
-import { useNavigate } from 'react-router-dom';
 
 import classNames from 'classnames';
 import { URL } from '../../constants/constants';
+import SearchCard from '../SearchCard/SearchCard.jsx';
+import Loader from '../Loader/Loader';
 
 export default function CreateParty() {
   const [activeExperience, setActiveExperience] = useState("")
@@ -20,8 +21,6 @@ export default function CreateParty() {
   const [error, setError] = useState("");
 
   const [searchResults, setSearchResults] = useState("");
-
-  const navigate = useNavigate();
 
   const categories = [{
       category: "experience level",
@@ -63,7 +62,7 @@ export default function CreateParty() {
       setPartyFailed(false);
     }
     catch (error){
-      console.error(error);
+      console.error(error)
       setPartyFailed(true);
       setLoadingParty(false)
       setError(error);
@@ -94,6 +93,26 @@ export default function CreateParty() {
     handleSearchParty();
   }
 
+  var bottom;
+
+  if(loadingParty) {
+    bottom = <Loader />
+  }
+  else if(searchResults === "") {
+    bottom = <h2 className="before-search">Enter criteria and search!</h2>
+  }
+  else if(searchResults === null) {
+    bottom = <h2 className="no-parties">There are no parties that meet these search criteria</h2>
+  }
+
+  else {
+    bottom = <ul className="search-results">
+    {searchResults.slice(0).reverse().map((item, i) => {
+      return <SearchCard key={i} party={item} />
+    })}
+  </ul>
+  }
+
   return (
     <div className="find-parties">
       <form className="find-parties-form">
@@ -111,6 +130,7 @@ export default function CreateParty() {
           <h2 className="party-failed-status-text">{error.statusText}</h2>
         </div> :""}
       </form>
+      {bottom}
     </div>
   )
 }

@@ -1,0 +1,8 @@
+.search-params-list {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.search-params-list li span {
+  font-weight: bold;
+}

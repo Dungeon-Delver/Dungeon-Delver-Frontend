@@ -1,0 +1,145 @@
+.search-party-card {
+  display: grid;
+  grid-template-columns: 3fr 3fr 3fr 2fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 10px;
+  align-items: center;
+  background-color: #e9e8e9;
+  text-align: center;
+  font-family: "Palatino";
+}
+
+.search-party-card div {
+padding: 3px;
+}
+
+.search-party-card .search-party-members {
+max-height: 100px;
+}
+
+.search-party-card .search-party-image {
+grid-column: 1 / span 1;
+grid-row: 1 / span 2;
+}
+
+.search-party-card .search-party-title {
+grid-column: 2 / span 1;
+grid-row: 1 / span 1;
+font-weight: bold;
+font-size: 22px;
+font-family: "Palatino"
+}
+
+.search-party-card .search-party-status {
+grid-column: 2 / span 1;
+grid-row: 2 / span 1;
+}
+
+.search-party-card .green {
+background-color: rgba(0, 154, 0, 0.7);	
+}
+
+.search-party-card .purple {
+background-color: rgba(95, 77, 172, 0.7);
+}
+
+.search-params-list {
+grid-column: 3 / span 1;
+grid-row: 1 / span 2;
+background-color: #d5d5d5
+}
+
+.enter-dungeon-button-container {
+grid-column: 4 / span 1;
+grid-row: 1 / span 2;
+}
+
+.noselect {
+-webkit-touch-callout: none;
+  -webkit-user-select: none;
+   -khtml-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.enter-dungeon-button {
+width: 150px;
+height: 50px;
+cursor: pointer;
+border: 0px solid #5b3f69;
+background: #34283b;
+transition: 200ms;
+}
+
+.enter-dungeon-button span {
+position: absolute;
+transform: translateX(-50%) translateY(-50%);
+font-family: 'Berkshire Swash', cursive;
+color: #f0ecfc;
+transition: 500ms;
+font-size: 22px;
+}
+
+.enter-dungeon-button::before, enter-dungeon-button::after {
+content: '';
+position: absolute;
+margin-left: -75px;
+margin-top: -25px;
+width: 140px;
+height: 40px;
+z-index: 1;
+}
+
+.enter-dungeon-button::before {
+border: 5px solid #7e5791;
+transition: 200ms;
+}
+
+.enter-dungeon-button::after {
+border: 5px solid #b37ccf;
+transition: 500ms;
+}
+
+.enter-dungeon-button:hover {
+border: 5px solid #5b3f69;
+}
+
+.enter-dungeon-button:hover span {
+letter-spacing: 3px;
+font-size: 16px;
+}
+
+.enter-dungeon-button:hover::before {
+width: 150px;
+height: 50px;
+margin-left: -80px;
+margin-top: -30px;
+}
+
+.enter-dungeon-button:hover::after {
+width: 160px;
+height: 60px;
+margin-left: -85px;
+margin-top: -35px;
+}
+
+.enter-dungeon-button:focus {
+outline: none;
+}
+
+.enter-dungeon-button span {
+white-space: nowrap;
+}
+
+@media screen and (max-width: 600px) {
+.search-party-card {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+.search-party-image {
+  width: 100px;
+}
+}
