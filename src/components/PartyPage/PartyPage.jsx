@@ -9,8 +9,7 @@ import "./PartyPage.css"
 import { currentUser } from '../../recoil/atoms/atoms';
 import { useRecoilValue } from 'recoil';
 import { BACKEND_URL } from '../../constants/constants';
-
-
+import NotFound from "../NotFound/NotFound"
 
 export default function PartyPage() {
   const params = useParams();
@@ -61,8 +60,13 @@ export default function PartyPage() {
     }
     catch (e) {
       console.error(e);
-      setParty(null);
-      setError(e)
+      if(e.response.status===404) {
+        setParty("Not Found")
+      }
+      else {
+        setParty(null);
+        setError(e)
+      }
     }
   }
 
@@ -70,6 +74,10 @@ export default function PartyPage() {
     return(
       <Loader />
     )
+  }
+  console.log(party)
+  if(party==="Not Found") {
+    return(<NotFound />)
   }
 
   if(party===null) {
