@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Constants from '../../constants/appConstants';
+import GetCurrentUser from '../../constants/GetCurrentUser';
 
 import './App.css';
 import Facebook from '../Facebook/Facebook';
@@ -24,7 +24,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useRecoilState(loggedInState)
   const isLoading = useRecoilValue(isLoggingInState)
 
-  const getCurrentUser = Constants().getCurrentUser
+  const getCurrentUser = GetCurrentUser()
 
   useEffect( () => {
     const login = async (user) => {

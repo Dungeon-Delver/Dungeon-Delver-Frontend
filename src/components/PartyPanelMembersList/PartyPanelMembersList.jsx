@@ -1,7 +1,8 @@
 import axios from 'axios';
 import classNames from 'classnames';
 import {useState}from 'react'
-import Constants from '../../constants/appConstants';
+import { BACKEND_URL } from '../../constants/constants';
+import GetCurrentUser from '../../constants/GetCurrentUser';
 import "./PartyPanelMembersList.css"
 
 export default function MembersList({party, players, dm, inParty}) {
@@ -34,14 +35,13 @@ function RemoveUserButton({item, dm, party}) {
   const [buttonText, setButtonText] = useState("Remove User")
   const [error, setError] = useState("")
 
-  const getCurrentUser = Constants().getCurrentUser
-  const URL = Constants().URL;
+  const getCurrentUser = GetCurrentUser()
 
   const removeUser = async(playerId) => {
     try {
       setButtonText("Removing User")
       const currentUser = await getCurrentUser();
-      await axios.post(`${URL}party/${party.party.objectId}/remove/${playerId}`, {dm : currentUser})
+      await axios.post(`${BACKEND_URL}party/${party.party.objectId}/remove/${playerId}`, {dm : currentUser})
       setButtonText("Removed User")
     }
     catch (err) {
