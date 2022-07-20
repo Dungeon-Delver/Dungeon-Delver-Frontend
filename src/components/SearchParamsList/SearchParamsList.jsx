@@ -1,7 +1,6 @@
 import "./SearchParamsList.css"
 
 export default function SearchParamsList({party}) {
-  console.log('party: ', party);
   return (
     <ul className="search-params-list">
       <li className="search-experience"><span>Experience:</span> {party.searchParameters.experience}</li>

@@ -27,7 +27,8 @@ grid-column: 2 / span 1;
 grid-row: 1 / span 1;
 font-weight: bold;
 font-size: 22px;
-font-family: "Palatino"
+font-family: "Palatino";
+margin-top: 10px;
 }
 
 .search-party-card .search-party-status {
