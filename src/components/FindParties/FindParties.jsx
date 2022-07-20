@@ -8,6 +8,7 @@ import classNames from 'classnames';
 import { URL } from '../../constants/constants';
 import SearchCard from '../SearchCard/SearchCard.jsx';
 import Loader from '../Loader/Loader';
+import GetCurrentUser from '../../constants/GetCurrentUser';
 
 export default function CreateParty() {
   const [activeExperience, setActiveExperience] = useState("")
@@ -21,6 +22,7 @@ export default function CreateParty() {
   const [error, setError] = useState("");
 
   const [searchResults, setSearchResults] = useState("");
+  const getCurrentUser = GetCurrentUser();
 
   const categories = [{
       category: "experience level",
@@ -47,7 +49,9 @@ export default function CreateParty() {
   ]
 
   const handleSearchParty = async() => {
+    const user = await getCurrentUser();
     const JSON_OBJECT = {
+      user: user.id,
       searchParameters: {
         experience: activeExperience,
         type: activeType,
@@ -105,6 +109,12 @@ export default function CreateParty() {
     bottom = <h2 className="no-parties">There are no parties that meet these search criteria</h2>
   }
 
+  else if (partyFailed) {
+    bottom = <div className="party-failed"> 
+    <h1 className="party-failed-message">{error.response.data ? error.response.data.error.message : error.message}</h1>
+    <h2 className="party-failed-status-text">{error.statusText}</h2>
+    </div>
+  }
   else {
     bottom = <ul className="search-results">
     {searchResults.slice(0).reverse().map((item, i) => {
@@ -125,10 +135,6 @@ export default function CreateParty() {
           <div className="button__text">Find Dungeons</div>
         </button>
         <div className="missing-params">{missingParams}</div>
-        {partyFailed ?<div className="party-failed"> 
-          <h1 className="party-failed-message">{error.response.data ? error.response.data.error.message : error.message}</h1>
-          <h2 className="party-failed-status-text">{error.statusText}</h2>
-        </div> :""}
       </form>
       {bottom}
     </div>
