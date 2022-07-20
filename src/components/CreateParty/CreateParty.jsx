@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 
 import { useRecoilValue } from 'recoil';
 import { currentUser } from '../../recoil/atoms/atoms';
-import constants from '../../constants/appConstants'
 import classNames from 'classnames';
+import { BACKEND_URL } from '../../constants/constants';
 
 export default function CreateParty() {
   const [partyName, setPartyName] = useState("");
@@ -23,7 +23,6 @@ export default function CreateParty() {
   const [partyFailed, setPartyFailed] = useState(false);
   const [error, setError] = useState("");
 
-  const URL = constants().URL;
   const id = useRecoilValue(currentUser);
   const navigate = useNavigate();
 
@@ -68,7 +67,7 @@ export default function CreateParty() {
       mode: activeMode
     }
     try {
-      const data = await axios.post(`${URL}party/create-party`, JSON_OBJECT);
+      const data = await axios.post(`${BACKEND_URL}party/create-party`, JSON_OBJECT);
       const partyId = data.data.newParty
       setLoadingParty(false);
       setPartyFailed(false);

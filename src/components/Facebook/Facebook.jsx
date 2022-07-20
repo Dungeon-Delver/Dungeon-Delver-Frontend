@@ -5,7 +5,7 @@ import Keys from "../../keys.json"
 import Parse from "../../constants/parseInitialize"
 
 
-import Constants from '../../constants/appConstants';
+import GetCurrentUser from '../../constants/GetCurrentUser';
 
 
 import { useSetRecoilState } from 'recoil'
@@ -20,7 +20,7 @@ export default function FacebookOAuth() {
     setIsLoading(true);
   }
 
-  const getCurrentUser = Constants().getCurrentUser;
+  const getCurrentUser = GetCurrentUser()
 
 
   const handleFacebookLogin = async (response) => {

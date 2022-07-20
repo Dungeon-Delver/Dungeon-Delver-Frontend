@@ -2,22 +2,22 @@ import axios from 'axios'
 import {useState, useEffect}from 'react'
 import { Link } from 'react-router-dom'
 import './MyParties.css'
-import Constants from '../../constants/appConstants'
+import GetCurrentUser from '../../constants/GetCurrentUser'
 import Loader from '../Loader/Loader'
 import PartyCard from "../PartyCard/PartyCard.jsx"
+import { BACKEND_URL } from '../../constants/constants'
 
 export default function MyParties() {
-  const URL = Constants().URL;
   const [parties, setParties] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const getCurrentUser = Constants().getCurrentUser;
+  const getCurrentUser = GetCurrentUser();
 
   useEffect( () => {
     const getParties = async () => {
       try{
         const user = await getCurrentUser();
-        const res = await axios.get(`${URL}user/${user.id}/parties`)
+        const res = await axios.get(`${BACKEND_URL}user/${user.id}/parties`)
         setParties(res.data.parties)
         setLoading(false)
       }
