@@ -8,7 +8,7 @@ import PartyPanel from '../PartyPanel/PartyPanel';
 import "./PartyPage.css"
 import { currentUser } from '../../recoil/atoms/atoms';
 import { useRecoilValue } from 'recoil';
-import { URL } from '../../constants/constants';
+import { BACKEND_URL } from '../../constants/constants';
 
 
 
@@ -53,7 +53,7 @@ export default function PartyPage() {
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(`${URL}party/${params.partyId}`);
+      const response = await axios.get(`${BACKEND_URL}party/${params.partyId}`);
       const result = response.data.party
       setParty(result)
       checkPermissions(result.members)

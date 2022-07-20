@@ -2,7 +2,7 @@ import axios from "axios";
 import classNames from "classnames";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
-import { URL } from "../../constants/constants";
+import { BACKEND_URL } from "../../constants/constants";
 import GetCurrentUser from "../../constants/GetCurrentUser";
 import { navbarOpen } from "../../recoil/atoms/atoms";
 import CategoryContainer from "../CategoryContainer/CategoryContainer";
@@ -67,7 +67,7 @@ export default function EditParty({party, activeSelectors, fetchData, modifyPara
       mode: activeMode
     }
     try {
-      await axios.post(`${URL}party/${party.party.objectId}/modify`, JSON_OBJECT);
+      await axios.post(`${BACKEND_URL}party/${party.party.objectId}/modify`, JSON_OBJECT);
       setLoadingParty(false)
       fetchData();
       setError("")

@@ -7,7 +7,7 @@ import PartySidebarCard from "../PartySidebarCard/PartySidebarCard"
 import classNames from 'classnames'
 import { useRecoilValue } from 'recoil'
 import { navbarOpen } from '../../recoil/atoms/atoms'
-import { URL } from '../../constants/constants'
+import { BACKEND_URL } from '../../constants/constants'
 
 export default function PartySidebar({party}) {
   const [parties, setParties] = useState(null);
@@ -25,7 +25,7 @@ export default function PartySidebar({party}) {
     const getParties = async () => {
       try{
         const user = await getCurrentUser();
-        const res = await axios.get(`${URL}user/${user.id}/parties`)
+        const res = await axios.get(`${BACKEND_URL}user/${user.id}/parties`)
         setParties(res.data.parties)
         setLoading(false)
       }

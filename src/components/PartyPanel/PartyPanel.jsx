@@ -8,7 +8,7 @@ import GetCurrentUser from '../../constants/GetCurrentUser'
 import { useRecoilValue } from 'recoil'
 import { navbarOpen } from '../../recoil/atoms/atoms'
 import classNames from 'classnames'
-import { URL } from '../../constants/constants'
+import { BACKEND_URL } from '../../constants/constants'
 
 
 export default function PartyPanel({party, inParty, fetchData}) {
@@ -94,7 +94,7 @@ function PanelButton({party, inParty, requestedUsers}) {
       setButtonDisabled(true)
       setButtonText("Sending Request")
       const currentUser = await getCurrentUser();
-      await axios.post(`${URL}user/${party.party.objectId}/join`, {userId: currentUser})
+      await axios.post(`${BACKEND_URL}user/${party.party.objectId}/join`, {userId: currentUser})
       setButtonDisabled(false)
       setOnPress(() => cancelRequest)
       setButtonText("Cancel Request")
@@ -110,7 +110,7 @@ function PanelButton({party, inParty, requestedUsers}) {
       setButtonText("Leaving party")
       setButtonDisabled(true)
       const currentUser = await getCurrentUser();
-      await axios.post(`${URL}user/${party.party.objectId}/leave`, {userId: currentUser})
+      await axios.post(`${BACKEND_URL}user/${party.party.objectId}/leave`, {userId: currentUser})
       setButtonText("Successfully left party")
     }
     catch (err) {
@@ -124,7 +124,7 @@ function PanelButton({party, inParty, requestedUsers}) {
       setButtonText("Cancelling Request")
       setButtonDisabled(true)
       const currentUser = await getCurrentUser();
-      await axios.post(`${URL}user/${party.party.objectId}/cancel-join`, {userId: currentUser})
+      await axios.post(`${BACKEND_URL}user/${party.party.objectId}/cancel-join`, {userId: currentUser})
       setButtonText("Successfully cancelled request")
       setJustRequested(false)
     }
@@ -139,7 +139,7 @@ function PanelButton({party, inParty, requestedUsers}) {
       setButtonText("Deleting Party")
       setButtonDisabled(true)
       const currentUser = await getCurrentUser();
-      await axios.post(`${URL}party/${party.party.objectId}/delete`, {dm: currentUser})
+      await axios.post(`${BACKEND_URL}party/${party.party.objectId}/delete`, {dm: currentUser})
       setButtonText("Successfully deleted party")
       setJustRequested(false)
     }

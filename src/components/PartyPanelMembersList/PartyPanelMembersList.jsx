@@ -1,7 +1,7 @@
 import axios from 'axios';
 import classNames from 'classnames';
 import {useState}from 'react'
-import { URL } from '../../constants/constants';
+import { BACKEND_URL } from '../../constants/constants';
 import GetCurrentUser from '../../constants/GetCurrentUser';
 import "./PartyPanelMembersList.css"
 
@@ -41,7 +41,7 @@ function RemoveUserButton({item, dm, party}) {
     try {
       setButtonText("Removing User")
       const currentUser = await getCurrentUser();
-      await axios.post(`${URL}party/${party.party.objectId}/remove/${playerId}`, {dm : currentUser})
+      await axios.post(`${BACKEND_URL}party/${party.party.objectId}/remove/${playerId}`, {dm : currentUser})
       setButtonText("Removed User")
     }
     catch (err) {

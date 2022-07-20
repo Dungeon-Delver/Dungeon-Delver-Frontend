@@ -2,9 +2,6 @@ import Parse from "./parseInitialize"
 import { useSetRecoilState } from 'recoil';
 import { currentUser, loggedInState  } from '../recoil/atoms/atoms';
 
-const LOCALHOST_SERVER_URL = "http://localhost:3001/"
-
-
 
 export default function GetCurrentUser() {
   const setCurrentUser = useSetRecoilState(currentUser)
