@@ -20,3 +20,11 @@
   right: 10px;
   cursor: pointer;
 }
+
+@media screen and (max-width: 800px) {
+  .categories-display .edit-party {
+    position: fixed;
+    top: 0px;
+    padding-top: 80px;
+  }
+}
