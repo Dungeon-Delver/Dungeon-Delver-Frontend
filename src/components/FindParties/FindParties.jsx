@@ -124,11 +124,15 @@ export default function CreateParty() {
     </div>
   }
   else {
-    bottom = <ul className="search-results">
+    bottom = <><ul className="search-results">
     {searchResults.slice(0).reverse().map((item, i) => {
       return <SearchCard key={i} party={item} />
     })}
   </ul>
+  <div className="button-20-container">
+  <button onClick={handlePrevious} className="previous-button button-20">Previous</button>
+  <button onClick={handleNext} className="next-button button-20">Next</button>
+</div></>
   }
 
   return (
@@ -145,10 +149,6 @@ export default function CreateParty() {
         <div className="missing-params">{missingParams}</div>
       </form>
       {bottom}
-      <div className="button-20-container">
-        <button onClick={handlePrevious} className="previous-button button-20">Previous</button>
-        <button onClick={handleNext} className="next-button button-20">Next</button>
-      </div>
     </div>
   )
 }
