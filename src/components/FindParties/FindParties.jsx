@@ -64,7 +64,10 @@ export default function FindParties() {
     }
     try {
       const data = await axios.post(`${URL}party/search`, JSON_OBJECT);
-      setSearchResults(data.data.response.parties)
+      if(data.data.response!=null)
+        setSearchResults(data.data.response.parties)
+      else
+        setSearchResults(null)
       setLoadingParty(false);
       setNextDisabled(data.data.response.reachedEnd)
       setPrevDisabled(true)
@@ -117,7 +120,10 @@ export default function FindParties() {
     }
     try {
       const data = await axios.post(`${URL}party/search`, JSON_OBJECT);
-      setSearchResults(data.data.response.parties)
+      if(data.data.response!=null)
+        setSearchResults(data.data.response.parties)
+      else
+        setSearchResults(null)
       setLoadingParty(false);
       setPartyFailed(false);
       setPage(page+1)
@@ -146,7 +152,10 @@ export default function FindParties() {
     }
     try {
       const data = await axios.post(`${URL}party/search`, JSON_OBJECT);
-      setSearchResults(data.data.response.parties)
+      if(data.data.response!=null)
+        setSearchResults(data.data.response.parties)
+      else
+        setSearchResults(null)
       setLoadingParty(false);
       setPartyFailed(false);
       setNextDisabled(false);
