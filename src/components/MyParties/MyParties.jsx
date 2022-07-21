@@ -55,10 +55,10 @@ export default function MyParties() {
       <Link to={`/create-party`}><button className="create-new-party-button">Create a Party</button></Link>
         {parties!=null ? 
          <ul className="parties">
-          {parties.dmParties.slice(0).reverse().map((item, i) => {
+          {parties.dmParties.map((item, i) => {
             return <PartyCard key={i} party={item} role={"Dungeon Master"}/>
           })}
-          {parties.playerParties.slice(0).reverse().map((item, i) => {
+          {parties.playerParties.map((item, i) => {
             return <PartyCard key={i} party={item} role={"Player"}/>
           })}
         </ul>
