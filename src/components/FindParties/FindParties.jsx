@@ -146,7 +146,7 @@ export default function CreateParty() {
       </form>
       {bottom}
       <div className="button-20-container">
-        <button onClick={handlePrevious} className="previous-button button-20">Preivous</button>
+        <button onClick={handlePrevious} className="previous-button button-20">Previous</button>
         <button onClick={handleNext} className="next-button button-20">Next</button>
       </div>
     </div>
