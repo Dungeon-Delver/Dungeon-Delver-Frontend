@@ -10,7 +10,7 @@ import SearchCard from '../SearchCard/SearchCard.jsx';
 import Loader from '../Loader/Loader';
 import GetCurrentUser from '../../constants/GetCurrentUser';
 
-export default function CreateParty() {
+export default function FindParties() {
   const [activeExperience, setActiveExperience] = useState("")
   const [activeType, setActiveType] = useState("")
   const [activeGenre, setActiveGenre] = useState("")
@@ -21,6 +21,8 @@ export default function CreateParty() {
   const [partyFailed, setPartyFailed] = useState(false);
   const [error, setError] = useState("");
   const [page, setPage] = useState(1)
+  const [prevDisabled, setPrevDisabled] = useState(true);
+  const [nextDisabled, setNextDisabled] = useState(false);
 
   const [searchResults, setSearchResults] = useState("");
   const getCurrentUser = GetCurrentUser();
@@ -62,8 +64,10 @@ export default function CreateParty() {
     }
     try {
       const data = await axios.post(`${URL}party/search`, JSON_OBJECT);
-      setSearchResults(data.data.parties)
+      setSearchResults(data.data.response.parties)
       setLoadingParty(false);
+      setNextDisabled(data.data.response.reachedEnd)
+      setPrevDisabled(true)
       setPartyFailed(false);
       setPage(1)
     }
@@ -113,10 +117,12 @@ export default function CreateParty() {
     }
     try {
       const data = await axios.post(`${URL}party/search`, JSON_OBJECT);
-      setSearchResults(data.data.parties)
+      setSearchResults(data.data.response.parties)
       setLoadingParty(false);
       setPartyFailed(false);
       setPage(page+1)
+      setPrevDisabled(false)
+      setNextDisabled(data.data.response.reachedEnd)
     }
     catch (error){
       console.error(error)
@@ -140,10 +146,12 @@ export default function CreateParty() {
     }
     try {
       const data = await axios.post(`${URL}party/search`, JSON_OBJECT);
-      setSearchResults(data.data.parties)
+      setSearchResults(data.data.response.parties)
       setLoadingParty(false);
       setPartyFailed(false);
-      setPage(page+1)
+      setNextDisabled(false);
+      setPrevDisabled(data.data.response.reachedEnd)
+      setPage(page > 1 ? page-1 : 1)
     }
     catch (error){
       console.error(error)
@@ -175,16 +183,16 @@ export default function CreateParty() {
     bottom =
     <>
       <ul className="search-results">
-        {searchResults.slice(0).reverse().map((item, i) => {
+        {searchResults.map((item, i) => {
           return <SearchCard key={i} party={item} />
         })}
     </ul>
     <div className="button-20-container">
-      <button onClick={handlePrevious} className="previous-button button-20">Previous</button>
+      <button disabled={prevDisabled} onClick={handlePrevious} className="previous-button button-20">Previous</button>
       <div className="page-number">
         Page {page}
       </div>
-      <button onClick={handleNext} className="next-button button-20">Next</button>
+      <button disabled={nextDisabled} onClick={handleNext} className="next-button button-20">Next</button>
     </div>
   </>
   }
