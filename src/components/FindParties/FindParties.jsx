@@ -20,6 +20,7 @@ export default function CreateParty() {
   const [loadingParty, setLoadingParty] = useState(false);
   const [partyFailed, setPartyFailed] = useState(false);
   const [error, setError] = useState("");
+  const [page, setPage] = useState(1)
 
   const [searchResults, setSearchResults] = useState("");
   const getCurrentUser = GetCurrentUser();
@@ -64,6 +65,7 @@ export default function CreateParty() {
       setSearchResults(data.data.parties)
       setLoadingParty(false);
       setPartyFailed(false);
+      setPage(1)
     }
     catch (error){
       console.error(error)
@@ -97,12 +99,58 @@ export default function CreateParty() {
     handleSearchParty();
   }
 
-  const handleNext = () => {
-
+  const handleNext = async () => {
+    const user = await getCurrentUser();
+    const JSON_OBJECT = {
+      user: user.id,
+      searchParameters: {
+        experience: activeExperience,
+        type: activeType,
+        genre: activeGenre,
+        level: activeLevel,
+      },
+      last: searchResults[searchResults.length-1]
+    }
+    try {
+      const data = await axios.post(`${URL}party/search`, JSON_OBJECT);
+      setSearchResults(data.data.parties)
+      setLoadingParty(false);
+      setPartyFailed(false);
+      setPage(page+1)
+    }
+    catch (error){
+      console.error(error)
+      setPartyFailed(true);
+      setLoadingParty(false)
+      setError(error);
+    }
   }
 
-  const handlePrevious = () => {
-
+  const handlePrevious = async () => {
+    const user = await getCurrentUser();
+    const JSON_OBJECT = {
+      user: user.id,
+      searchParameters: {
+        experience: activeExperience,
+        type: activeType,
+        genre: activeGenre,
+        level: activeLevel,
+      },
+      first: searchResults[0]
+    }
+    try {
+      const data = await axios.post(`${URL}party/search`, JSON_OBJECT);
+      setSearchResults(data.data.parties)
+      setLoadingParty(false);
+      setPartyFailed(false);
+      setPage(page+1)
+    }
+    catch (error){
+      console.error(error)
+      setPartyFailed(true);
+      setLoadingParty(false)
+      setError(error);
+    }
   }
 
   var bottom;
@@ -124,15 +172,21 @@ export default function CreateParty() {
     </div>
   }
   else {
-    bottom = <><ul className="search-results">
-    {searchResults.slice(0).reverse().map((item, i) => {
-      return <SearchCard key={i} party={item} />
-    })}
-  </ul>
-  <div className="button-20-container">
-  <button onClick={handlePrevious} className="previous-button button-20">Previous</button>
-  <button onClick={handleNext} className="next-button button-20">Next</button>
-</div></>
+    bottom =
+    <>
+      <ul className="search-results">
+        {searchResults.slice(0).reverse().map((item, i) => {
+          return <SearchCard key={i} party={item} />
+        })}
+    </ul>
+    <div className="button-20-container">
+      <button onClick={handlePrevious} className="previous-button button-20">Previous</button>
+      <div className="page-number">
+        Page {page}
+      </div>
+      <button onClick={handleNext} className="next-button button-20">Next</button>
+    </div>
+  </>
   }
 
   return (
