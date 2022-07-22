@@ -14,8 +14,10 @@ export default function PartyChat({party, inParty}) {
   }
 
   const handleSendMessage = () => {
-    sendMessage(newMessage);
-    setNewMessage("");
+    if(newMessage !== "") {
+      sendMessage(newMessage);
+      setNewMessage("");
+    }
   };
 
 
@@ -23,6 +25,13 @@ export default function PartyChat({party, inParty}) {
     return (<div className="party-chat">
       <h1>Only party members can see the chat!</h1>
     </div>)
+  }
+
+  const handleKeyDown = (event) => {
+    if(event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault()
+      handleSendMessage();
+    }
   }
 
 
@@ -40,6 +49,7 @@ export default function PartyChat({party, inParty}) {
       {inParty==="dm" || inParty==="player" ? <><textarea
         value={newMessage}
         onChange={handleNewMessageChange}
+        onKeyDown={(event) => handleKeyDown(event)}
         placeholder="Write message..."
         className="new-message-input-field" /><button onClick={handleSendMessage} className="send-message-button">
           Send
