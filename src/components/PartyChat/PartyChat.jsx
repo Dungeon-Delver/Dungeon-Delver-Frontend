@@ -19,10 +19,10 @@ export default function PartyChat({party, inParty}) {
   };
 
 
-  if(inParty!=="dm" && inParty!=="player") {
-    return <div className="party-chat">
-      <h1>Join the party to see the chat!</h1>
-    </div>
+  if((inParty!=="dm" && inParty!=="player")&&party.status!=="Public") {
+    return (<div className="party-chat">
+      <h1>Only party members can see the chat!</h1>
+    </div>)
   }
 
 
@@ -30,22 +30,21 @@ export default function PartyChat({party, inParty}) {
     <div className="party-chat">
       <ol className="messages-list">
         {messages.map((message, i) => {
-          <li
+          return (<li
           key={i}
           className={classNames({"message-item": true, "my-message": message.ownedByCurrentUser, "received-message": !message.ownedByCurrentUser})}>
             {message.body}
-          </li>
+          </li>)
         })}
       </ol>
-      <textarea
+      {inParty==="dm" || inParty==="player" ? <><textarea
         value={newMessage}
         onChange={handleNewMessageChange}
         placeholder="Write message..."
-        className="new-message-input-field"
-      />
-      <button onClick={handleSendMessage} className="send-message-button">
-        Send
-      </button>
+        className="new-message-input-field" /><button onClick={handleSendMessage} className="send-message-button">
+          Send
+        </button></> : ""}
+      
     </div>
   )
 }
