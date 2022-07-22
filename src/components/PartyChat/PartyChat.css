@@ -18,6 +18,11 @@
   text-align: left;
 }
 
+.message-item:hover {
+  background-color: #bcbcbc;
+  border-radius: 15px;
+}
+
 .message-item {
   display: grid;
   grid-template-columns: 30px 1fr;

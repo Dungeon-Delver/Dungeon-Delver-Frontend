@@ -2,7 +2,6 @@ import {useState} from 'react'
 import "./PartyChat.css"
 import useChat from "../../hooks/useChat"
 import classNames from 'classnames'
-import userEvent from '@testing-library/user-event'
 
 //Stretch
 export default function PartyChat({party, inParty}) {
