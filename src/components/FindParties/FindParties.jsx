@@ -160,7 +160,14 @@ export default function FindParties() {
       setPartyFailed(false);
       setNextDisabled(false);
       setPrevDisabled(data.data.response.reachedEnd)
-      setPage(page > 1 ? page-1 : 1)
+      var newPage = page
+      if(page > 1) {
+        --newPage
+      }
+      if(newPage > 0 && data.data.response.reachedEnd) {
+        newPage = 1
+      }
+      setPage(newPage)
     }
     catch (error){
       console.error(error)
