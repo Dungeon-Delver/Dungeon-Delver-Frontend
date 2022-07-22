@@ -29,11 +29,6 @@
   grid-template-rows: 1fr;
 }
 
-.message-item.new-sender {
-  grid-template-columns: 30px 1fr;
-  grid-template-rows: 25px 1fr;
-}
-
 .chat-user {
   padding-left: 5px;
   font-weight: bold;
@@ -45,4 +40,16 @@
   overflow-wrap: break-word;
   max-width:  calc(100vw - 250px - 200px - 18px - 40px - 30px);
   white-space: pre-wrap;
+}
+
+@media screen and (max-width: 800px) {
+  .message-body{
+    max-width: calc(100vw - 200px - 18px - 40px - 30px);
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .message-body{
+    max-width: calc(100vw - 18px - 40px - 30px);
+  }
 }
