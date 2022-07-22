@@ -1,0 +1,42 @@
+.party-chat {
+  max-width: calc(100vw - 250px - 200px);
+}
+
+.chat-img-container {
+  width: 30px;
+  height: 30px;
+}
+
+.new-sender {
+  margin-top: 1.0625rem;
+}
+
+.message-item {
+  padding-top: 0.125rem;
+  padding-right: 48px;
+  margin-right: 10px;
+  text-align: left;
+}
+
+.message-item {
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  grid-template-rows: 1fr;
+}
+
+.message-item.new-sender {
+  grid-template-columns: 30px 1fr;
+  grid-template-rows: 25px 1fr;
+}
+
+.chat-user {
+  padding-left: 5px;
+  font-weight: bold;
+}
+
+.message-body {
+  grid-column: 2;
+  padding-left: 5px;
+  overflow-wrap: break-word;
+  max-width:  calc(100vw - 250px - 200px - 18px - 40px - 30px);
+}
