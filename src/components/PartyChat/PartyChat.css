@@ -12,7 +12,7 @@
 }
 
 .message-item {
-  padding-top: 0.125rem;
+  padding-top: 0.175rem;
   padding-right: 48px;
   margin-right: 10px;
   text-align: left;
@@ -39,4 +39,5 @@
   padding-left: 5px;
   overflow-wrap: break-word;
   max-width:  calc(100vw - 250px - 200px - 18px - 40px - 30px);
+  white-space: pre-wrap;
 }
