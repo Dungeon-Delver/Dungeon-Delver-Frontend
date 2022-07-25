@@ -58,8 +58,9 @@ export default function PartyChat({party, inParty}) {
 
 function ChatMessage({message, prevMessage}) {
   const newSender = prevMessage===true || prevMessage.senderId !== message.senderId
+  const liClassNames = classNames({"message-item": true, "my-message": message.ownedByCurrentUser, "received-message": !message.ownedByCurrentUser, "new-sender" : newSender})
   return (<li
-    className={classNames({"message-item": true, "my-message": message.ownedByCurrentUser, "received-message": !message.ownedByCurrentUser, "new-sender" : newSender})}>
+    className={liClassNames}>
       {newSender ?
         <><div className="chat-img-container"><img src={message.user.picture} alt={message.user.name} /></div><div className="chat-user">{message.user.username}</div></>
       : ""}
