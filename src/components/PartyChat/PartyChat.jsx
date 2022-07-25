@@ -60,7 +60,8 @@ export default function PartyChat({party, inParty}) {
         onChange={handleNewMessageChange}
         onKeyDown={(event) => handleKeyDown(event)}
         placeholder="Write message..."
-        className="new-message-input-field" /><button onClick={handleSendMessage} className="send-message-button">
+        className="new-message-input-field" />
+        <button onClick={handleSendMessage} className="send-message-button button-46">
           Send
         </button></> : ""}
       
