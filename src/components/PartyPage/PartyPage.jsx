@@ -75,7 +75,6 @@ export default function PartyPage() {
       <Loader />
     )
   }
-  console.log(party)
   if(party==="Not Found") {
     return(<NotFound />)
   }
