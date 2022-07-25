@@ -15,7 +15,7 @@ export default function PartyChat({party, inParty}) {
 
   const handleSendMessage = () => {
     if(newMessage !== "") {
-      sendMessage(newMessage);
+      sendMessage(newMessage, party);
       setNewMessage("");
     }
   };

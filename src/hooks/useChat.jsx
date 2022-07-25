@@ -45,11 +45,12 @@ export default function useChat (partyId)  {
     }
   }, [partyId, curUser.id]);
 
-  const sendMessage = async (messageBody) => {
+  const sendMessage = async (messageBody, party) => {
     const currentUser = await getCurrentUser();
     socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
       body: messageBody,
-      senderId: currentUser.id
+      senderId: currentUser.id,
+      partyId: party.party.objectId
     })
   }
 
