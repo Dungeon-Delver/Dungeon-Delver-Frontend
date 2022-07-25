@@ -14,9 +14,19 @@ export default function PartyChat({party, inParty}) {
   }
 
   const handleSendMessage = () => {
-    sendMessage(newMessage);
-    setNewMessage("");
+    if(newMessage !== "") {
+      sendMessage(newMessage, party);
+      setNewMessage("");
+    }
   };
+
+
+  const handleKeyDown = (event) => {
+    if(event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault()
+      handleSendMessage();
+    }
+  }
 
 
   if((inParty!=="dm" && inParty!=="player")&&party.status!=="Public") {
@@ -30,16 +40,13 @@ export default function PartyChat({party, inParty}) {
     <div className="party-chat">
       <ol className="messages-list">
         {messages.map((message, i) => {
-          return (<li
-          key={i}
-          className={classNames({"message-item": true, "my-message": message.ownedByCurrentUser, "received-message": !message.ownedByCurrentUser})}>
-            {message.body}
-          </li>)
+          return(<ChatMessage key={i} message={message} prevMessage={i === 0 ? true : messages[i-1]}/>)
         })}
       </ol>
       {inParty==="dm" || inParty==="player" ? <><textarea
         value={newMessage}
         onChange={handleNewMessageChange}
+        onKeyDown={(event) => handleKeyDown(event)}
         placeholder="Write message..."
         className="new-message-input-field" /><button onClick={handleSendMessage} className="send-message-button">
           Send
@@ -48,3 +55,15 @@ export default function PartyChat({party, inParty}) {
     </div>
   )
 }
+
+function ChatMessage({message, prevMessage}) {
+  const newSender = prevMessage===true || prevMessage.senderId !== message.senderId
+  const liClassNames = classNames({"message-item": true, "my-message": message.ownedByCurrentUser, "received-message": !message.ownedByCurrentUser, "new-sender" : newSender})
+  return (<li
+    className={liClassNames}>
+      {newSender ?
+        <><div className="chat-img-container"><img src={message.user.picture} alt={message.user.name} /></div><div className="chat-user">{message.user.username}</div></>
+      : ""}
+      <div className="message-body">{message.body}</div>
+    </li>)
+  }
