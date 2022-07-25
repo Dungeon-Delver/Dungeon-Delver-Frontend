@@ -1,0 +1,13 @@
+.not-found {
+  max-height: calc(100vh - 75px);
+}
+
+.not-found .not-found-link .image-container {
+  max-height: 500px;
+  width: auto;
+}
+
+.not-found .not-found-link .image-container img {
+  max-height: auto;
+  max-width: 350px;
+}
