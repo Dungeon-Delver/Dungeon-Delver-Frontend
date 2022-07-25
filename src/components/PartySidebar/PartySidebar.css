@@ -22,15 +22,15 @@
   }
   .party-sidebar .sidebar-icon {
     display: block;
-    position: absolute;
-    top: 2px;
+    position: fixed;
+    top: 78px;
     left: 0;
-    z-index: 2;
+    z-index: 10;
   }
 
   .party-sidebar.navbar-is-open .sidebar-icon {
-    position: absolute;
-    top: 2px;
+    position: fixed;
+    top: 188px;
     left: 2px;
   }
 

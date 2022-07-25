@@ -3,12 +3,16 @@ import "./PartyChat.css"
 import useChat from "../../hooks/useChat"
 import classNames from 'classnames'
 import ReactTextareaAutosize from 'react-textarea-autosize'
+import { useRecoilValue } from 'recoil'
+import { navbarOpen } from '../../recoil/atoms/atoms'
 
 //Stretch
 export default function PartyChat({party, inParty}) {
   const partyId = party.party.objectId
   const {messages, sendMessage} = useChat(partyId)
   const [newMessage, setNewMessage] = useState("")
+  const openNavbar = useRecoilValue(navbarOpen);
+
 
   const handleNewMessageChange = (event) => {
     setNewMessage(event.target.value);
@@ -38,7 +42,7 @@ export default function PartyChat({party, inParty}) {
 
 
   return (
-    <div className="party-chat">
+    <div className={classNames({"party-chat": true, "navbar-is-open": openNavbar})}>
       <ol className="messages-list">
         {messages.map((message, i) => {
           return(<ChatMessage key={i} message={message} prevMessage={i === 0 ? true : messages[i-1]}/>)

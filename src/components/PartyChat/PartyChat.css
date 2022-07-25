@@ -1,5 +1,13 @@
 .party-chat {
   width: calc(100vw - 250px - 200px);
+  height: calc(100vh - 106px);
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.party-chat.navbar-is-open {
+  height: calc(100vh - 216px);
 }
 
 .chat-img-container {
@@ -20,6 +28,8 @@
 
 .messages-list {
     max-width: calc(100vw - 250px - 200px - 15px - 30px);
+    overscroll-behavior: contain;
+    overflow-y: scroll;
 }
 
 .message-item:hover {
@@ -48,36 +58,35 @@
 }
 
 .new-message-input-field {
-  width: 100%;
+  width: calc(100% - 6px);
+  border-radius: 5px;
   max-width: 100%;
   min-height: 50px;
+  resize: none;
 }
 
 
 @media screen and (max-width: 800px) {
-
+  .party-chat {
+    width: calc(100vw - 200px);
+  }
   .messages-list {
     max-width: calc(100vw - 200px - 15px - 30px);
 }
   .message-body{
     max-width: calc(100vw  - 200px - 18px - 40px - 30px)
   }
-
-  .party-chat {
-    width: 100%;
-  }
 }
 
 @media screen and (max-width: 500px) {
+  .party-chat {
+    width: 100vw;
+  }
   .messages-list {
     max-width: calc(100vw - 15px - 30px);
 }
   
   .message-body{
     max-width: calc(100vw  - 18px - 40px - 30px)
-  }
-
-  .party-chat {
-    width: 100%;
   }
 }
