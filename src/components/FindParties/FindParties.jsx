@@ -64,10 +64,7 @@ export default function FindParties() {
     }
     try {
       const data = await axios.post(`${URL}party/search`, JSON_OBJECT);
-      if(data.data.response!=null)
-        setSearchResults(data.data.response.parties)
-      else
-        setSearchResults(null)
+      setSearchResults(data.data.response?.parties ?? null)
       setLoadingParty(false);
       setNextDisabled(data.data.response.reachedEnd)
       setPrevDisabled(true)
@@ -120,10 +117,7 @@ export default function FindParties() {
     }
     try {
       const data = await axios.post(`${URL}party/search`, JSON_OBJECT);
-      if(data.data.response!=null)
-        setSearchResults(data.data.response.parties)
-      else
-        setSearchResults(null)
+      setSearchResults(data.data.response?.parties ?? null)
       setLoadingParty(false);
       setPartyFailed(false);
       setPage(page+1)
@@ -152,22 +146,25 @@ export default function FindParties() {
     }
     try {
       const data = await axios.post(`${URL}party/search`, JSON_OBJECT);
-      if(data.data.response!=null)
+      if(data.data.response!=null) {
         setSearchResults(data.data.response.parties)
-      else
-        setSearchResults(null)
+        setPrevDisabled(data.data.response.reachedEnd)
+        setNextDisabled(false);
+        var newPage = page
+        if(page > 1) {
+          --newPage
+        }
+        if(newPage > 0 && data.data.response.reachedEnd) {
+          newPage = 1
+        }
+        setPage(newPage)
+      }
+      else {
+        setPage(1)
+        setPrevDisabled(true)
+      }
       setLoadingParty(false);
       setPartyFailed(false);
-      setNextDisabled(false);
-      setPrevDisabled(data.data.response.reachedEnd)
-      var newPage = page
-      if(page > 1) {
-        --newPage
-      }
-      if(newPage > 0 && data.data.response.reachedEnd) {
-        newPage = 1
-      }
-      setPage(newPage)
     }
     catch (error){
       console.error(error)
