@@ -61,10 +61,10 @@ export default function PartySidebar({party}) {
     <div className={classNames({"party-sidebar": true, "responsive": openSidebar, "navbar-is-open": openNavbar})}>
         {parties!=null ? 
          <ul className="parties-list">
-          {parties.dmParties.slice(0).reverse().map((item, i) => {
+          {parties.dmParties.map((item, i) => {
             return <PartySidebarCard key={i} currentParty={party} party={item} role={"Dungeon Master"}/>
           })}
-          {parties.playerParties.slice(0).reverse().map((item, i) => {
+          {parties.playerParties.map((item, i) => {
             return <PartySidebarCard key={i} currentParty={party} party={item} role={"Player"}/>
           })}
         </ul>
