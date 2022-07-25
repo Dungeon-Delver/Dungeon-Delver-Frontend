@@ -44,7 +44,7 @@ export default function CreateParty() {
       setActiveSelector: setActiveGenre
     }, {
       category: "party level",
-      selectors:["1-4", "5-8", "9-12", "13-16", "17-20", "Any"],
+      selectors:["1-4", "5-8", "9-12", "13-16", "17-20"],
       activeSelector: activeLevel,
       setActiveSelector: setActiveLevel
     }, {

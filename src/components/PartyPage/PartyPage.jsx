@@ -38,7 +38,7 @@ export default function PartyPage() {
   }, [params.partyId]);
 
   const checkPermissions = (members) => {
-    var inPartyVal = 0;
+    let inPartyVal = 0;
     if(user.id === members.dm.objectId) {
       inPartyVal = "dm"
     }
