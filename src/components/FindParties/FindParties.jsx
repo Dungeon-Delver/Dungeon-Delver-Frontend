@@ -10,7 +10,7 @@ import SearchCard from '../SearchCard/SearchCard.jsx';
 import Loader from '../Loader/Loader';
 import GetCurrentUser from '../../constants/GetCurrentUser';
 
-export default function CreateParty() {
+export default function FindParties() {
   const [activeExperience, setActiveExperience] = useState("")
   const [activeType, setActiveType] = useState("")
   const [activeGenre, setActiveGenre] = useState("")
@@ -20,6 +20,9 @@ export default function CreateParty() {
   const [loadingParty, setLoadingParty] = useState(false);
   const [partyFailed, setPartyFailed] = useState(false);
   const [error, setError] = useState("");
+  const [page, setPage] = useState(1)
+  const [prevDisabled, setPrevDisabled] = useState(true);
+  const [nextDisabled, setNextDisabled] = useState(false);
 
   const [searchResults, setSearchResults] = useState("");
   const getCurrentUser = GetCurrentUser();
@@ -61,9 +64,12 @@ export default function CreateParty() {
     }
     try {
       const data = await axios.post(`${URL}party/search`, JSON_OBJECT);
-      setSearchResults(data.data.parties)
+      setSearchResults(data.data.response?.parties ?? null)
       setLoadingParty(false);
+      setNextDisabled(data.data.response.reachedEnd)
+      setPrevDisabled(true)
       setPartyFailed(false);
+      setPage(1)
     }
     catch (error){
       console.error(error)
@@ -97,7 +103,78 @@ export default function CreateParty() {
     handleSearchParty();
   }
 
-  var bottom;
+  const handleNext = async () => {
+    const user = await getCurrentUser();
+    const JSON_OBJECT = {
+      user: user.id,
+      searchParameters: {
+        experience: activeExperience,
+        type: activeType,
+        genre: activeGenre,
+        level: activeLevel,
+      },
+      last: searchResults[searchResults.length-1]
+    }
+    try {
+      const data = await axios.post(`${URL}party/search`, JSON_OBJECT);
+      setSearchResults(data.data.response?.parties ?? null)
+      setLoadingParty(false);
+      setPartyFailed(false);
+      setPage(page+1)
+      setPrevDisabled(false)
+      setNextDisabled(data.data.response.reachedEnd)
+    }
+    catch (error){
+      console.error(error)
+      setPartyFailed(true);
+      setLoadingParty(false)
+      setError(error);
+    }
+  }
+
+  const handlePrevious = async () => {
+    const user = await getCurrentUser();
+    const JSON_OBJECT = {
+      user: user.id,
+      searchParameters: {
+        experience: activeExperience,
+        type: activeType,
+        genre: activeGenre,
+        level: activeLevel,
+      },
+      first: searchResults[0]
+    }
+    try {
+      const data = await axios.post(`${URL}party/search`, JSON_OBJECT);
+      if(data.data.response!=null) {
+        setSearchResults(data.data.response.parties)
+        setPrevDisabled(data.data.response.reachedEnd)
+        setNextDisabled(false);
+        let newPage = page
+        if(page > 1) {
+          --newPage
+        }
+        if(newPage > 0 && data.data.response.reachedEnd) {
+          newPage = 1
+        }
+        setPage(newPage)
+      }
+      else {
+        setPage(1)
+        setPrevDisabled(true)
+      }
+      setLoadingParty(false);
+      setPartyFailed(false);
+    }
+    catch (error){
+      console.error(error)
+      setPartyFailed(true);
+      setLoadingParty(false)
+      setError(error);
+    }
+  }
+
+  let bottom;
 
   if(loadingParty) {
     bottom = <Loader />
@@ -116,11 +193,21 @@ export default function CreateParty() {
     </div>
   }
   else {
-    bottom = <ul className="search-results">
-    {searchResults.slice(0).reverse().map((item, i) => {
-      return <SearchCard key={i} party={item} />
-    })}
-  </ul>
+    bottom =
+    <>
+      <ul className="search-results">
+        {searchResults.map((item, i) => {
+          return <SearchCard key={i} party={item} />
+        })}
+    </ul>
+    <div className="button-20-container">
+      <button disabled={prevDisabled} onClick={handlePrevious} className="previous-button button-20">Previous</button>
+      <div className="page-number">
+        Page {page}
+      </div>
+      <button disabled={nextDisabled} onClick={handleNext} className="next-button button-20">Next</button>
+    </div>
+  </>
   }
 
   return (
