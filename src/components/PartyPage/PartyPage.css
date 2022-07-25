@@ -1,6 +1,8 @@
 .party-page {
   display: grid;
-  grid-template-columns: 200px 1fr 250px
+  grid-template-columns: 200px 1fr 250px;
+  max-height: calc(100vh - 75px);
+  overflow: scroll;
 }
 
 .party-sidebar {

@@ -1,11 +1,18 @@
 .party-sidebar {
-  min-height: 100vh;
   background-color: #d5d5d5;
+  height: 100%;
+  overflow-y: scroll;
+  max-height: calc(100vh - 76px);
 }
 
 .sidebar-icon {
   display: none;
   cursor: pointer;
+}
+
+.party-sidebar.navbar-is-open {
+  top: 186px;
+  max-height: calc(100vh - 186px);
 }
 
 
@@ -32,11 +39,9 @@
     max-width: 200px;
     top: 76px;
     left: 0px;
+    max-height: calc(100vh - 76px);
   }
 
-  .party-sidebar.navbar-is-open {
-    top: 186px;
-  }
   .party-sidebar.responsive ul{
     display: grid;
     z-index: 1;

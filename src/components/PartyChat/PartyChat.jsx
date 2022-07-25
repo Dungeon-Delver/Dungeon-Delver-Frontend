@@ -2,6 +2,7 @@ import {useState} from 'react'
 import "./PartyChat.css"
 import useChat from "../../hooks/useChat"
 import classNames from 'classnames'
+import ReactTextareaAutosize from 'react-textarea-autosize'
 
 //Stretch
 export default function PartyChat({party, inParty}) {
@@ -43,7 +44,7 @@ export default function PartyChat({party, inParty}) {
           return(<ChatMessage key={i} message={message} prevMessage={i === 0 ? true : messages[i-1]}/>)
         })}
       </ol>
-      {inParty==="dm" || inParty==="player" ? <><textarea
+      {inParty==="dm" || inParty==="player" ? <><ReactTextareaAutosize
         value={newMessage}
         onChange={handleNewMessageChange}
         onKeyDown={(event) => handleKeyDown(event)}
