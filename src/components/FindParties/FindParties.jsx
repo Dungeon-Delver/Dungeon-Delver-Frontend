@@ -150,7 +150,7 @@ export default function FindParties() {
         setSearchResults(data.data.response.parties)
         setPrevDisabled(data.data.response.reachedEnd)
         setNextDisabled(false);
-        var newPage = page
+        let newPage = page
         if(page > 1) {
           --newPage
         }
@@ -174,7 +174,7 @@ export default function FindParties() {
     }
   }
 
-  var bottom;
+  let bottom;
 
   if(loadingParty) {
     bottom = <Loader />
