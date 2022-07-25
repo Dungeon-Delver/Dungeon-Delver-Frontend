@@ -5,3 +5,19 @@
 .find-parties-form button {
   margin-top: 10px;
 }
+
+.search-results {
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: repeat( auto-fit, 600px );
+  grid-template-rows: 1fr;
+  grid-gap: 10px;
+  justify-content: space-around;
+  align-content: center;
+}
+
+@media screen and (max-width: 600px) {
+  .search-results {
+    grid-template-columns: repeat( auto-fit, 100% );
+  }
+}
