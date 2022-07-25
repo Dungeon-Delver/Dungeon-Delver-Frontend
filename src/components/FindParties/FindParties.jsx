@@ -57,10 +57,17 @@ export default function FindParties() {
       user: user.id,
       searchParameters: {
         experience: activeExperience,
-        type: activeType,
-        genre: activeGenre,
-        level: activeLevel,
       },
+    }
+
+    if(activeType !== "Any Type") {
+      JSON_OBJECT.searchParameters.type = activeType
+    }
+    if(activeGenre !== "Any Genre") {
+      JSON_OBJECT.searchParameters.genre = activeGenre
+    }
+    if(activeLevel !== "Any Level") {
+      JSON_OBJECT.searchParameters.level = activeLevel
     }
     try {
       const data = await axios.post(`${BACKEND_URL}party/search`, JSON_OBJECT);
