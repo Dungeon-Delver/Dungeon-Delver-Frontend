@@ -5,7 +5,7 @@ import axios from 'axios';
 
 
 import classNames from 'classnames';
-import { URL } from '../../constants/constants';
+import { BACKEND_URL } from '../../constants/constants';
 import SearchCard from '../SearchCard/SearchCard.jsx';
 import Loader from '../Loader/Loader';
 import GetCurrentUser from '../../constants/GetCurrentUser';
@@ -63,7 +63,7 @@ export default function FindParties() {
       },
     }
     try {
-      const data = await axios.post(`${URL}party/search`, JSON_OBJECT);
+      const data = await axios.post(`${BACKEND_URL}party/search`, JSON_OBJECT);
       setSearchResults(data.data.response?.parties ?? null)
       setLoadingParty(false);
       setNextDisabled(data.data.response.reachedEnd)
@@ -116,7 +116,7 @@ export default function FindParties() {
       last: searchResults[searchResults.length-1]
     }
     try {
-      const data = await axios.post(`${URL}party/search`, JSON_OBJECT);
+      const data = await axios.post(`${BACKEND_URL}party/search`, JSON_OBJECT);
       setSearchResults(data.data.response?.parties ?? null)
       setLoadingParty(false);
       setPartyFailed(false);
@@ -145,7 +145,7 @@ export default function FindParties() {
       first: searchResults[0]
     }
     try {
-      const data = await axios.post(`${URL}party/search`, JSON_OBJECT);
+      const data = await axios.post(`${BACKEND_URL}party/search`, JSON_OBJECT);
       if(data.data.response!=null) {
         setSearchResults(data.data.response.parties)
         setPrevDisabled(data.data.response.reachedEnd)
