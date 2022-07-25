@@ -30,6 +30,7 @@
     max-width: calc(100vw - 250px - 200px - 15px - 30px);
     overscroll-behavior: contain;
     overflow-y: scroll;
+    margin-bottom: 0px;
 }
 
 .message-item:hover {

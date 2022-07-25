@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import "./PartyChat.css"
 import useChat from "../../hooks/useChat"
 import classNames from 'classnames'
@@ -12,6 +12,12 @@ export default function PartyChat({party, inParty}) {
   const {messages, sendMessage} = useChat(partyId)
   const [newMessage, setNewMessage] = useState("")
   const openNavbar = useRecoilValue(navbarOpen);
+
+  const messagesList = useRef(null);
+
+  useEffect(() => {
+    messagesList.current?.scrollIntoView({behavior: 'smooth'});
+  }, [messages]);
 
 
   const handleNewMessageChange = (event) => {
@@ -47,6 +53,7 @@ export default function PartyChat({party, inParty}) {
         {messages.map((message, i) => {
           return(<ChatMessage key={i} message={message} prevMessage={i === 0 ? true : messages[i-1]}/>)
         })}
+        <div ref={messagesList}></div>
       </ol>
       {inParty==="dm" || inParty==="player" ? <><ReactTextareaAutosize
         value={newMessage}
