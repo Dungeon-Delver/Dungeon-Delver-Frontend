@@ -4,7 +4,7 @@ import useChat from "../../hooks/useChat"
 import classNames from 'classnames'
 import ReactTextareaAutosize from 'react-textarea-autosize'
 import { useRecoilValue } from 'recoil'
-import { navbarOpen } from '../../recoil/atoms/atoms'
+import { currentUser, navbarOpen } from '../../recoil/atoms/atoms'
 import axios from 'axios'
 import { BACKEND_URL } from '../../constants/constants'
 
@@ -16,6 +16,7 @@ export default function PartyChat({party, inParty}) {
   const [newMessage, setNewMessage] = useState("")
   const openNavbar = useRecoilValue(navbarOpen);
   const [loadingMessages, setLoadingMessages] = useState(true)
+  const user = useRecoilValue(currentUser)
 
   const messagesList = useRef(null);
 
@@ -24,11 +25,11 @@ export default function PartyChat({party, inParty}) {
     try {
       let response
       if(firstMessage!=null) 
-        response = await axios.post(`${BACKEND_URL}party/${partyId}/messages/`, {firstMessage: firstMessage})
+        response = await axios.post(`${BACKEND_URL}party/${partyId}/messages/`, {firstMessage: firstMessage, userId: user.id})
       else {
-        response = await axios.post(`${BACKEND_URL}party/${partyId}/messages/`, {})
+        response = await axios.post(`${BACKEND_URL}party/${partyId}/messages/`, {userId: user.id})
       }
-      console.log(response)
+      setMessages(response.data.messages.messages)
       setLoadingMessages(false)
     }
     catch (err) {
@@ -71,7 +72,9 @@ export default function PartyChat({party, inParty}) {
       <h1>Only party members can see the chat!</h1>
     </div>)
   }
-
+  if(loadingMessages) {
+    return <>Loading</>
+  }
 
   return (
     <div className={classNames({"party-chat": true, "navbar-is-open": openNavbar})}>
@@ -101,7 +104,7 @@ function ChatMessage({message, prevMessage}) {
   return (<li
     className={liClassNames}>
       {newSender ?
-        <><div className="chat-img-container"><img src={message.user.picture} alt={message.user.name} /></div><div className="chat-user">{message.user.username}</div></>
+        <><div className="chat-img-container"><img src={message.user.picture} alt={message.user.username} /></div><div className="chat-user">{message.user.username}</div></>
       : ""}
       <div className="message-body">{message.body}</div>
     </li>)
