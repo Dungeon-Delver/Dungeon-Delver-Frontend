@@ -86,7 +86,7 @@ export default function PartyChat({party, inParty}) {
   return (
     <div className={classNames({"party-chat": true, "navbar-is-open": openNavbar})}>
       <ol className="messages-list">
-        <button className={"load-more-messages"} disabled={reachedTop} onClick={() => loadMore(messages[0])}>Load More</button>
+        <button className={"load-more-messages button-81"} disabled={reachedTop} onClick={() => loadMore(messages[0])}>Load More</button>
         {messages.map((message, i) => {
           return(<ChatMessage key={i} message={message} prevMessage={i === 0 ? true : messages[i-1]}/>)
         })}
