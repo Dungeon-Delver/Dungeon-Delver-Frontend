@@ -13,13 +13,13 @@ export default function PartyChat({party, inParty}) {
   const partyId = party.party.objectId
   const [messages, setMessages] = useState([]);
   const [lastMessage, setLastMessage] = useState(null)
-  const {sendMessage} = useChat(partyId, messages, setMessages, setLastMessage)
   const [newMessage, setNewMessage] = useState("")
   const openNavbar = useRecoilValue(navbarOpen);
   const [loadingMessages, setLoadingMessages] = useState(true)
   const user = useRecoilValue(currentUser)
   const [reachedTop, setReachedTop] = useState(false)
-
+  const [pendingMessages, setPendingMessages] = useState([])
+  const {sendMessage} = useChat(partyId, messages, setMessages, setLastMessage, pendingMessages, setPendingMessages)
 
   const messagesListBottom = useRef(null);
 
@@ -82,13 +82,15 @@ export default function PartyChat({party, inParty}) {
   if(loadingMessages) {
     return <>Loading</>
   }
-
   return (
     <div className={classNames({"party-chat": true, "navbar-is-open": openNavbar})}>
       <ol className="messages-list">
         <button className={"load-more-messages button-81"} disabled={reachedTop} onClick={() => loadMore(messages[0])}>Load More</button>
         {messages.map((message, i) => {
           return(<ChatMessage key={i} message={message} prevMessage={i === 0 ? true : messages[i-1]}/>)
+        })}
+        {pendingMessages.map((message, i) => {
+          return <ChatMessage key={i} message={message} prevMessage={i === 0 ? messages[messages.length-1]: pendingMessages[i-1]} />
         })}
         <div ref={messagesListBottom}></div>
       </ol>
