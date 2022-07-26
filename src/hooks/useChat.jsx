@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { useRecoilValue } from "recoil";
 import socketIOClient from "socket.io-client";
 import { BACKEND_URL, CHAT_SERVER_URL } from "../constants/constants";
@@ -8,8 +8,7 @@ import { currentUser } from "../recoil/atoms/atoms";
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event
 
-export default function useChat (partyId)  {
-  const [messages, setMessages] = useState([]);
+export default function useChat (partyId, messages, setMessages)  {
   const socketRef = useRef();
 
   const getCurrentUser = GetCurrentUser();
@@ -43,6 +42,7 @@ export default function useChat (partyId)  {
     return () => {
       socketRef.current.disconnect()
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [partyId, curUser.id]);
 
   const sendMessage = async (messageBody, party) => {
