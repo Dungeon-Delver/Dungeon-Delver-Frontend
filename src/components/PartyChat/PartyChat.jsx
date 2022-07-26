@@ -19,7 +19,7 @@ export default function PartyChat({party, inParty}) {
   const user = useRecoilValue(currentUser)
   const [reachedTop, setReachedTop] = useState(false)
   const [pendingMessages, setPendingMessages] = useState([])
-  const {sendMessage} = useChat(partyId, messages, setMessages, setLastMessage, pendingMessages, setPendingMessages)
+  const {sendMessage} = useChat(partyId, setMessages, setLastMessage, pendingMessages, setPendingMessages)
 
   const messagesListBottom = useRef(null);
 
@@ -50,9 +50,19 @@ export default function PartyChat({party, inParty}) {
   }, [])
 
   useEffect(() => {
+    if(lastMessage!==null) {
+      if(lastMessage.senderId === user.id) {
+        for(let i = 0; i < pendingMessages.length; i++) {
+          if(pendingMessages[i].body === lastMessage.body) {
+            setPendingMessages([...pendingMessages.slice(0,i), ...pendingMessages.slice(i+1)])
+            break;
+          }
+        }
+      }
+    }
     messagesListBottom.current?.scrollIntoView({behavior: 'smooth'});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastMessage]);
-
 
   const handleNewMessageChange = (event) => {
     setNewMessage(event.target.value);

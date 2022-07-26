@@ -8,20 +8,18 @@ import { currentUser } from "../recoil/atoms/atoms";
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event
 
-export default function useChat (partyId, messages, setMessages, setLastMessage, pendingMessages, setPendingMessages)  {
+export default function useChat (partyId, setMessages, setLastMessage, pendingMessages, setPendingMessages)  {
   const socketRef = useRef();
 
   const getCurrentUser = GetCurrentUser();
 
   const curUser = useRecoilValue(currentUser)
 
-
   useEffect(() => {
     socketRef.current = socketIOClient(CHAT_SERVER_URL, {query: {partyId}
   })
     const chatMessageEvent = async() => {
-      socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, async (message) => {
-       let userSender
+      socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, async (message) => {       let userSender
       try {
         const response = await axios.get(`${BACKEND_URL}user/${message.senderId}`)
         userSender = response.data.user
@@ -32,7 +30,7 @@ export default function useChat (partyId, messages, setMessages, setLastMessage,
       const incomingMessage = {
         ...message,
         user: userSender,
-        ownedByCurrentUser: message.senderID === curUser.id
+        ownedByCurrentUser: message.senderId === curUser.id
       };
       setMessages((messages) => [...messages, incomingMessage])
       setLastMessage(message)
@@ -48,7 +46,6 @@ export default function useChat (partyId, messages, setMessages, setLastMessage,
 
   const sendMessage = async (messageBody, party) => {
     const currentUser = await getCurrentUser();
-    
     setPendingMessages([...pendingMessages, {body: messageBody, senderId: currentUser.id, user: {username: currentUser.username, picture: currentUser.picture}}])
 
     socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
@@ -58,7 +55,7 @@ export default function useChat (partyId, messages, setMessages, setLastMessage,
     })
   }
 
-  return {messages, sendMessage}
+  return {sendMessage}
 }
 
 
