@@ -64,6 +64,10 @@ export default function PartyChat({party, inParty}) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastMessage]);
 
+  useEffect(() => {
+    messagesListBottom.current?.scrollIntoView({behavior: 'smooth'});
+  }, [pendingMessages])
+
   const handleNewMessageChange = (event) => {
     setNewMessage(event.target.value);
   }
