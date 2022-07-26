@@ -44,7 +44,7 @@ export default function FacebookOAuth() {
         // Set username and email to match facebook profile email
         userToLogin.set('username', response.name);
         userToLogin.set('email', userEmail);
-        userToLogin.set('picture', response.picture.data.url);        
+        userToLogin.set('picture', response.picture.data.url); 
         try {
          await userToLogin
           .linkWith('facebook', {

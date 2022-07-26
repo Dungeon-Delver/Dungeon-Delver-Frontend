@@ -8,7 +8,7 @@ import { currentUser } from "../recoil/atoms/atoms";
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event
 
-export default function useChat (partyId, messages, setMessages)  {
+export default function useChat (partyId, messages, setMessages, setLastMessage)  {
   const socketRef = useRef();
 
   const getCurrentUser = GetCurrentUser();
@@ -21,7 +21,7 @@ export default function useChat (partyId, messages, setMessages)  {
   })
     const chatMessageEvent = async() => {
       socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, async (message) => {
-       var userSender
+       let userSender
       try {
         const response = await axios.get(`${BACKEND_URL}user/${message.senderId}`)
         userSender = response.data.user
@@ -35,6 +35,7 @@ export default function useChat (partyId, messages, setMessages)  {
         ownedByCurrentUser: message.senderID === curUser.id
       };
       setMessages((messages) => [...messages, incomingMessage])
+      setLastMessage(message)
       })
   }
     chatMessageEvent()

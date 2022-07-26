@@ -12,24 +12,29 @@ import { BACKEND_URL } from '../../constants/constants'
 export default function PartyChat({party, inParty}) {
   const partyId = party.party.objectId
   const [messages, setMessages] = useState([]);
-  const {sendMessage} = useChat(partyId, messages, setMessages)
+  const [lastMessage, setLastMessage] = useState(null)
+  const {sendMessage} = useChat(partyId, messages, setMessages, setLastMessage)
   const [newMessage, setNewMessage] = useState("")
   const openNavbar = useRecoilValue(navbarOpen);
   const [loadingMessages, setLoadingMessages] = useState(true)
   const user = useRecoilValue(currentUser)
+  const [reachedTop, setReachedTop] = useState(false)
 
-  const messagesList = useRef(null);
+
+  const messagesListBottom = useRef(null);
 
   const loadMore = async (firstMessage) => {
     setLoadingMessages(true)
     try {
       let response
-      if(firstMessage!=null) 
+      if(firstMessage!=null) {
         response = await axios.post(`${BACKEND_URL}party/${partyId}/messages/`, {firstMessage: firstMessage, userId: user.id})
+      }
       else {
         response = await axios.post(`${BACKEND_URL}party/${partyId}/messages/`, {userId: user.id})
       }
-      setMessages(response.data.messages.messages)
+      setMessages([...response.data.messages.messages, ...messages])
+      setReachedTop(response.data.messages.reachedEnd)
       setLoadingMessages(false)
     }
     catch (err) {
@@ -39,12 +44,14 @@ export default function PartyChat({party, inParty}) {
   }
 
   useEffect(() => {
-    loadMore(null)
+     
+    loadMore(null)    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    messagesList.current?.scrollIntoView({behavior: 'smooth'});
-  }, [messages]);
+    messagesListBottom.current?.scrollIntoView({behavior: 'smooth'});
+  }, [lastMessage]);
 
 
   const handleNewMessageChange = (event) => {
@@ -79,10 +86,11 @@ export default function PartyChat({party, inParty}) {
   return (
     <div className={classNames({"party-chat": true, "navbar-is-open": openNavbar})}>
       <ol className="messages-list">
+        <button className={"load-more-messages"} disabled={reachedTop} onClick={() => loadMore(messages[0])}>Load More</button>
         {messages.map((message, i) => {
           return(<ChatMessage key={i} message={message} prevMessage={i === 0 ? true : messages[i-1]}/>)
         })}
-        <div ref={messagesList}></div>
+        <div ref={messagesListBottom}></div>
       </ol>
       {inParty==="dm" || inParty==="player" ? <><ReactTextareaAutosize
         value={newMessage}
