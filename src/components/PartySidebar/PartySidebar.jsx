@@ -69,7 +69,7 @@ export default function PartySidebar({party}) {
           })}
         </ul>
         : ""}
-        <div className="sidebar-icon" onClick={toggleSidebar}>☰</div>
+        <div className="sidebar-icon" onClick={toggleSidebar}>📜</div>
     </div>
   )
 }

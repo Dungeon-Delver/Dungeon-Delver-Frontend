@@ -1,13 +1,51 @@
-import {useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import "./PartyChat.css"
 import useChat from "../../hooks/useChat"
 import classNames from 'classnames'
+import ReactTextareaAutosize from 'react-textarea-autosize'
+import { useRecoilValue } from 'recoil'
+import { currentUser, navbarOpen } from '../../recoil/atoms/atoms'
+import axios from 'axios'
+import { BACKEND_URL } from '../../constants/constants'
 
 //Stretch
 export default function PartyChat({party, inParty}) {
   const partyId = party.party.objectId
-  const {messages, sendMessage} = useChat(partyId)
+  const [messages, setMessages] = useState([]);
+  const {sendMessage} = useChat(partyId, messages, setMessages)
   const [newMessage, setNewMessage] = useState("")
+  const openNavbar = useRecoilValue(navbarOpen);
+  const [loadingMessages, setLoadingMessages] = useState(true)
+  const user = useRecoilValue(currentUser)
+
+  const messagesList = useRef(null);
+
+  const loadMore = async (firstMessage) => {
+    setLoadingMessages(true)
+    try {
+      let response
+      if(firstMessage!=null) 
+        response = await axios.post(`${BACKEND_URL}party/${partyId}/messages/`, {firstMessage: firstMessage, userId: user.id})
+      else {
+        response = await axios.post(`${BACKEND_URL}party/${partyId}/messages/`, {userId: user.id})
+      }
+      setMessages(response.data.messages.messages)
+      setLoadingMessages(false)
+    }
+    catch (err) {
+      console.error(err)
+      setLoadingMessages(false)
+    }
+  }
+
+  useEffect(() => {
+    loadMore(null)
+  }, [])
+
+  useEffect(() => {
+    messagesList.current?.scrollIntoView({behavior: 'smooth'});
+  }, [messages]);
+
 
   const handleNewMessageChange = (event) => {
     setNewMessage(event.target.value);
@@ -34,21 +72,25 @@ export default function PartyChat({party, inParty}) {
       <h1>Only party members can see the chat!</h1>
     </div>)
   }
-
+  if(loadingMessages) {
+    return <>Loading</>
+  }
 
   return (
-    <div className="party-chat">
+    <div className={classNames({"party-chat": true, "navbar-is-open": openNavbar})}>
       <ol className="messages-list">
         {messages.map((message, i) => {
           return(<ChatMessage key={i} message={message} prevMessage={i === 0 ? true : messages[i-1]}/>)
         })}
+        <div ref={messagesList}></div>
       </ol>
-      {inParty==="dm" || inParty==="player" ? <><textarea
+      {inParty==="dm" || inParty==="player" ? <><ReactTextareaAutosize
         value={newMessage}
         onChange={handleNewMessageChange}
         onKeyDown={(event) => handleKeyDown(event)}
         placeholder="Write message..."
-        className="new-message-input-field" /><button onClick={handleSendMessage} className="send-message-button">
+        className="new-message-input-field" />
+        <button onClick={handleSendMessage} className="send-message-button button-46">
           Send
         </button></> : ""}
       
@@ -62,7 +104,7 @@ function ChatMessage({message, prevMessage}) {
   return (<li
     className={liClassNames}>
       {newSender ?
-        <><div className="chat-img-container"><img src={message.user.picture} alt={message.user.name} /></div><div className="chat-user">{message.user.username}</div></>
+        <><div className="chat-img-container"><img src={message.user.picture} alt={message.user.username} /></div><div className="chat-user">{message.user.username}</div></>
       : ""}
       <div className="message-body">{message.body}</div>
     </li>)

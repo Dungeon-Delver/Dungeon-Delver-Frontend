@@ -1,7 +1,9 @@
 .party-panel {
-  min-height: 100vh;
   background-color: #d5d5d5;
   padding: 10px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+  height: calc(100vh - 76px);
 }
 
 .party-panel-icon {
@@ -34,14 +36,18 @@
     top: 76px;
     right: 0px;
     padding: 0;
+    max-height: calc(100vh - 76px);
   }
 
   .party-panel.navbar-is-open {
     top: 186px;
+    max-height: calc(100vh - 186px);
   }
 
   .party-panel.party-panel.responsive {
     padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
   }
 
   .party-panel.responsive div:not(:last-child), .party-panel.responsive ul{
