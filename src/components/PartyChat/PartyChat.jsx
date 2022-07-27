@@ -30,7 +30,7 @@ export default function PartyChat({party, inParty}) {
           setTimedOutMessage(item.messageId);
         }
       })
-    }, 3000)
+    }, 10000)
     return() => clearTimeout(timer)
   }
 
