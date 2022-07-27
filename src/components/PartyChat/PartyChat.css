@@ -19,7 +19,7 @@
   margin-top: 1.0625rem;
 }
 
-.pendingMessage {
+.pending-message {
   color: gray
 }
 
@@ -148,6 +148,10 @@
 .button-81:hover {
   background-color: #1e293b;
   color: #fff;
+}
+
+.timed-out {
+  color: red;
 }
 
 @media (min-width: 768px) {
