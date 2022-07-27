@@ -136,13 +136,17 @@
   color: #fff;
 }
 
+.load-more-messages:disabled {
+  background-color: #bcbcbc;
+  color: gray;
+}
+
 @media (min-width: 768px) {
   .button-81 {
     font-size: 1.125rem;
     padding: 1rem 2rem;
   }
 }
-
 
 @media screen and (max-width: 800px) {
   .party-chat {

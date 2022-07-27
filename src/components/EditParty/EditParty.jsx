@@ -9,14 +9,15 @@ import CategoryContainer from "../CategoryContainer/CategoryContainer";
 import "./EditParty.css"
 
 export default function EditParty({party, activeSelectors, fetchData, modifyParams}) {
+  console.log('activeSelectors: ', activeSelectors);
 
   const getCurrentUser = GetCurrentUser()
 
   const [partyName, setPartyName] = useState(party.party.name);
   const [activeExperience, setActiveExperience] = useState(activeSelectors[0][1])
-  const [activeType, setActiveType] = useState(activeSelectors[3][1])
-  const [activeGenre, setActiveGenre] = useState(activeSelectors[1][1])
-  const [activeLevel, setActiveLevel] = useState(activeSelectors[2][1]);
+  const [activeType, setActiveType] = useState(activeSelectors[1][1])
+  const [activeGenre, setActiveGenre] = useState(activeSelectors[2][1])
+  const [activeLevel, setActiveLevel] = useState(activeSelectors[3][1]);
   const [activeMode, setActiveMode] = useState(activeSelectors[4][1]);
   const [missingParams, setMissingParams] = useState([])
 
@@ -43,7 +44,7 @@ export default function EditParty({party, activeSelectors, fetchData, modifyPara
     setActiveSelector: setActiveGenre
   }, {
     category: "party level",
-    selectors:["1-4", "5-8", "9-12", "13-16", "17-20", "Any"],
+    selectors:["1-4", "5-8", "9-12", "13-16", "17-20"],
     activeSelector: activeLevel,
     setActiveSelector: setActiveLevel
   }, {
