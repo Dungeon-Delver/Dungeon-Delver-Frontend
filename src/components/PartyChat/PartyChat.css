@@ -103,6 +103,10 @@
   border-color: rgb(0, 0, 0);
 }
 
+.load-more-messages:disabled {
+  background-color: #bcbcbc;
+  color: gray;
+}
 
 @media screen and (max-width: 800px) {
   .party-chat {
