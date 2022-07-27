@@ -9,7 +9,6 @@ import CategoryContainer from "../CategoryContainer/CategoryContainer";
 import "./EditParty.css"
 
 export default function EditParty({party, activeSelectors, fetchData, modifyParams}) {
-  console.log('activeSelectors: ', activeSelectors);
 
   const getCurrentUser = GetCurrentUser()
 
