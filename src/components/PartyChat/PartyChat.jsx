@@ -101,10 +101,10 @@ export default function PartyChat({party, inParty}) {
       <ol className="messages-list">
         <button className={"load-more-messages button-81"} disabled={reachedTop} onClick={() => loadMore(messages[0])}>Load More</button>
         {messages.map((message, i) => {
-          return(<ChatMessage key={i} message={message} prevMessage={i === 0 ? true : messages[i-1]}/>)
+          return(<ChatMessage key={i} message={message} prevMessage={i === 0 ? true : messages[i-1]} pendingMessage={false}/>)
         })}
         {pendingMessages.map((message, i) => {
-          return <ChatMessage key={i} message={message} prevMessage={i === 0 ? messages[messages.length-1]: pendingMessages[i-1]} />
+          return <ChatMessage key={i} message={message} prevMessage={i === 0 ? messages[messages.length-1]: pendingMessages[i-1]} pendingMessage={true} />
         })}
         <div ref={messagesListBottom}></div>
       </ol>
@@ -122,9 +122,9 @@ export default function PartyChat({party, inParty}) {
   )
 }
 
-function ChatMessage({message, prevMessage}) {
+function ChatMessage({message, prevMessage, pendingMessage}) {
   const newSender = prevMessage===true || prevMessage.senderId !== message.senderId
-  const liClassNames = classNames({"message-item": true, "my-message": message.ownedByCurrentUser, "received-message": !message.ownedByCurrentUser, "new-sender" : newSender})
+  const liClassNames = classNames({"message-item": true, "my-message": message.ownedByCurrentUser, "received-message": !message.ownedByCurrentUser, "new-sender" : newSender, "pendingMessage": pendingMessage})
   return (<li
     className={liClassNames}>
       {newSender ?
