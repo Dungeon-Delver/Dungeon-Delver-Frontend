@@ -53,7 +53,7 @@ export default function PartyChat({party, inParty}) {
     if(lastMessage!==null) {
       if(lastMessage.senderId === user.id) {
         for(let i = 0; i < pendingMessages.length; i++) {
-          if(pendingMessages[i].body === lastMessage.body) {
+          if(pendingMessages[i].messageId === lastMessage.messageId) {
             setPendingMessages([...pendingMessages.slice(0,i), ...pendingMessages.slice(i+1)])
             break;
           }
@@ -74,7 +74,7 @@ export default function PartyChat({party, inParty}) {
 
   const handleSendMessage = () => {
     if(newMessage !== "") {
-      sendMessage(newMessage, party);
+      sendMessage(newMessage, party, pendingMessages.length > 0 ? pendingMessages[pendingMessages.length-1].messageId+1 : 0);
       setNewMessage("");
     }
   };
