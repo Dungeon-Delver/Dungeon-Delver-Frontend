@@ -100,6 +100,7 @@ export default function PartyChat({party, inParty}) {
       })
       setTimedOutMessage(null)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timedOutMessage])
 
   const handleNewMessageChange = (event) => {
