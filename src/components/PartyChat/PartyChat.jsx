@@ -20,6 +20,7 @@ export default function PartyChat({party, inParty}) {
   const [reachedTop, setReachedTop] = useState(false)
   const [pendingMessages, setPendingMessages] = useState([])
   const {sendMessage} = useChat(partyId, setMessages, setLastMessage, pendingMessages, setPendingMessages)
+  const [newMessageId, setNewMessageId] = useState(0)
 
   const messagesListBottom = useRef(null);
 
@@ -46,8 +47,10 @@ export default function PartyChat({party, inParty}) {
 
   useEffect(() => {
     setPendingMessages([])
-    setLastMessage([])
-    loadMore(null)  
+    setLastMessage(null)
+    loadMore(null)
+    
+    
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [partyId])
 
@@ -76,7 +79,8 @@ export default function PartyChat({party, inParty}) {
 
   const handleSendMessage = () => {
     if(newMessage !== "") {
-      sendMessage(newMessage, party, pendingMessages.length > 0 ? pendingMessages[pendingMessages.length-1].messageId+1 : 0);
+      sendMessage(newMessage, party, newMessageId);
+      setNewMessageId(newMessageId+1)
       setNewMessage("");
     }
   };
