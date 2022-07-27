@@ -60,7 +60,7 @@ export default function useChat (partyId, setMessages, setLastMessage, pendingMe
     })
   }
 
-  return {sendMessage, socketRef}
+  return {sendMessage}
 }
 
 

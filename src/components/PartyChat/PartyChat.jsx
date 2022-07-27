@@ -34,7 +34,7 @@ export default function PartyChat({party, inParty}) {
     return() => clearTimeout(timer)
   }
 
-  const {sendMessage, socketRef} = useChat(partyId, setMessages, setLastMessage, pendingMessages, setPendingMessages, onTimeout)
+  const {sendMessage} = useChat(partyId, setMessages, setLastMessage, pendingMessages, setPendingMessages, onTimeout)
   const [newMessageId, setNewMessageId] = useState(0)
 
   const messagesListBottom = useRef(null);
@@ -96,12 +96,10 @@ export default function PartyChat({party, inParty}) {
           const newItem = Object.assign({}, item)
           newItem.timedOut = true;
           setPendingMessages([...pendingMessages.slice(0,i), newItem, ...pendingMessages.slice(i+1)])
-          socketRef.current.disconnect()
         }
       })
       setTimedOutMessage(null)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timedOutMessage])
 
   const handleNewMessageChange = (event) => {
