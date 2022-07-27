@@ -13,13 +13,13 @@ export default function PartyChat({party, inParty}) {
   const partyId = party.party.objectId
   const [messages, setMessages] = useState([]);
   const [lastMessage, setLastMessage] = useState(null)
-  const {sendMessage} = useChat(partyId, messages, setMessages, setLastMessage)
   const [newMessage, setNewMessage] = useState("")
   const openNavbar = useRecoilValue(navbarOpen);
   const [loadingMessages, setLoadingMessages] = useState(true)
   const user = useRecoilValue(currentUser)
   const [reachedTop, setReachedTop] = useState(false)
-
+  const [pendingMessages, setPendingMessages] = useState([])
+  const {sendMessage} = useChat(partyId, setMessages, setLastMessage, pendingMessages, setPendingMessages)
 
   const messagesListBottom = useRef(null);
 
@@ -50,9 +50,23 @@ export default function PartyChat({party, inParty}) {
   }, [])
 
   useEffect(() => {
+    if(lastMessage!==null) {
+      if(lastMessage.senderId === user.id) {
+        for(let i = 0; i < pendingMessages.length; i++) {
+          if(pendingMessages[i].messageId === lastMessage.messageId) {
+            setPendingMessages([...pendingMessages.slice(0,i), ...pendingMessages.slice(i+1)])
+            break;
+          }
+        }
+      }
+    }
     messagesListBottom.current?.scrollIntoView({behavior: 'smooth'});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [lastMessage]);
 
+  useEffect(() => {
+    messagesListBottom.current?.scrollIntoView({behavior: 'smooth'});
+  }, [pendingMessages])
 
   const handleNewMessageChange = (event) => {
     setNewMessage(event.target.value);
@@ -60,7 +74,7 @@ export default function PartyChat({party, inParty}) {
 
   const handleSendMessage = () => {
     if(newMessage !== "") {
-      sendMessage(newMessage, party);
+      sendMessage(newMessage, party, pendingMessages.length > 0 ? pendingMessages[pendingMessages.length-1].messageId+1 : 0);
       setNewMessage("");
     }
   };
@@ -82,13 +96,15 @@ export default function PartyChat({party, inParty}) {
   if(loadingMessages) {
     return <>Loading</>
   }
-
   return (
     <div className={classNames({"party-chat": true, "navbar-is-open": openNavbar})}>
       <ol className="messages-list">
-        <button className={"load-more-messages"} disabled={reachedTop} onClick={() => loadMore(messages[0])}>Load More</button>
+        <button className={"load-more-messages button-81"} disabled={reachedTop} onClick={() => loadMore(messages[0])}>Load More</button>
         {messages.map((message, i) => {
-          return(<ChatMessage key={i} message={message} prevMessage={i === 0 ? true : messages[i-1]}/>)
+          return(<ChatMessage key={i} message={message} prevMessage={i === 0 ? true : messages[i-1]} pendingMessage={false}/>)
+        })}
+        {pendingMessages.map((message, i) => {
+          return <ChatMessage key={i} message={message} prevMessage={i === 0 ? messages[messages.length-1]: pendingMessages[i-1]} pendingMessage={true} />
         })}
         <div ref={messagesListBottom}></div>
       </ol>
@@ -106,9 +122,9 @@ export default function PartyChat({party, inParty}) {
   )
 }
 
-function ChatMessage({message, prevMessage}) {
+function ChatMessage({message, prevMessage, pendingMessage}) {
   const newSender = prevMessage===true || prevMessage.senderId !== message.senderId
-  const liClassNames = classNames({"message-item": true, "my-message": message.ownedByCurrentUser, "received-message": !message.ownedByCurrentUser, "new-sender" : newSender})
+  const liClassNames = classNames({"message-item": true, "my-message": message.ownedByCurrentUser, "received-message": !message.ownedByCurrentUser, "new-sender" : newSender, "pendingMessage": pendingMessage})
   return (<li
     className={liClassNames}>
       {newSender ?
