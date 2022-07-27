@@ -36,14 +36,6 @@ grid-column: 2 / span 1;
 grid-row: 2 / span 1;
 }
 
-.search-party-card .green {
-background-color: rgba(0, 154, 0, 0.7);	
-}
-
-.search-party-card .purple {
-background-color: rgba(95, 77, 172, 0.7);
-}
-
 .search-params-list {
 grid-column: 3 / span 1;
 grid-row: 1 / span 2;
