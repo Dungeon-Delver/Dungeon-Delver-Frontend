@@ -29,11 +29,12 @@ export default function PartyChat({party, inParty}) {
       let response
       if(firstMessage!=null) {
         response = await axios.post(`${BACKEND_URL}party/${partyId}/messages/`, {firstMessage: firstMessage, userId: user.id})
+        setMessages([...response.data.messages.messages, ...messages])
       }
       else {
         response = await axios.post(`${BACKEND_URL}party/${partyId}/messages/`, {userId: user.id})
+        setMessages(response.data.messages.messages)
       }
-      setMessages([...response.data.messages.messages, ...messages])
       setReachedTop(response.data.messages.reachedEnd)
       setLoadingMessages(false)
     }
@@ -44,10 +45,11 @@ export default function PartyChat({party, inParty}) {
   }
 
   useEffect(() => {
-     
-    loadMore(null)    
+    setPendingMessages([])
+    setLastMessage([])
+    loadMore(null)  
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [partyId])
 
   useEffect(() => {
     if(lastMessage!==null) {
