@@ -44,7 +44,7 @@ export default function FacebookOAuth() {
         // Set username and email to match facebook profile email
         userToLogin.set('username', response.name);
         userToLogin.set('email', userEmail);
-        userToLogin.set('picture', response.picture.data.url);        
+        userToLogin.set('picture', response.picture.data.url); 
         try {
          await userToLogin
           .linkWith('facebook', {
@@ -53,7 +53,7 @@ export default function FacebookOAuth() {
           // logIn returns the corresponding ParseUser object
           const user = await getCurrentUser();
           localStorage.setItem('user', JSON.stringify(user));
-          if(!user.get("enabled")) {
+          if(!user.enabled) {
             console.error("disabled user")
             setLoggedIn("disabled")
           }
