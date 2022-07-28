@@ -1,6 +1,6 @@
 .notification-card {
   width: 295px;
-  max-height: 100px;
+  min-height: 50px;
   display: grid;
   grid-template-columns: 15px 30px 1fr;
   padding: 2px;
@@ -19,6 +19,7 @@
   height: 30px;
   border-radius: 50%;
   object-fit: cover;
+  align-self: center;
 }
 
 .notification-card:hover {
