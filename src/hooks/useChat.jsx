@@ -47,13 +47,15 @@ export default function useChat (partyId, setMessages, setLastMessage, pendingMe
 
   const sendMessage = async (messageBody, party, messageId) => {
     const currentUser = await getCurrentUser();
-    setPendingMessages([...pendingMessages, {body: messageBody, senderId: currentUser.id, user: {username: currentUser.username, picture: currentUser.picture}, messageId: messageId}])
+    const currentDate = new Date()
+    setPendingMessages([...pendingMessages, {body: messageBody, senderId: currentUser.id, user: {username: currentUser.username, picture: currentUser.picture}, messageId: messageId, createdAt: currentDate.toString()
+    }])
 
     socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
       body: messageBody,
       senderId: currentUser.id,
       partyId: party.party.objectId,
-      messageId: messageId
+      messageId: messageId,
     })
   }
 

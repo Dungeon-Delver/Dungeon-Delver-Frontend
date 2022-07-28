@@ -25,9 +25,13 @@
 
 .message-item {
   padding-top: 0.175rem;
-  padding-right: 48px;
   margin-right: 10px;
   text-align: left;
+}
+
+.message-body {
+  display: grid;
+  grid-template-columns: 1fr 70px;
 }
 
 .messages-list {
@@ -38,9 +42,18 @@
     margin-top: 0px;
 }
 
+.message-date {
+  display: none;
+}
+
 .message-item:hover {
   background-color: #bcbcbc;
   border-radius: 15px;
+}
+
+.message-item:hover .message-body .message-date {
+  display: block;
+  font-size: 16px;
 }
 
 .message-item {
@@ -63,6 +76,7 @@
   max-width: calc(100vw  - 200px - 250px - 18px - 40px - 30px);
   font-family: Palatino;
 }
+
 
 .new-message-input-field {
   width: calc(100% - 6px);

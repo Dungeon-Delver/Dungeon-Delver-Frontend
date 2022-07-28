@@ -20,6 +20,7 @@ export default function PartyChat({party, inParty}) {
   const [reachedTop, setReachedTop] = useState(false)
   const [pendingMessages, setPendingMessages] = useState([])
   const {sendMessage} = useChat(partyId, setMessages, setLastMessage, pendingMessages, setPendingMessages)
+  const [newMessageId, setNewMessageId] = useState(0)
 
   const messagesListBottom = useRef(null);
 
@@ -29,11 +30,12 @@ export default function PartyChat({party, inParty}) {
       let response
       if(firstMessage!=null) {
         response = await axios.post(`${BACKEND_URL}party/${partyId}/messages/`, {firstMessage: firstMessage, userId: user.id})
+        setMessages([...response.data.messages.messages, ...messages])
       }
       else {
         response = await axios.post(`${BACKEND_URL}party/${partyId}/messages/`, {userId: user.id})
+        setMessages(response.data.messages.messages)
       }
-      setMessages([...response.data.messages.messages, ...messages])
       setReachedTop(response.data.messages.reachedEnd)
       setLoadingMessages(false)
     }
@@ -44,10 +46,13 @@ export default function PartyChat({party, inParty}) {
   }
 
   useEffect(() => {
-     
-    loadMore(null)    
+    setPendingMessages([])
+    setLastMessage(null)
+    loadMore(null)
+    
+    
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [partyId])
 
   useEffect(() => {
     if(lastMessage!==null) {
@@ -74,7 +79,8 @@ export default function PartyChat({party, inParty}) {
 
   const handleSendMessage = () => {
     if(newMessage !== "") {
-      sendMessage(newMessage, party, pendingMessages.length > 0 ? pendingMessages[pendingMessages.length-1].messageId+1 : 0);
+      sendMessage(newMessage, party, newMessageId);
+      setNewMessageId(newMessageId+1)
       setNewMessage("");
     }
   };
@@ -123,13 +129,31 @@ export default function PartyChat({party, inParty}) {
 }
 
 function ChatMessage({message, prevMessage, pendingMessage}) {
+  function padTo2Digits(num) {
+    return String(num).padStart(2, '0');
+  }
+  const messageDate = new Date(message.createdAt)
+  const prevMessageDate = new Date(prevMessage.createdAt)
+  const dateString = messageDate.getHours() > 12 ? messageDate.getHours()-12 + ':' + padTo2Digits(messageDate.getMinutes()) + ' pm' : messageDate.getHours() + ':' + padTo2Digits(messageDate.getMinutes()) + ' am'
+
   const newSender = prevMessage===true || prevMessage.senderId !== message.senderId
+  const newDate = prevMessage===true || (prevMessageDate.getFullYear() !== messageDate.getFullYear() || prevMessageDate.getMonth() !== messageDate.getMonth() || prevMessageDate.getDate() !== messageDate.getDate())
   const liClassNames = classNames({"message-item": true, "my-message": message.ownedByCurrentUser, "received-message": !message.ownedByCurrentUser, "new-sender" : newSender, "pendingMessage": pendingMessage})
-  return (<li
-    className={liClassNames}>
-      {newSender ?
-        <><div className="chat-img-container"><img src={message.user.picture} alt={message.user.username} /></div><div className="chat-user">{message.user.username}</div></>
+
+  return (
+    <>
+      {newDate ?
+        <div className="new-date">{(messageDate.getMonth()+1) + '/' + messageDate.getDate() + '/' + messageDate.getFullYear()}</div>
       : ""}
-      <div className="message-body">{message.body}</div>
-    </li>)
+      <li
+      className={liClassNames}>
+        {newSender ?
+          <><div className="chat-img-container"><img src={message.user.picture} alt={message.user.username} /></div><div className="chat-user">{message.user.username}</div></>
+        : ""}
+        <div className="message-body">
+          <div className="message-content">{message.body}</div>
+          <div className="message-date">{dateString}</div>
+        </div>
+      </li>
+    </>)
   }
