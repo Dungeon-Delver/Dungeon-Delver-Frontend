@@ -1,0 +1,18 @@
+.notification-card {
+  max-width: 300px;
+  max-height: 100px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  font-size: 18px;
+}
+
+.notification-img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}

@@ -26,3 +26,7 @@ body {
 
 a { color: inherit; } 
 
+* {
+  font-family: Palatino;
+}
+
