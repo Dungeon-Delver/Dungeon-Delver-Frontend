@@ -1,6 +1,10 @@
 .notification-card {
-  max-width: 300px;
+  width: 295px;
   max-height: 100px;
+  display: grid;
+  grid-template-columns: 15px 30px 1fr;
+  padding: 2px;
+  border: 1px solid #bcbcbc;
 }
 
 .info {
@@ -15,4 +19,20 @@
   height: 30px;
   border-radius: 50%;
   object-fit: cover;
+}
+
+.notification-card:hover {
+  background-color: #bcbcbc;
+}
+
+.dot {
+  align-self: center;
+  height: 10px;
+  width: 10px;
+  background-color: #4933ab;
+  border-radius: 50%;
+}
+
+.read .dot {
+  visibility: hidden;
 }

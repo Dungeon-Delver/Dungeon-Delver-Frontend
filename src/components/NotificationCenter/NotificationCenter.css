@@ -2,8 +2,9 @@
  position: absolute;
  max-height: 500px;
  max-width: 300px;
- right: 200px;
- background-color: #FAF9F6
+ right: 1px;
+ background-color: #FAF9F6;
+ overflow-y: scroll;
 }
 
 
