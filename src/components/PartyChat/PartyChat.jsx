@@ -77,11 +77,23 @@ export default function PartyChat({party, inParty}) {
     setNewMessage(event.target.value);
   }
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if(newMessage !== "") {
-      sendMessage(newMessage, party, newMessageId);
-      setNewMessageId(newMessageId+1)
-      setNewMessage("");
+      try {
+        const response = await axios.get(`${BACKEND_URL}user/${user.id}/in/party/${partyId}`)
+        if(!response.data.inParty) {
+          window.location.reload();
+        }
+        else {
+          sendMessage(newMessage, party, newMessageId);
+          setNewMessageId(newMessageId+1)
+          setNewMessage("");
+        }
+      }
+      catch (err){
+        console.error(err)
+      }
+     
     }
   };
 
