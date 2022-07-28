@@ -8,7 +8,7 @@ import { currentUser } from "../recoil/atoms/atoms";
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event
 
-export default function useChat (partyId, setMessages, setLastMessage, pendingMessages, setPendingMessages)  {
+export default function useChat (partyId, setMessages, setLastMessage, pendingMessages, setPendingMessages, onTimeout)  {
   const socketRef = useRef();
 
   const getCurrentUser = GetCurrentUser();
@@ -48,7 +48,8 @@ export default function useChat (partyId, setMessages, setLastMessage, pendingMe
   const sendMessage = async (messageBody, party, messageId) => {
     const currentUser = await getCurrentUser();
     const currentDate = new Date()
-    setPendingMessages([...pendingMessages, {body: messageBody, senderId: currentUser.id, user: {username: currentUser.username, picture: currentUser.picture}, messageId: messageId, createdAt: currentDate.toString()
+    const clearTimeout = onTimeout(messageId)
+    setPendingMessages([...pendingMessages, {body: messageBody, senderId: currentUser.id, user: {username: currentUser.username, picture: currentUser.picture}, messageId: messageId, createdAt: currentDate.toString(), clearTimeout: clearTimeout
     }])
 
     socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
