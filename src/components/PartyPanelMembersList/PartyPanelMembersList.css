@@ -34,6 +34,7 @@
 }
 
 .panel-party-members-dm .player button {
+	position: relative;
   grid-column: 1 / span 2;
   align-self: stretch;
   justify-self: center;
