@@ -150,6 +150,10 @@
   color: #fff;
 }
 
+.timed-out {
+  color: red;
+ }
+
 
 .load-more-messages:disabled {
   background-color: #bcbcbc;
