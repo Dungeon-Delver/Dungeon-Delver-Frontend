@@ -5,6 +5,7 @@
  right: 1px;
  background-color: #FAF9F6;
  overflow-y: scroll;
+ z-index: 50;
 }
 
 

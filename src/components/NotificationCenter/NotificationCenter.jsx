@@ -12,7 +12,13 @@ export default function NotificationCenter() {
   const [unreadNotifications, setUnreadNotifications] = useState([])
   const [notifications, setNotifications] = useState([])
   const [notificationsOpen, setNotificationsOpen] = useState(false)
-  useNotification(unreadNotifications, setUnreadNotifications)
+
+  const deleteNotif = (notification) => {
+    console.log(notification)
+    console.log(unreadNotifications)
+  }
+
+  useNotification(unreadNotifications, setUnreadNotifications, deleteNotif)
 
   const curUser = useRecoilValue(currentUser)
 

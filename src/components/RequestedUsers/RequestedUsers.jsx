@@ -2,6 +2,7 @@ import axios from 'axios'
 import {useState} from 'react'
 import { BACKEND_URL } from '../../constants/constants'
 import GetCurrentUser from '../../constants/GetCurrentUser'
+import useNotification from '../../hooks/useNotification'
 import "./RequestedUsers.css"
 
 export default function RequestedUsers({requestedUsers, party, fetchData}) {
@@ -22,19 +23,25 @@ function RequestedUserCard({user, party, fetchData}) {
   const [acceptButtonText, setAcceptButtonText] = useState("Accept Request")
   const [rejectButtonText, setRejectButtonText] = useState("Reject Request")
   const [buttonsDisabled, setButtonsDisabled] = useState(false)
+  const {sendNotification} = useNotification(null, null)
   const getCurrentUser = GetCurrentUser()
+
   const acceptUser = async () => {
     setAcceptButtonText("Accepting...")
     const currentUser = await getCurrentUser();
     setButtonsDisabled(true)
-    await axios.post(`${BACKEND_URL}party/${party.objectId}/accept/${user.objectId}`, {dm: currentUser})
+    const response = await axios.post(`${BACKEND_URL}party/${party.objectId}/accept/${user.objectId}`, {dm: currentUser})
+    const notification = response.data.notification
+    sendNotification(notification)
     fetchData();
   }
   const rejectUser = async () => {
     setRejectButtonText("Rejecting...")
     setButtonsDisabled(true)
     const currentUser = await getCurrentUser();
-    await axios.post(`${BACKEND_URL}party/${party.objectId}/reject/${user.objectId}`, {dm: currentUser})
+    const response = await axios.post(`${BACKEND_URL}party/${party.objectId}/reject/${user.objectId}`, {dm: currentUser})
+    const notification = response.data.notification
+    sendNotification(notification)
     fetchData();
   }
   return (
