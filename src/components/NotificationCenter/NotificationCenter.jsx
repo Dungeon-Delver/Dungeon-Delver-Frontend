@@ -7,11 +7,16 @@ import { useRecoilValue } from "recoil"
 import { currentUser } from "../../recoil/atoms/atoms"
 import axios from "axios"
 import { BACKEND_URL } from "../../constants/constants"
+import classNames from "classnames"
 
 export default function NotificationCenter() {
   const [unreadNotifications, setUnreadNotifications] = useState([])
   const [notifications, setNotifications] = useState([])
   const [notificationsOpen, setNotificationsOpen] = useState(false)
+  const [firstNotif, setFirstNotif] = useState("")
+  const [lastNotif, setLastNotif] = useState("")
+  const [prevDisabled, setPrevDisabled] = useState(true);
+  const [nextDisabled, setNextDisabled] = useState(false);
 
   const deleteNotif = (notification) => {
     
@@ -36,9 +41,12 @@ export default function NotificationCenter() {
   useEffect(() => {
     const getNotifications = async () => {
       try {
-        const response = await axios.get(`${BACKEND_URL}user/${curUser.id}/notifications`)
+        const response = await axios.post(`${BACKEND_URL}user/${curUser.id}/notifications`, {})
         setNotifications(response.data.notifications.readNotifications)
         setUnreadNotifications(response.data.notifications.unreadNotifications)
+        setFirstNotif(response.data.notifications.unreadNotifications.length > 0 ? response.data.notifications.unreadNotifications[0] : response.data.notifications.readNotifications[0])
+        setLastNotif(response.data.notifications.readNotifications.length > 0 ? response.data.notifications.readNotifications[response.data.notifications.readNotifications.length-1] : response.data.notifications.unreadNotifications[response.data.notifications.unreadNotifications.length-1])
+        setNextDisabled(response.data.notifications.reachedEnd)
       }
       catch (err) {
         console.error(err)
@@ -47,6 +55,48 @@ export default function NotificationCenter() {
     getNotifications()
   }, [curUser.id])
 
+  const getNextNotifications = async () => {
+    try {
+      axios.post(`${BACKEND_URL}user/read-notifications`, {notifications: unreadNotifications})
+    }
+    catch (err) {
+      console.error(err)
+    }
+    try {
+      const response = await axios.post(`${BACKEND_URL}user/${curUser.id}/notifications`, {last: lastNotif})
+      setNotifications(response.data.notifications.readNotifications)
+      setUnreadNotifications(response.data.notifications.unreadNotifications)
+      setFirstNotif(response.data.notifications.unreadNotifications.length > 0 ? response.data.notifications.unreadNotifications[0] : response.data.notifications.readNotifications[0])
+      setLastNotif(response.data.notifications.readNotifications.length > 0 ? response.data.notifications.readNotifications[response.data.notifications.readNotifications.length-1] : response.data.notifications.unreadNotifications[response.data.notifications.unreadNotifications.length-1])
+      setNextDisabled(response.data.notifications.reachedEnd)
+      setPrevDisabled(false)
+    }
+    catch (err) {
+      console.error(err)
+    }
+  }
+
+  const getPrevNotifications = async() => {
+    try {
+      axios.post(`${BACKEND_URL}user/read-notifications`, {notifications: unreadNotifications})
+    }
+    catch (err) {
+      console.error(err)
+    }
+    try {
+      const response = await axios.post(`${BACKEND_URL}user/${curUser.id}/notifications`, {first: firstNotif})
+      setNotifications(response.data.notifications.readNotifications)
+      setUnreadNotifications(response.data.notifications.unreadNotifications)
+      setFirstNotif(response.data.notifications.unreadNotifications.length > 0 ? response.data.notifications.unreadNotifications[0] : response.data.notifications.readNotifications[0])
+      setLastNotif(response.data.notifications.readNotifications.length > 0 ? response.data.notifications.readNotifications[response.data.notifications.readNotifications.length-1] : response.data.notifications.unreadNotifications[response.data.notifications.unreadNotifications.length-1])
+      setNextDisabled(false)
+      setPrevDisabled(response.data.notifications.reachedEnd)
+    }
+    catch (err) {
+      console.error(err)
+    }
+  }
+
   return (
     <div className="notification-center">
       <div className="notification-bell">
@@ -54,14 +104,24 @@ export default function NotificationCenter() {
         {unreadNotifications.length > 0 ? <div className="counter">{unreadNotifications.length}</div> : ""}
       </div>
       {notificationsOpen ? 
-            <ol className="notifications-menu">
-              {unreadNotifications.map((item, i) => {
-                return <NotificationCard key={i} notification={item} handleCloseNavbar={handleCloseNavbar} unread={true}/>
-              })}
-              {notifications.map((item, i) => {
-                return <NotificationCard key={i} notification={item} handleCloseNavbar={handleCloseNavbar} unread={false}/>
-              })}
-            </ol>
+        <div className="notifications-popup">
+          <ol className="notifications-menu">
+            {unreadNotifications.map((item, i) => {
+              return <NotificationCard key={i} notification={item} handleCloseNavbar={handleCloseNavbar} unread={true}/>
+            })}
+            {notifications.map((item, i) => {
+              return <NotificationCard key={i} notification={item} handleCloseNavbar={handleCloseNavbar} unread={false}/>
+            })}
+          </ol>
+          <div className="arrow-wrapper">
+            <div className={classNames({"arrow arrow--left": true, "disabled": prevDisabled})} onClick={() => {if(!prevDisabled) {getPrevNotifications()}}} >
+              <span>Prev</span>
+            </div>
+            <div className={classNames({"arrow arrow--right": true, "disabled": nextDisabled})} onClick={() => {if(!nextDisabled) {getNextNotifications()}}} >
+              <span>Next</span>
+            </div>
+          </div>
+        </div>
         : ""}
     </div>
   )
