@@ -14,8 +14,7 @@ export default function NotificationCenter() {
   const [notificationsOpen, setNotificationsOpen] = useState(false)
 
   const deleteNotif = (notification) => {
-    console.log(notification)
-    console.log(unreadNotifications)
+    
   }
 
   useNotification(unreadNotifications, setUnreadNotifications, deleteNotif)

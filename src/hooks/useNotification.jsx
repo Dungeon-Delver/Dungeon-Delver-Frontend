@@ -17,7 +17,6 @@ export default function useNotification (notifications, setNotifications, delete
     socketRef.current = socketIOClient(SOCKET_SERVER_URL, {query: {userId}})
     const notificationEvent = async() => {
       socketRef.current.on(NEW_NOTIFICATION_EVENT, async (notification) => {
-        console.log('notification received: ', notification);
         if(notification.notification.user.objectId === userId) {
           if(notification.notification.hasOwnProperty("cancel")) {
             deleteNotif(notification)
