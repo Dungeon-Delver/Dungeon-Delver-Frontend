@@ -154,9 +154,14 @@
   color: red;
  }
 
+
 .load-more-messages:disabled {
   background-color: #bcbcbc;
   color: gray;
+
+.timed-out {
+  color: red;
+
 }
 
 @media (min-width: 768px) {
