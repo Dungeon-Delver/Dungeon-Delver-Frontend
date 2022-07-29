@@ -23,6 +23,8 @@ export default function FindParties() {
   const [page, setPage] = useState(1)
   const [prevDisabled, setPrevDisabled] = useState(true);
   const [nextDisabled, setNextDisabled] = useState(false);
+  const [partyName, setPartyName] = useState("")
+  const [searchMode, setSearchMode] = useState(null)
 
   const [searchResults, setSearchResults] = useState("");
   const getCurrentUser = GetCurrentUser();
@@ -71,7 +73,7 @@ export default function FindParties() {
     }
     try {
       const data = await axios.post(`${BACKEND_URL}party/search`, JSON_OBJECT);
-      if(data.data.response!=null) {
+      if(data.data.response.parties.length > 0) {
         setSearchResults(data.data.response.parties)
         setNextDisabled(data.data.response.reachedEnd)
       }
@@ -82,6 +84,7 @@ export default function FindParties() {
       setPrevDisabled(true)
       setPartyFailed(false);
       setPage(1)
+      setSearchMode("params")
     }
     catch (error){
       console.error(error)
@@ -106,6 +109,31 @@ export default function FindParties() {
     return true;
   }
 
+  const handleSearchPartyByName = async() => {
+    const user = await getCurrentUser();
+    try {
+      const data = await axios.post(`${BACKEND_URL}party/search`, {user: user.id, name: partyName});
+      if(data.data.response.parties.length > 0) {
+        setSearchResults(data.data.response.parties)
+        setNextDisabled(data.data.response.reachedEnd)
+      }
+      else {
+        setSearchResults(null)
+      }
+      setLoadingParty(false);
+      setPrevDisabled(true)
+      setPartyFailed(false);
+      setPage(1)
+      setSearchMode("name")
+    }
+    catch (error){
+      console.error(error)
+      setPartyFailed(true);
+      setLoadingParty(false)
+      setError(error);
+    }
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if(!validateForm()) {
@@ -115,92 +143,155 @@ export default function FindParties() {
     handleSearchParty();
   }
 
+  const handleSubmitByName = (event) => {
+    event.preventDefault();
+    setLoadingParty(true);
+    handleSearchPartyByName();
+  }
+
   const handleNext = async () => {
     const user = await getCurrentUser();
-    const JSON_OBJECT = {
-      user: user.id,
-      searchParameters: {
-        experience: activeExperience,
-      },
-      last: searchResults[searchResults.length-1]
-    }
-    if(activeType !== "Any Type") {
-      JSON_OBJECT.searchParameters.type = activeType
-    }
-    if(activeGenre !== "Any Genre") {
-      JSON_OBJECT.searchParameters.genre = activeGenre
-    }
-    if(activeLevel !== "Any Level") {
-      JSON_OBJECT.searchParameters.level = activeLevel
-    }
-    try {
-      const data = await axios.post(`${BACKEND_URL}party/search`, JSON_OBJECT);
-      if(data.data.response!=null) {
-        setSearchResults(data.data.response.parties)
-        setPage(page+1)
-        setPrevDisabled(false)
-        setNextDisabled(data.data.response.reachedEnd)
+    if(searchMode === "params") {
+      const JSON_OBJECT = {
+        user: user.id,
+        searchParameters: {
+          experience: activeExperience,
+        },
+        last: searchResults[searchResults.length-1]
       }
-      else {
-        setNextDisabled(true)
+      if(activeType !== "Any Type") {
+        JSON_OBJECT.searchParameters.type = activeType
       }
-      setLoadingParty(false);
-      setPartyFailed(false);
+      if(activeGenre !== "Any Genre") {
+        JSON_OBJECT.searchParameters.genre = activeGenre
+      }
+      if(activeLevel !== "Any Level") {
+        JSON_OBJECT.searchParameters.level = activeLevel
+      }
+      try {
+        const data = await axios.post(`${BACKEND_URL}party/search`, JSON_OBJECT);
+        if(data.data.response.parties.length > 0) {
+          setSearchResults(data.data.response.parties)
+          setPage(page+1)
+          setPrevDisabled(false)
+          setNextDisabled(data.data.response.reachedEnd)
+        }
+        else {
+          setNextDisabled(true)
+        }
+        setLoadingParty(false);
+        setPartyFailed(false);
+      }
+      catch (error){
+        console.error(error)
+        setPartyFailed(true);
+        setLoadingParty(false)
+        setError(error);
+      }
     }
-    catch (error){
-      console.error(error)
-      setPartyFailed(true);
-      setLoadingParty(false)
-      setError(error);
+    else if (searchMode === "name") {
+      try {
+        const data = await axios.post(`${BACKEND_URL}party/search`, {user: user.id, name: partyName, last: searchResults[searchResults.length-1]});
+        if(data.data.response.parties.length > 0) {
+          setSearchResults(data.data.response.parties)
+          setPage(page+1)
+          setPrevDisabled(false)
+          setNextDisabled(data.data.response.reachedEnd)
+        }
+        else {
+          setNextDisabled(true)
+        }
+        setLoadingParty(false);
+        setPartyFailed(false);
+      }
+      catch (error){
+        console.error(error)
+        setPartyFailed(true);
+        setLoadingParty(false)
+        setError(error);
+      }
     }
   }
 
   const handlePrevious = async () => {
     const user = await getCurrentUser();
-    const JSON_OBJECT = {
-      user: user.id,
-      searchParameters: {
-        experience: activeExperience,
-      },
-      first: searchResults[0]
-    }
-    if(activeType !== "Any Type") {
-      JSON_OBJECT.searchParameters.type = activeType
-    }
-    if(activeGenre !== "Any Genre") {
-      JSON_OBJECT.searchParameters.genre = activeGenre
-    }
-    if(activeLevel !== "Any Level") {
-      JSON_OBJECT.searchParameters.level = activeLevel
-    }
-    try {
-      const data = await axios.post(`${BACKEND_URL}party/search`, JSON_OBJECT);
-      if(data.data.response!=null) {
-        setSearchResults(data.data.response.parties)
-        setPrevDisabled(data.data.response.reachedEnd)
-        setNextDisabled(false);
-        let newPage = page
-        if(page > 1) {
-          --newPage
-        }
-        if(newPage > 0 && data.data.response.reachedEnd) {
-          newPage = 1
-        }
-        setPage(newPage)
+    if(searchMode === "params") {
+      const JSON_OBJECT = {
+        user: user.id,
+        searchParameters: {
+          experience: activeExperience,
+        },
+        first: searchResults[0]
       }
-      else {
-        setPage(1)
-        setPrevDisabled(true)
+      if(activeType !== "Any Type") {
+        JSON_OBJECT.searchParameters.type = activeType
       }
-      setLoadingParty(false);
-      setPartyFailed(false);
+      if(activeGenre !== "Any Genre") {
+        JSON_OBJECT.searchParameters.genre = activeGenre
+      }
+      if(activeLevel !== "Any Level") {
+        JSON_OBJECT.searchParameters.level = activeLevel
+      }
+      try {
+        const data = await axios.post(`${BACKEND_URL}party/search`, JSON_OBJECT);
+        if(data.data.response.parties.length > 0) {
+          setSearchResults(data.data.response.parties)
+          setPrevDisabled(data.data.response.reachedEnd)
+          setNextDisabled(false);
+          let newPage = page
+          if(page > 1) {
+            --newPage
+          }
+          if(newPage > 0 && data.data.response.reachedEnd) {
+            newPage = 1
+          }
+          setPage(newPage)
+        }
+        else {
+          setPage(1)
+          setPrevDisabled(true)
+        }
+        setLoadingParty(false);
+        setPartyFailed(false);
+      }
+      catch (error){
+        console.error(error)
+        setPartyFailed(true);
+        setLoadingParty(false)
+        setError(error);
+      }
     }
-    catch (error){
-      console.error(error)
-      setPartyFailed(true);
-      setLoadingParty(false)
-      setError(error);
+    else if (searchMode==="name") {
+      try {
+        const data = await axios.post(`${BACKEND_URL}party/search`, {user: user.id, name: partyName, first: searchResults[0]});
+        if(data.data.response.parties.length > 0) {
+          setSearchResults(data.data.response.parties)
+          setPrevDisabled(data.data.response.reachedEnd)
+          setNextDisabled(false);
+          let newPage = page
+          if(page > 1) {
+            --newPage
+          }
+          if(newPage > 0 && data.data.response.reachedEnd) {
+            newPage = 1
+          }
+          setPage(newPage)
+        }
+        else {
+          setPage(1)
+          setPrevDisabled(true)
+        }
+        setLoadingParty(false);
+        setPartyFailed(false);
+      }
+      catch (error){
+        console.error(error)
+        setPartyFailed(true);
+        setLoadingParty(false)
+        setError(error);
+      }
     }
+    
   }
 
   let bottom;
@@ -243,6 +334,7 @@ export default function FindParties() {
     <div className="find-parties">
       <form className="find-parties-form">
         <div className="categories">
+          <h2>Search by category...</h2>
           {categories.map((item) => (
             <CategoryContainer key={item.category} category={item} />
           ))}
@@ -251,6 +343,16 @@ export default function FindParties() {
           <div className="button__text">Find Dungeons</div>
         </button>
         <div className="missing-params">{missingParams}</div>
+      </form>
+      <form className="find-parties-by-name-form">
+        <h2>... or by party name!</h2>
+        <div className="party-name form__group field">
+          <input className="party-name-input form__field" id="name" name="Party Name" placeholder="Dungeoneers" value={partyName} onChange={(event) => setPartyName(event.target.value)}></input>
+          <label htmlFor="name" className="form__label">Party Name</label>
+        </div>
+        <button className={classNames({"button": true, "button--loading": loadingParty})} onClick={(event) => handleSubmitByName(event)}>
+          <div className="button__text">Find Dungeons</div>
+        </button>
       </form>
       {bottom}
     </div>
