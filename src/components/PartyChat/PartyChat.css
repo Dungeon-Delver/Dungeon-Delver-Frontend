@@ -152,6 +152,11 @@
 
 .timed-out {
   color: red;
+ }
+
+.load-more-messages:disabled {
+  background-color: #bcbcbc;
+  color: gray;
 }
 
 @media (min-width: 768px) {
@@ -160,7 +165,6 @@
     padding: 1rem 2rem;
   }
 }
-
 
 @media screen and (max-width: 800px) {
   .party-chat {
