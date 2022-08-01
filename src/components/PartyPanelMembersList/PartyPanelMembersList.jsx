@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import {useState}from 'react'
 import { BACKEND_URL } from '../../constants/constants';
 import GetCurrentUser from '../../constants/GetCurrentUser';
+import useNotification from '../../hooks/useNotification';
 import "./PartyPanelMembersList.css"
 
 export default function MembersList({party, players, dm, inParty}) {
@@ -32,6 +33,8 @@ export default function MembersList({party, players, dm, inParty}) {
 
 function RemoveUserButton({item, dm, party}) {
 
+  const {sendNotification} = useNotification(null, null)
+
   const [buttonText, setButtonText] = useState("Remove User")
   const [error, setError] = useState("")
 
@@ -41,7 +44,9 @@ function RemoveUserButton({item, dm, party}) {
     try {
       setButtonText("Removing User")
       const currentUser = await getCurrentUser();
-      await axios.post(`${BACKEND_URL}party/${party.party.objectId}/remove/${playerId}`, {dm : currentUser})
+      const response = await axios.post(`${BACKEND_URL}party/${party.party.objectId}/remove/${playerId}`, {dm : currentUser})
+      const notification = response.data.notification
+      sendNotification(notification)
       setButtonText("Removed User")
     }
     catch (err) {
