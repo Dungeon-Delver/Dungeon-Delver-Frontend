@@ -8,7 +8,7 @@ import { currentUser } from "../recoil/atoms/atoms";
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event
 
-export default function useChat (partyId, setMessages, setLastMessage, pendingMessages, setPendingMessages, onTimeout)  {
+export default function useChat (roomId, setMessages, setLastMessage, pendingMessages, setPendingMessages, onTimeout)  {
   const socketRef = useRef();
 
   const getCurrentUser = GetCurrentUser();
@@ -16,7 +16,8 @@ export default function useChat (partyId, setMessages, setLastMessage, pendingMe
   const curUser = useRecoilValue(currentUser)
 
   useEffect(() => {
-    socketRef.current = socketIOClient(SOCKET_SERVER_URL, {query: {partyId}})
+    socketRef.current = socketIOClient(SOCKET_SERVER_URL, {query: {roomId}})
+    
     const chatMessageEvent = async() => {
       socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, async (message) => {
         let userSender
@@ -42,7 +43,7 @@ export default function useChat (partyId, setMessages, setLastMessage, pendingMe
       socketRef.current.disconnect()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [partyId, curUser.id]);
+  }, [roomId, curUser.id]);
 
   const sendMessage = async (messageBody, party, messageId) => {
     const currentUser = await getCurrentUser();

@@ -11,13 +11,15 @@ export default function useNotification (notifications, setNotifications, delete
   const socketRef = useRef();
   const curUser = useRecoilValue(currentUser)
   const userId = curUser.id
+  const roomId = `${userId}-notifications`
+
 
 
   useEffect(() => {
-    socketRef.current = socketIOClient(SOCKET_SERVER_URL, {query: {userId}})
+    socketRef.current = socketIOClient(SOCKET_SERVER_URL, {query: {roomId}})
     const notificationEvent = async() => {
       socketRef.current.on(NEW_NOTIFICATION_EVENT, async (notification) => {
-        if(notification.notification.user.objectId === userId) {
+        if(`${notification.notification.user.objectId}-notifications`=== roomId) {
           if(notification.notification.hasOwnProperty("cancel")) {
             deleteNotif(notification)
           }
@@ -36,15 +38,16 @@ export default function useNotification (notifications, setNotifications, delete
     }
   }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userId]);
+  }, [roomId]);
 
   const sendNotification = async (notification) => {
-    const room = notification.user.objectId
-    const socket = socketIOClient(SOCKET_SERVER_URL, {query: {room}})
+    const newUserId = notification.user.objectId
+    const roomId = `${newUserId}-notifications`
+    const socket = socketIOClient(SOCKET_SERVER_URL, {query: {roomId}})
     socket.emit(NEW_NOTIFICATION_EVENT, {
       notification: notification
     })
-    const receiveSocket = socketIOClient(SOCKET_SERVER_URL, {query: {room}})
+    const receiveSocket = socketIOClient(SOCKET_SERVER_URL, {query: {roomId}})
     receiveSocket.on(NEW_NOTIFICATION_EVENT, async (receivedNotification) => {
       if(notification.objectId === receivedNotification.objectId) {
         receiveSocket.disconnect();

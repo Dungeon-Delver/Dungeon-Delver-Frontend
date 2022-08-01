@@ -175,11 +175,15 @@ function ChatMessage({message, prevMessage, pendingMessage}) {
     return String(num).padStart(2, '0');
   }
   const messageDate = new Date(message.createdAt)
-  const prevMessageDate = new Date(prevMessage.createdAt)
+  var prevMessageDate
+  if(prevMessage) {
+    prevMessageDate = new Date(prevMessage.createdAt)
+
+  }
   const dateString = messageDate.getHours() > 12 ? messageDate.getHours()-12 + ':' + padTo2Digits(messageDate.getMinutes()) + ' pm' : messageDate.getHours() + ':' + padTo2Digits(messageDate.getMinutes()) + ' am'
 
-  const newSender = prevMessage===true || prevMessage.senderId !== message.senderId
-  const newDate = prevMessage===true || (prevMessageDate.getFullYear() !== messageDate.getFullYear() || prevMessageDate.getMonth() !== messageDate.getMonth() || prevMessageDate.getDate() !== messageDate.getDate())
+  const newSender = prevMessage===undefined || prevMessage===true || prevMessage.senderId !== message.senderId
+  const newDate = prevMessage===undefined || prevMessage===true || (prevMessageDate.getFullYear() !== messageDate.getFullYear() || prevMessageDate.getMonth() !== messageDate.getMonth() || prevMessageDate.getDate() !== messageDate.getDate())
   const liClassNames = classNames({"message-item": true, "my-message": message.ownedByCurrentUser, "received-message": !message.ownedByCurrentUser, "new-sender" : newSender, "pending-message": pendingMessage, "timed-out": message.hasOwnProperty("timedOut")})
 
   return (

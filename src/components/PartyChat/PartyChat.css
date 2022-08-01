@@ -162,7 +162,11 @@
 
 .timed-out {
   color: red;
+}
 
+.new-date {
+  margin-bottom: 2px;
+  margin-top: 2px;
 }
 
 @media (min-width: 768px) {
