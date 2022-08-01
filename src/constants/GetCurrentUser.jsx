@@ -10,7 +10,6 @@ export default function GetCurrentUser() {
   return (
     async () => {
       const currentUser = Parse.User.current()
-      setCurrentUser(currentUser)
       if(currentUser == null) {
         setLoggedIn(false)
       }
@@ -18,7 +17,10 @@ export default function GetCurrentUser() {
         if(currentUser.get("enabled")){
           setLoggedIn(true)
         }
-        return currentUser;
+        const userJSON = currentUser.toJSON();
+        userJSON.id = userJSON.objectId;
+        setCurrentUser(userJSON)
+        return userJSON;
       }
     }
   )

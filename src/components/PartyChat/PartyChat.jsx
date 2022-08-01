@@ -12,24 +12,31 @@ import { BACKEND_URL } from '../../constants/constants'
 export default function PartyChat({party, inParty}) {
   const partyId = party.party.objectId
   const [messages, setMessages] = useState([]);
-  const {sendMessage} = useChat(partyId, messages, setMessages)
+  const [lastMessage, setLastMessage] = useState(null)
   const [newMessage, setNewMessage] = useState("")
   const openNavbar = useRecoilValue(navbarOpen);
   const [loadingMessages, setLoadingMessages] = useState(true)
   const user = useRecoilValue(currentUser)
+  const [reachedTop, setReachedTop] = useState(false)
+  const [pendingMessages, setPendingMessages] = useState([])
+  const {sendMessage} = useChat(partyId, setMessages, setLastMessage, pendingMessages, setPendingMessages)
+  const [newMessageId, setNewMessageId] = useState(0)
 
-  const messagesList = useRef(null);
+  const messagesListBottom = useRef(null);
 
   const loadMore = async (firstMessage) => {
     setLoadingMessages(true)
     try {
       let response
-      if(firstMessage!=null) 
+      if(firstMessage!=null) {
         response = await axios.post(`${BACKEND_URL}party/${partyId}/messages/`, {firstMessage: firstMessage, userId: user.id})
+        setMessages([...response.data.messages.messages, ...messages])
+      }
       else {
         response = await axios.post(`${BACKEND_URL}party/${partyId}/messages/`, {userId: user.id})
+        setMessages(response.data.messages.messages)
       }
-      setMessages(response.data.messages.messages)
+      setReachedTop(response.data.messages.reachedEnd)
       setLoadingMessages(false)
     }
     catch (err) {
@@ -39,13 +46,32 @@ export default function PartyChat({party, inParty}) {
   }
 
   useEffect(() => {
+    setPendingMessages([])
+    setLastMessage(null)
     loadMore(null)
-  }, [])
+    
+    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [partyId])
 
   useEffect(() => {
-    messagesList.current?.scrollIntoView({behavior: 'smooth'});
-  }, [messages]);
+    if(lastMessage!==null) {
+      if(lastMessage.senderId === user.id) {
+        for(let i = 0; i < pendingMessages.length; i++) {
+          if(pendingMessages[i].messageId === lastMessage.messageId) {
+            setPendingMessages([...pendingMessages.slice(0,i), ...pendingMessages.slice(i+1)])
+            break;
+          }
+        }
+      }
+    }
+    messagesListBottom.current?.scrollIntoView({behavior: 'smooth'});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lastMessage]);
 
+  useEffect(() => {
+    messagesListBottom.current?.scrollIntoView({behavior: 'smooth'});
+  }, [pendingMessages])
 
   const handleNewMessageChange = (event) => {
     setNewMessage(event.target.value);
@@ -53,7 +79,8 @@ export default function PartyChat({party, inParty}) {
 
   const handleSendMessage = () => {
     if(newMessage !== "") {
-      sendMessage(newMessage, party);
+      sendMessage(newMessage, party, newMessageId);
+      setNewMessageId(newMessageId+1)
       setNewMessage("");
     }
   };
@@ -75,14 +102,17 @@ export default function PartyChat({party, inParty}) {
   if(loadingMessages) {
     return <>Loading</>
   }
-
   return (
     <div className={classNames({"party-chat": true, "navbar-is-open": openNavbar})}>
       <ol className="messages-list">
+        <button className={"load-more-messages button-81"} disabled={reachedTop} onClick={() => loadMore(messages[0])}>Load More</button>
         {messages.map((message, i) => {
-          return(<ChatMessage key={i} message={message} prevMessage={i === 0 ? true : messages[i-1]}/>)
+          return(<ChatMessage key={i} message={message} prevMessage={i === 0 ? true : messages[i-1]} pendingMessage={false}/>)
         })}
-        <div ref={messagesList}></div>
+        {pendingMessages.map((message, i) => {
+          return <ChatMessage key={i} message={message} prevMessage={i === 0 ? messages[messages.length-1]: pendingMessages[i-1]} pendingMessage={true} />
+        })}
+        <div ref={messagesListBottom}></div>
       </ol>
       {inParty==="dm" || inParty==="player" ? <><ReactTextareaAutosize
         value={newMessage}
@@ -98,14 +128,32 @@ export default function PartyChat({party, inParty}) {
   )
 }
 
-function ChatMessage({message, prevMessage}) {
+function ChatMessage({message, prevMessage, pendingMessage}) {
+  function padTo2Digits(num) {
+    return String(num).padStart(2, '0');
+  }
+  const messageDate = new Date(message.createdAt)
+  const prevMessageDate = new Date(prevMessage.createdAt)
+  const dateString = messageDate.getHours() > 12 ? messageDate.getHours()-12 + ':' + padTo2Digits(messageDate.getMinutes()) + ' pm' : messageDate.getHours() + ':' + padTo2Digits(messageDate.getMinutes()) + ' am'
+
   const newSender = prevMessage===true || prevMessage.senderId !== message.senderId
-  const liClassNames = classNames({"message-item": true, "my-message": message.ownedByCurrentUser, "received-message": !message.ownedByCurrentUser, "new-sender" : newSender})
-  return (<li
-    className={liClassNames}>
-      {newSender ?
-        <><div className="chat-img-container"><img src={message.user.picture} alt={message.user.username} /></div><div className="chat-user">{message.user.username}</div></>
+  const newDate = prevMessage===true || (prevMessageDate.getFullYear() !== messageDate.getFullYear() || prevMessageDate.getMonth() !== messageDate.getMonth() || prevMessageDate.getDate() !== messageDate.getDate())
+  const liClassNames = classNames({"message-item": true, "my-message": message.ownedByCurrentUser, "received-message": !message.ownedByCurrentUser, "new-sender" : newSender, "pendingMessage": pendingMessage})
+
+  return (
+    <>
+      {newDate ?
+        <div className="new-date">{(messageDate.getMonth()+1) + '/' + messageDate.getDate() + '/' + messageDate.getFullYear()}</div>
       : ""}
-      <div className="message-body">{message.body}</div>
-    </li>)
+      <li
+      className={liClassNames}>
+        {newSender ?
+          <><div className="chat-img-container"><img src={message.user.picture} alt={message.user.username} /></div><div className="chat-user">{message.user.username}</div></>
+        : ""}
+        <div className="message-body">
+          <div className="message-content">{message.body}</div>
+          <div className="message-date">{dateString}</div>
+        </div>
+      </li>
+    </>)
   }

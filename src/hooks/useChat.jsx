@@ -8,32 +8,32 @@ import { currentUser } from "../recoil/atoms/atoms";
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event
 
-export default function useChat (partyId, messages, setMessages)  {
+export default function useChat (partyId, setMessages, setLastMessage, pendingMessages, setPendingMessages)  {
   const socketRef = useRef();
 
   const getCurrentUser = GetCurrentUser();
 
   const curUser = useRecoilValue(currentUser)
 
-
   useEffect(() => {
     socketRef.current = socketIOClient(SOCKET_SERVER_URL, {query: {partyId}})
     const chatMessageEvent = async() => {
       socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, async (message) => {
-      var userSender
-      try {
-        const response = await axios.get(`${BACKEND_URL}user/${message.senderId}`)
-        userSender = response.data.user
-      }
-      catch (err) {
-        return;
-      }
-      const incomingMessage = {
-        ...message,
-        user: userSender,
-        ownedByCurrentUser: message.senderID === curUser.id
-      };
-      setMessages((messages) => [...messages, incomingMessage])
+        let userSender
+        try {
+          const response = await axios.get(`${BACKEND_URL}user/${message.senderId}`)
+          userSender = response.data.user
+        }
+        catch (err) {
+          return;
+        }
+        const incomingMessage = {
+          ...message,
+          user: userSender,
+          ownedByCurrentUser: message.senderId === curUser.id
+        };
+        setMessages((messages) => [...messages, incomingMessage])
+        setLastMessage(message)
       })
   }
     chatMessageEvent()
@@ -44,16 +44,21 @@ export default function useChat (partyId, messages, setMessages)  {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [partyId, curUser.id]);
 
-  const sendMessage = async (messageBody, party) => {
+  const sendMessage = async (messageBody, party, messageId) => {
     const currentUser = await getCurrentUser();
+    const currentDate = new Date()
+    setPendingMessages([...pendingMessages, {body: messageBody, senderId: currentUser.id, user: {username: currentUser.username, picture: currentUser.picture}, messageId: messageId, createdAt: currentDate.toString()
+    }])
+
     socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
       body: messageBody,
       senderId: currentUser.id,
-      partyId: party.party.objectId
+      partyId: party.party.objectId,
+      messageId: messageId,
     })
   }
 
-  return {messages, sendMessage}
+  return {sendMessage}
 }
 
 
