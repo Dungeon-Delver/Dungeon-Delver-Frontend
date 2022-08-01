@@ -23,14 +23,14 @@
   .party-sidebar .sidebar-icon {
     display: block;
     position: fixed;
-    top: 78px;
+    top: 76px;
     left: 0;
     z-index: 10;
   }
 
   .party-sidebar.navbar-is-open .sidebar-icon {
     position: fixed;
-    top: 188px;
+    top: 186px;
     left: 2px;
   }
 
@@ -45,5 +45,19 @@
   .party-sidebar.responsive ul{
     display: grid;
     z-index: 1;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .party-sidebar {
+    max-width: 100vw;
+  }
+
+  .party-sidebar.responsive {
+    width: 100vw;
+  }
+
+  .party-sidebar-card {
+    max-width: 200px;
   }
 }
