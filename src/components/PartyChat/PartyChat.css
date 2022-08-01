@@ -158,6 +158,7 @@
 .load-more-messages:disabled {
   background-color: #bcbcbc;
   color: gray;
+}
 
 .timed-out {
   color: red;
