@@ -19,7 +19,7 @@
   margin-top: 1.0625rem;
 }
 
-.pendingMessage {
+.pending-message {
   color: gray
 }
 
@@ -150,9 +150,18 @@
   color: #fff;
 }
 
+.timed-out {
+  color: red;
+ }
+
+
 .load-more-messages:disabled {
   background-color: #bcbcbc;
   color: gray;
+
+.timed-out {
+  color: red;
+
 }
 
 @media (min-width: 768px) {

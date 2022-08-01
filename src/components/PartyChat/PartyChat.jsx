@@ -19,7 +19,22 @@ export default function PartyChat({party, inParty}) {
   const user = useRecoilValue(currentUser)
   const [reachedTop, setReachedTop] = useState(false)
   const [pendingMessages, setPendingMessages] = useState([])
-  const {sendMessage} = useChat(partyId, setMessages, setLastMessage, pendingMessages, setPendingMessages)
+  const [timedOutMessage, setTimedOutMessage] = useState(null)
+  const pendingMessagesRef = useRef(pendingMessages)
+  pendingMessagesRef.current = pendingMessages
+
+  const onTimeout = (messageId) => {
+    const timer = setTimeout(() => {
+      pendingMessagesRef.current.forEach((item) => {
+        if(item.messageId === messageId) {
+          setTimedOutMessage(item.messageId);
+        }
+      })
+    }, 10000)
+    return() => clearTimeout(timer)
+  }
+
+  const {sendMessage} = useChat(partyId, setMessages, setLastMessage, pendingMessages, setPendingMessages, onTimeout)
   const [newMessageId, setNewMessageId] = useState(0)
 
   const messagesListBottom = useRef(null);
@@ -59,6 +74,7 @@ export default function PartyChat({party, inParty}) {
       if(lastMessage.senderId === user.id) {
         for(let i = 0; i < pendingMessages.length; i++) {
           if(pendingMessages[i].messageId === lastMessage.messageId) {
+            pendingMessages[i].clearTimeout()
             setPendingMessages([...pendingMessages.slice(0,i), ...pendingMessages.slice(i+1)])
             break;
           }
@@ -73,15 +89,41 @@ export default function PartyChat({party, inParty}) {
     messagesListBottom.current?.scrollIntoView({behavior: 'smooth'});
   }, [pendingMessages])
 
+  useEffect(() => {
+    if(timedOutMessage != null) {
+      pendingMessages.forEach((item, i)=> {
+        if(item.messageId === timedOutMessage) {
+          const newItem = Object.assign({}, item)
+          newItem.timedOut = true;
+          setPendingMessages([...pendingMessages.slice(0,i), newItem, ...pendingMessages.slice(i+1)])
+        }
+      })
+      setTimedOutMessage(null)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timedOutMessage])
+
   const handleNewMessageChange = (event) => {
     setNewMessage(event.target.value);
   }
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if(newMessage !== "") {
-      sendMessage(newMessage, party, newMessageId);
-      setNewMessageId(newMessageId+1)
-      setNewMessage("");
+      try {
+        const response = await axios.get(`${BACKEND_URL}user/${user.id}/in/party/${partyId}`)
+        if(!response.data.inParty) {
+          window.location.reload();
+        }
+        else {
+          sendMessage(newMessage, party, newMessageId);
+          setNewMessageId(newMessageId+1)
+          setNewMessage("");
+        }
+      }
+      catch (err){
+        console.error(err)
+      }
+     
     }
   };
 
@@ -138,7 +180,7 @@ function ChatMessage({message, prevMessage, pendingMessage}) {
 
   const newSender = prevMessage===true || prevMessage.senderId !== message.senderId
   const newDate = prevMessage===true || (prevMessageDate.getFullYear() !== messageDate.getFullYear() || prevMessageDate.getMonth() !== messageDate.getMonth() || prevMessageDate.getDate() !== messageDate.getDate())
-  const liClassNames = classNames({"message-item": true, "my-message": message.ownedByCurrentUser, "received-message": !message.ownedByCurrentUser, "new-sender" : newSender, "pendingMessage": pendingMessage})
+  const liClassNames = classNames({"message-item": true, "my-message": message.ownedByCurrentUser, "received-message": !message.ownedByCurrentUser, "new-sender" : newSender, "pending-message": pendingMessage, "timed-out": message.hasOwnProperty("timedOut")})
 
   return (
     <>
