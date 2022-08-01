@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useRef } from "react";
 import { useRecoilValue } from "recoil";
 import socketIOClient from "socket.io-client";
-import { BACKEND_URL, CHAT_SERVER_URL } from "../constants/constants";
+import { BACKEND_URL, SOCKET_SERVER_URL } from "../constants/constants";
 import GetCurrentUser from "../constants/GetCurrentUser";
 import { currentUser } from "../recoil/atoms/atoms";
 
@@ -17,11 +17,10 @@ export default function useChat (partyId, messages, setMessages)  {
 
 
   useEffect(() => {
-    socketRef.current = socketIOClient(CHAT_SERVER_URL, {query: {partyId}
-  })
+    socketRef.current = socketIOClient(SOCKET_SERVER_URL, {query: {partyId}})
     const chatMessageEvent = async() => {
       socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, async (message) => {
-       var userSender
+      var userSender
       try {
         const response = await axios.get(`${BACKEND_URL}user/${message.senderId}`)
         userSender = response.data.user

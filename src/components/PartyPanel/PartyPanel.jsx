@@ -9,6 +9,7 @@ import { useRecoilValue } from 'recoil'
 import { navbarOpen } from '../../recoil/atoms/atoms'
 import classNames from 'classnames'
 import { BACKEND_URL } from '../../constants/constants'
+import useNotification from '../../hooks/useNotification'
 
 
 export default function PartyPanel({party, inParty, fetchData}) {
@@ -36,6 +37,7 @@ function PanelButton({party, inParty, requestedUsers}) {
   const [buttonDisabled, setButtonDisabled] = useState(true)
   const [onPress, setOnPress] = useState(() => {})
   const [justRequested, setJustRequested] = useState(false)
+  const {sendNotification} = useNotification(null, null)
 
   const [error, setError] = useState("");
 
@@ -94,7 +96,9 @@ function PanelButton({party, inParty, requestedUsers}) {
       setButtonDisabled(true)
       setButtonText("Sending Request")
       const currentUser = await getCurrentUser();
-      await axios.post(`${BACKEND_URL}user/${party.party.objectId}/join`, {userId: currentUser})
+      const response = await axios.post(`${BACKEND_URL}user/${party.party.objectId}/join`, {userId: currentUser})
+      const notification = response.data.notification
+      sendNotification(notification)
       setButtonDisabled(false)
       setOnPress(() => cancelRequest)
       setButtonText("Cancel Request")
@@ -110,7 +114,9 @@ function PanelButton({party, inParty, requestedUsers}) {
       setButtonText("Leaving party")
       setButtonDisabled(true)
       const currentUser = await getCurrentUser();
-      await axios.post(`${BACKEND_URL}user/${party.party.objectId}/leave`, {userId: currentUser})
+      const response = await axios.post(`${BACKEND_URL}user/${party.party.objectId}/leave`, {userId: currentUser})
+      const notification = response.data.notification
+      sendNotification(notification)
       setButtonText("Successfully left party")
     }
     catch (err) {
@@ -124,7 +130,9 @@ function PanelButton({party, inParty, requestedUsers}) {
       setButtonText("Cancelling Request")
       setButtonDisabled(true)
       const currentUser = await getCurrentUser();
-      await axios.post(`${BACKEND_URL}user/${party.party.objectId}/cancel-join`, {userId: currentUser})
+      const response = await axios.post(`${BACKEND_URL}user/${party.party.objectId}/cancel-join`, {userId: currentUser})
+      const notification = response.data.notification
+      sendNotification(notification)
       setButtonText("Successfully cancelled request")
       setJustRequested(false)
     }
@@ -139,7 +147,11 @@ function PanelButton({party, inParty, requestedUsers}) {
       setButtonText("Deleting Party")
       setButtonDisabled(true)
       const currentUser = await getCurrentUser();
-      await axios.post(`${BACKEND_URL}party/${party.party.objectId}/delete`, {dm: currentUser})
+      const response = await axios.post(`${BACKEND_URL}party/${party.party.objectId}/delete`, {dm: currentUser})
+      const notifications = response.data.notifications
+      notifications.forEach(item =>
+        sendNotification(item)
+      )
       setButtonText("Successfully deleted party")
       setJustRequested(false)
     }
