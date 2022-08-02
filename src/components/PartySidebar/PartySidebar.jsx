@@ -9,7 +9,7 @@ import { useRecoilValue } from 'recoil'
 import { navbarOpen } from '../../recoil/atoms/atoms'
 import { BACKEND_URL } from '../../constants/constants'
 
-export default function PartySidebar({party}) {
+export default function PartySidebar({party, refreshParties}) {
   const [parties, setParties] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -38,7 +38,7 @@ export default function PartySidebar({party}) {
     setLoading(true)
     getParties()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [refreshParties])
   if(loading) {
     return (
       <Loader />
