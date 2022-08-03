@@ -1,25 +1,29 @@
 .search-party-card {
   display: grid;
-  grid-template-columns: 3fr 3fr 3fr 2fr;
+  grid-template-columns: 3fr 2fr 4fr 2fr;
   grid-template-rows: 1fr 1fr;
   grid-gap: 10px;
   align-items: center;
   background-color: #e9e8e9;
   text-align: center;
   font-family: "Palatino";
+  border-radius: 15px;
 }
 
 .search-party-card div {
 padding: 3px;
 }
 
-.search-party-card .search-party-members {
-max-height: 100px;
-}
-
 .search-party-card .search-party-image {
 grid-column: 1 / span 1;
 grid-row: 1 / span 2;
+max-height: 100%;
+}
+
+.search-party-card .search-party-image img {
+  object-fit: cover;
+  border-radius: 15px;
+  max-height: 130px;
 }
 
 .search-party-card .search-party-title {
@@ -39,7 +43,8 @@ grid-row: 2 / span 1;
 .search-params-list {
 grid-column: 3 / span 1;
 grid-row: 1 / span 2;
-background-color: #d5d5d5
+background-color: #d5d5d5;
+border-radius: 15px;
 }
 
 .enter-dungeon-button-container {
