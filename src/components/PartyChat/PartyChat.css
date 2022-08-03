@@ -48,7 +48,7 @@
 
 .message-item:hover {
   background-color: #bcbcbc;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .message-item:hover .message-body .message-date {

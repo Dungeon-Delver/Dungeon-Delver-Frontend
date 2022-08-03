@@ -8,7 +8,7 @@
     text-align: center;
     font-family: "Palatino";
     height: 130px;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
 .party-card div {
@@ -28,7 +28,7 @@
 
 .party-card .party-image img {
   object-fit: cover;
-  border-radius: 15px;
+  border-radius: 10px;
   max-height: 130px;
 }
 
@@ -42,7 +42,7 @@
 .party-card .party-role {
   grid-column: 2 / span 1;
   grid-row: 2 / span 1;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .party-card .green {
@@ -81,7 +81,7 @@
 	border: 0px solid #5b3f69;
 	background: #34283b;
 	transition: 200ms;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .enter-dungeon-button span {
@@ -101,7 +101,7 @@
 	width: 140px;
 	height: 40px;
 	z-index: 1;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .enter-dungeon-button::before {
@@ -128,7 +128,7 @@
 	height: 50px;
 	margin-left: -80px;
 	margin-top: -30px;
-  border-radius: 20px;
+  border-radius: 15px;
 }
 
 .enter-dungeon-button:hover::after {

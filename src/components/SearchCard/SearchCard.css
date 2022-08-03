@@ -7,7 +7,7 @@
   background-color: #e9e8e9;
   text-align: center;
   font-family: "Palatino";
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .search-party-card div {
@@ -22,7 +22,7 @@ max-height: 100%;
 
 .search-party-card .search-party-image img {
   object-fit: cover;
-  border-radius: 15px;
+  border-radius: 10px;
   max-height: 130px;
 }
 
@@ -44,7 +44,7 @@ grid-row: 2 / span 1;
 grid-column: 3 / span 1;
 grid-row: 1 / span 2;
 background-color: #d5d5d5;
-border-radius: 15px;
+border-radius: 10px;
 }
 
 .enter-dungeon-button-container {
@@ -69,7 +69,7 @@ grid-row: 1 / span 2;
 	border: 0px solid #5b3f69;
 	background: #34283b;
 	transition: 200ms;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .enter-dungeon-button span {
@@ -89,7 +89,7 @@ grid-row: 1 / span 2;
 	width: 140px;
 	height: 40px;
 	z-index: 1;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .enter-dungeon-button::before {
