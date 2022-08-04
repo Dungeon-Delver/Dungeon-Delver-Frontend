@@ -79,7 +79,7 @@ export default function UserProfile() {
           <div className="user-profile-date-joined">{`Delving since ${userDate.toLocaleDateString(userDate, dateOptions)}`}</div>
         </div>
       </div>
-        {user!=null ? 
+        {parties.playerParties.length > 0 || parties.dmParties.length > 0 ? 
          <ul className="parties">
           {parties.dmParties.map((item, i) => {
             return <PartyCard key={i} party={item} role={"Dungeon Master"}/>
@@ -88,7 +88,7 @@ export default function UserProfile() {
             return <PartyCard key={i} party={item} role={"Player"}/>
           })}
         </ul>
-        : <h2 className="no-parties">This user is not currently in any parties</h2>}
+        : <h2 className="no-parties">This user is not currently in any public parties</h2>}
     </div>
   )
 }

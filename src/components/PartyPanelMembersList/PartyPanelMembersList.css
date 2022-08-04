@@ -1,15 +1,22 @@
 .member-picture {
   width: auto;
+	border-radius: 50%;
+}
+
+.member-picture img {
+	object-fit: cover;
+	border-radius: 50%;
 }
 
 .panel-party-members {
   margin: 0px;
   display: inline-block;
   padding: 10px;
+	background-color: #bcbcbc;
+	border-radius: 10px;
 }
 
-.panel-party-members li {
-  background-color: #bcbcbc;
+.panel-party-members a li, .panel-party-members li a {
   margin-top: 10px;
   margin-right: 10px;
   align-items: center;
