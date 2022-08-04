@@ -2,11 +2,13 @@ import axios from "axios";
 import classNames from "classnames";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
-import { BACKEND_URL } from "../../constants/constants";
+import { BACKEND_URL, FILE_HOST_URL } from "../../constants/constants";
 import GetCurrentUser from "../../constants/GetCurrentUser";
 import { navbarOpen } from "../../recoil/atoms/atoms";
 import CategoryContainer from "../CategoryContainer/CategoryContainer";
 import "./EditParty.css"
+import Keys from "../../keys.json"
+import FileUpload from "../FileUpload/FileUpload";
 
 export default function EditParty({party, activeSelectors, fetchData, modifyParams}) {
 
@@ -19,6 +21,9 @@ export default function EditParty({party, activeSelectors, fetchData, modifyPara
   const [activeLevel, setActiveLevel] = useState(activeSelectors[3][1]);
   const [activeMode, setActiveMode] = useState(activeSelectors[4][1]);
   const [missingParams, setMissingParams] = useState([])
+
+  const [selectedFile, setSelectedFile] = useState();
+	const [isFilePicked, setIsFilePicked] = useState(false);
 
   const [loadingParty, setLoadingParty] = useState(false);
   const [error, setError] = useState("");
@@ -65,6 +70,24 @@ export default function EditParty({party, activeSelectors, fetchData, modifyPara
         level: activeLevel,
       },
       mode: activeMode
+    }
+    if(isFilePicked) {
+      const formData = new FormData()
+      formData.set('key', Keys.imageHostAPI)
+      formData.append('image', selectedFile.split(",").pop())
+      try {
+        const response = await axios({
+          method: 'post',
+          url: FILE_HOST_URL,
+          data: formData
+        })
+        JSON_OBJECT.image = response.data.data.url
+      }
+      catch (err) {
+        console.error(err)
+        console.log("Unable to upload image--proceeding with party creation")
+        setLoadingParty(false)
+      }
     }
     try {
       await axios.post(`${BACKEND_URL}party/${party.party.objectId}/modify`, JSON_OBJECT);
@@ -116,6 +139,7 @@ export default function EditParty({party, activeSelectors, fetchData, modifyPara
           <CategoryContainer key={item.category} category={item} />
         ))}
       </div>
+      <FileUpload setSelectedFile={setSelectedFile} setIsFilePicked={setIsFilePicked}/>
       <button className={classNames({"button": true, "button--loading": loadingParty})} onClick={(event) => handleSubmit(event)}>
         <div className="button__text">Save Changes</div>
       </button>

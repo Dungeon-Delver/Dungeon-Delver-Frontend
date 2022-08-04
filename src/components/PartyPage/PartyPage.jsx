@@ -18,13 +18,14 @@ export default function PartyPage() {
   const [inParty, setInParty] = useState(false);
   const [error, setError] = useState("")
   const [loadingParty, setLoadingParty] = useState(true);
+  const [refreshParties, setRefreshParties] = useState(false);
   const user = useRecoilValue(currentUser)
 
   useEffect(() => {
 
     const setup = async () => {
       try {
-        await fetchData()
+        await getParty()
         setLoadingParty(false)
       }
       catch (err) {
@@ -50,7 +51,11 @@ export default function PartyPage() {
     setInParty(inPartyVal)
   }
 
-  const fetchData = async () => {
+  const fetchData = () => {
+    getParty();
+    setRefreshParties(!refreshParties)
+  }
+  const getParty = async () => {
     try {
       const response = await axios.get(`${BACKEND_URL}party/${params.partyId}`);
       const result = response.data.party
@@ -84,7 +89,7 @@ export default function PartyPage() {
   }
   return(
     <div className="party-page">
-      <PartySidebar party={party} />
+      <PartySidebar party={party} refreshParties={refreshParties} />
       <PartyChat party={party} inParty={inParty} />
       <PartyPanel party={party} inParty={inParty} fetchData={fetchData} />
     </div>

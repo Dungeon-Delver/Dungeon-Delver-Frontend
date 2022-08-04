@@ -20,6 +20,7 @@
   transition: all 0.5s;
   width: auto;
   position: relative;
+  border-radius: 10px;
 }
 .create-new-party-button::after {
     content: "→";

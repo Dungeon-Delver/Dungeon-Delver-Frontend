@@ -3,6 +3,8 @@ import "./FileUpload.css"
 
 export default function FileUpload({setSelectedFile, setIsFilePicked}){
 
+  const [fileName, setFileName] = useState("")
+
 
   const getBase64 = (file, cb) => {
     let reader = new FileReader()
@@ -37,7 +39,8 @@ export default function FileUpload({setSelectedFile, setIsFilePicked}){
       try {
         getBase64(file, (result) => {
           setIsFilePicked(true);
-          setSelectedFile(result)
+          setSelectedFile(result);
+          setFileName(file.name)
         })
       }
       catch (err) {
@@ -52,7 +55,11 @@ export default function FileUpload({setSelectedFile, setIsFilePicked}){
 	return(
    <div className="file-upload">
       <div className="upload-input=container">
-			  <input type="file" name="file" onChange={changeHandler} />
+        <label htmlFor="file-input" className="file-input-label button-6">
+          <div className="file-input-text">Optional: Upload Party Image</div>
+			    <input id="file-input" type="file" name="file" accept="image/png, image/jpg, image/jpeg"onChange={changeHandler} label="Optiona: Upload Party Image"></input>
+          <div className="image-name" id="image-name">{fileName}</div>
+        </label>
       </div>
      {wrongExtension ? <div className="invalid-extension">Invalid File Extension! Supported Extensions: .png, .jpeg, .jpg</div>: ""}
      {invalidSize ? <div className="invalid-size">Invalid File Size! Maximum size: 64 MB</div> : ""}
