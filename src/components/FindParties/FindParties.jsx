@@ -138,7 +138,7 @@ export default function FindParties() {
         setSearchResults(null)
       }
       setLoadingParty(false);
-      setPrevDisabled(true)
+      setPrevDisabled(0)
       setPartyFailed(false);
       setPage(1)
       setSearchMode("name")
