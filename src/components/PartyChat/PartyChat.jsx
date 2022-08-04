@@ -7,6 +7,7 @@ import { useRecoilValue } from 'recoil'
 import { currentUser, navbarOpen } from '../../recoil/atoms/atoms'
 import axios from 'axios'
 import { BACKEND_URL } from '../../constants/constants'
+import ChatLoader from '../Loader/ChatLoader'
 
 //Stretch
 export default function PartyChat({party, inParty}) {
@@ -142,7 +143,7 @@ export default function PartyChat({party, inParty}) {
     </div>)
   }
   if(loadingMessages) {
-    return <>Loading</>
+    return <ChatLoader />
   }
   return (
     <div className={classNames({"party-chat": true, "navbar-is-open": openNavbar})}>
