@@ -7,7 +7,8 @@
     background-color: #e9e8e9;
     text-align: center;
     font-family: "Palatino";
-    height: 120px;
+    height: 130px;
+    border-radius: 10px;
 }
 
 .party-card div {
@@ -15,19 +16,20 @@
 }
 
 .party-card .party-members {
-  max-height: 120px;
+  max-height: 130px;
 }
 
 .party-card .party-image {
   grid-column: 1 / span 1;
   grid-row: 1 / span 2;
   max-height: 100%;
+  padding: 0px;
 }
 
 .party-card .party-image img {
   object-fit: cover;
-  border-radius: 15px;
-  max-height: 120px;
+  border-radius: 10px;
+  max-height: 130px;
 }
 
 .party-card .party-title {
@@ -40,6 +42,7 @@
 .party-card .party-role {
   grid-column: 2 / span 1;
   grid-row: 2 / span 1;
+  border-radius: 10px;
 }
 
 .party-card .green {
@@ -78,6 +81,7 @@
 	border: 0px solid #5b3f69;
 	background: #34283b;
 	transition: 200ms;
+  border-radius: 10px;
 }
 
 .enter-dungeon-button span {
@@ -97,6 +101,7 @@
 	width: 140px;
 	height: 40px;
 	z-index: 1;
+  border-radius: 10px;
 }
 
 .enter-dungeon-button::before {
@@ -123,6 +128,7 @@
 	height: 50px;
 	margin-left: -80px;
 	margin-top: -30px;
+  border-radius: 15px;
 }
 
 .enter-dungeon-button:hover::after {
@@ -130,6 +136,7 @@
 	height: 60px;
 	margin-left: -85px;
 	margin-top: -35px;
+  border-radius: 20px;
 }
 
 .enter-dungeon-button:focus {
@@ -145,6 +152,7 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
+    height: auto;
   }
   .party-image {
     width: 100px;
