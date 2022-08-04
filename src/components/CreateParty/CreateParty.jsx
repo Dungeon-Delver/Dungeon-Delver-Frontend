@@ -2,13 +2,15 @@ import {useState} from 'react'
 import './CreateParty.css'
 import CategoryContainer from "../CategoryContainer/CategoryContainer"
 import axios from 'axios';
+import FileUpload from "../FileUpload/FileUpload.jsx"
 
 import { useNavigate } from 'react-router-dom';
+import Keys from "../../keys.json"
 
 import { useRecoilValue } from 'recoil';
 import { currentUser } from '../../recoil/atoms/atoms';
 import classNames from 'classnames';
-import { BACKEND_URL } from '../../constants/constants';
+import { BACKEND_URL, FILE_HOST_URL } from '../../constants/constants';
 
 export default function CreateParty() {
   const [partyName, setPartyName] = useState("");
@@ -22,6 +24,9 @@ export default function CreateParty() {
   const [loadingParty, setLoadingParty] = useState(false);
   const [partyFailed, setPartyFailed] = useState(false);
   const [error, setError] = useState("");
+
+  const [selectedFile, setSelectedFile] = useState();
+	const [isFilePicked, setIsFilePicked] = useState(false);
 
   const id = useRecoilValue(currentUser);
   const navigate = useNavigate();
@@ -65,6 +70,24 @@ export default function CreateParty() {
         level: activeLevel,
       },
       mode: activeMode
+    }
+    if(isFilePicked) {
+      const formData = new FormData()
+      formData.set('key', Keys.imageHostAPI)
+      formData.append('image', selectedFile.split(",").pop())
+      try {
+        const response = await axios({
+          method: 'post',
+          url: FILE_HOST_URL,
+          data: formData
+        })
+        JSON_OBJECT.image = response.data.data.url
+      }
+      catch (err) {
+        console.error(err)
+        console.log("Unable to upload image--proceeding with party creation")
+        setLoadingParty(false)
+      }
     }
     try {
       const data = await axios.post(`${BACKEND_URL}party/create-party`, JSON_OBJECT);
@@ -116,8 +139,9 @@ export default function CreateParty() {
           <CategoryContainer key={item.category} category={item} />
         ))}
       </div>
+      <FileUpload setSelectedFile={setSelectedFile} setIsFilePicked={setIsFilePicked}/>
       <button className={classNames({"button": true, "button--loading": loadingParty})} onClick={(event) => handleSubmit(event)}>
-        <div className="button__text">Create Dungeon</div>
+        <div className="button__text" disabled={loadingParty} >Create Dungeon</div>
       </button>
       <div className="missing-params">{missingParams}</div>
       {partyFailed ?<div className="party-failed"> 
