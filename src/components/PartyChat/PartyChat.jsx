@@ -172,7 +172,6 @@ export default function PartyChat({party, inParty}) {
 }
 
 function ChatMessage({message, prevMessage, pendingMessage}) {
-  console.log('message: ', message);
   function padTo2Digits(num) {
     return String(num).padStart(2, '0');
   }
