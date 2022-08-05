@@ -39,7 +39,7 @@ export default function UserProfile() {
     setLoading(true)
     getProfile()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [params])
   if(loading) {
     return (
       <Loader />
