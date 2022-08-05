@@ -69,6 +69,8 @@ export default function FindParties() {
     }
     setQueueNext(false)
     setQueuePrev(false)
+    setPrev([])
+    setNext([])
 
     if(activeType !== "Any Type") {
       JSON_OBJECT.searchParameters.type = activeType
@@ -127,6 +129,8 @@ export default function FindParties() {
   const handleSearchPartyByName = async() => {
     setQueueNext(false)
     setQueuePrev(false)
+    setPrev([])
+    setNext([])
     try {
       const data = await axios.post(`${BACKEND_URL}party/search`, {user: user.id, name: partyName});
       if(data.data.response.parties.length > 0) {
