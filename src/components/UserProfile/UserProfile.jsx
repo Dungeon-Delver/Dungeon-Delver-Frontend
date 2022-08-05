@@ -80,14 +80,15 @@ export default function UserProfile() {
         </div>
       </div>
         {parties.playerParties.length > 0 || parties.dmParties.length > 0 ? 
-         <ul className="parties">
+        <><h2>{`${user.username}'s Public Parties`}</h2>
+        <ul className="parties">
           {parties.dmParties.map((item, i) => {
-            return <PartyCard key={i} party={item} role={"Dungeon Master"}/>
+            return <PartyCard key={i} party={item} role={"Dungeon Master"} />;
           })}
           {parties.playerParties.map((item, i) => {
-            return <PartyCard key={i} party={item} role={"Player"}/>
+            return <PartyCard key={i} party={item} role={"Player"} />;
           })}
-        </ul>
+        </ul></>
         : <h2 className="no-parties">This user is not currently in any public parties</h2>}
     </div>
   )
