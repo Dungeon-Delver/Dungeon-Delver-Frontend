@@ -13,6 +13,12 @@
 .chat-img-container {
   width: 30px;
   height: 30px;
+  border-radius: 50%;
+}
+
+.chat-img-container img {
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .new-sender {
@@ -40,6 +46,7 @@
     overflow-y: scroll;
     margin-bottom: 0px;
     margin-top: 0px;
+    margin-left: 10px;
 }
 
 .message-date {

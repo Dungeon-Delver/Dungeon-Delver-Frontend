@@ -1,6 +1,7 @@
 import axios from 'axios';
 import classNames from 'classnames';
 import {useState}from 'react'
+import { Link } from 'react-router-dom';
 import { BACKEND_URL } from '../../constants/constants';
 import GetCurrentUser from '../../constants/GetCurrentUser';
 import useNotification from '../../hooks/useNotification';
@@ -16,14 +17,14 @@ export default function MembersList({party, players, dm, inParty}) {
   return (
     <ul className={classNames({"panel-party-members": true, "panel-party-members-dm": inParty==="dm"})}>
       <h2 className="party-members-heading">Current Members</h2>
-        <li className="dm">
+      <Link to={`/user/${dm.objectId}`}><li className="dm">
           <div className="dm-picture member-picture"><img src={dm.picture} alt={dm.name}/></div>
           <div className="dm-name member-name">👑 {dm.username}</div>
-        </li>
+        </li></Link>
         {players.map((item, i) => {
           return <li key={i} className="player">
-              <div className="player-picture member-picture"><img src={item.picture} alt={item.name}/></div>
-              <div className="player-name member-name">{item.username}</div>
+              <Link to={`/user/${item.objectId}`}><div className="player-picture member-picture"><img src={item.picture} alt={item.name}/></div>
+              <div className="player-name member-name">{item.username}</div></Link>
               {inParty==="dm" ? <RemoveUserButton item={item} dm={dm} party={party}/>: ""}
             </li>
         })}

@@ -39,7 +39,7 @@ export default function UserProfile() {
     setLoading(true)
     getProfile()
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [params])
   if(loading) {
     return (
       <Loader />
@@ -79,16 +79,17 @@ export default function UserProfile() {
           <div className="user-profile-date-joined">{`Delving since ${userDate.toLocaleDateString(userDate, dateOptions)}`}</div>
         </div>
       </div>
-        {user!=null ? 
-         <ul className="parties">
+        {parties.playerParties.length > 0 || parties.dmParties.length > 0 ? 
+        <><h2>{`${user.username}'s Public Parties`}</h2>
+        <ul className="parties">
           {parties.dmParties.map((item, i) => {
-            return <PartyCard key={i} party={item} role={"Dungeon Master"}/>
+            return <PartyCard key={i} party={item} role={"Dungeon Master"} />;
           })}
           {parties.playerParties.map((item, i) => {
-            return <PartyCard key={i} party={item} role={"Player"}/>
+            return <PartyCard key={i} party={item} role={"Player"} />;
           })}
-        </ul>
-        : <h2 className="no-parties">This user is not currently in any parties</h2>}
+        </ul></>
+        : <h2 className="no-parties">This user is not currently in any public parties</h2>}
     </div>
   )
 }
