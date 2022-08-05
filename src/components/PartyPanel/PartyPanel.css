@@ -5,6 +5,7 @@
   padding-top: 0px;
   height: calc(100vh - 76px);
   overflow-y: scroll;
+  position: relative
 }
 
 .party-panel-icon {
@@ -19,17 +20,12 @@
   }
   .party-panel .party-panel-icon {
     display: block;
-    position: absolute;
-    top: 2px;
+    top: 0;
     right: 0;
     z-index: 5;
+    background-color: transparent;
   }
 
-  .party-panel.navbar-is-open .party-panel-icon {
-    position: absolute;
-    top: 2px;
-    right: 2px;
-  }
 
   .party-panel {
     position: absolute;
@@ -38,6 +34,7 @@
     right: 0px;
     padding: 0;
     max-height: calc(100vh - 76px);
+    background-color: transparent;
   }
 
   .party-panel.navbar-is-open {
@@ -49,10 +46,14 @@
     padding: 10px;
     padding-bottom: 0px;
     padding-top: 0px;
+    background-color: #d5d5d5;
   }
 
   .party-panel.responsive div:not(:last-child), .party-panel.responsive ul{
     display: block;
+  }
+  .party-panel.responsive .party-panel-icon {
+    position: absolute;
   }
 }
 
