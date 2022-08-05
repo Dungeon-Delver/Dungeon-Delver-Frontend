@@ -22,10 +22,26 @@
 .notification-bell {
   width: 32px;
   height: 32px;
+  margin-right: 8px;
 }
 
 .nav-button-container, .nav-button-container a {
   display: flex;
+}
+
+.navbar a {
+  display: flex;
+  align-content: center;
+}
+
+.my-profile-picture-container {
+  width: 30px;
+  height: 30px;
+  align-self: center;
+}
+
+.my-profile-picture-container img {
+  border-radius: 50%;
 }
 
 .nav-button:hover{
@@ -72,7 +88,7 @@
     display: inline-block;
   }
   .navbar.responsive {position: relative;}
-  .navbar.responsive div:not(:first-child):not(:last-child):not(.notification-bell) {
+  .navbar.responsive div:not(:first-child):not(:last-child):not(.notification-bell):not(.my-profile-icon) {
     float: none;
     display: block;
     text-align: left;
@@ -87,6 +103,12 @@
     top: 0;
   }
   .navbar .notification-center {
+    position: absolute;
+    top: 20px;
+    right: 50px;
+  }
+
+  .navbar .my-profile-icon {
     position: absolute;
     top: 20px;
     right: 20px;
