@@ -7,7 +7,10 @@ import { useRecoilValue } from 'recoil'
 import { currentUser, navbarOpen } from '../../recoil/atoms/atoms'
 import axios from 'axios'
 import { BACKEND_URL } from '../../constants/constants'
+
+import { Link } from 'react-router-dom'
 import ChatLoader from '../Loader/ChatLoader'
+
 
 //Stretch
 export default function PartyChat({party, inParty}) {
@@ -195,7 +198,7 @@ function ChatMessage({message, prevMessage, pendingMessage}) {
       <li
       className={liClassNames}>
         {newSender ?
-          <><div className="chat-img-container"><img src={message.user.picture} alt={message.user.username} /></div><div className="chat-user">{message.user.username}</div></>
+          <><Link to={`/user/${message.senderId}`}><div className="chat-img-container"><img src={message.user.picture} alt={message.user.username} /></div></Link><div className="chat-user">{message.user.username}</div></>
         : ""}
         <div className="message-body">
           <div className="message-content">{message.body}</div>

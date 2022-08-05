@@ -18,6 +18,7 @@ import Parse from "../../constants/parseInitialize"
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { isLoggingInState, loggedInState } from '../../recoil/atoms/atoms';
 import ScrollToTop from '../sharedComponents/scrollToTop';
+import UserProfile from '../UserProfile/UserProfile';
 
 function App() {
 
@@ -129,6 +130,7 @@ function App() {
               <Route path="/find-parties" element={<FindParties />}/>
               <Route path="/parties" element={<MyParties />} />
               <Route path="/party/:partyId" element={<PartyPage />}/>
+              <Route path ="user/:userId" element={<UserProfile />} />
               <Route path = "*" element={<NotFound />} />
             </Routes>
           </ScrollToTop>
