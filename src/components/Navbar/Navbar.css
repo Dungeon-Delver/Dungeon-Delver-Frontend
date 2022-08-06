@@ -11,7 +11,7 @@
   background-color: #4933ab;
   align-self: center;
   margin-left: 1vw;
-  margin-right: 1vw
+  margin-right: 1vw;
 }
 
 .notification-center {
@@ -58,7 +58,8 @@
   width: 100vw;
   margin: 0px;
   position: relative;
-  background-color: #9966cc
+  background-color: #9966cc;
+  min-height: 76px;
 }
 
 .still-visible-content {
