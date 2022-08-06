@@ -8,6 +8,7 @@ import classNames from 'classnames'
 import { useRecoilValue } from 'recoil'
 import { navbarOpen } from '../../recoil/atoms/atoms'
 import { BACKEND_URL } from '../../constants/constants'
+import ChatLoader from '../Loader/ChatLoader'
 
 export default function PartySidebar({party, refreshParties}) {
   const [parties, setParties] = useState(null);
@@ -41,7 +42,7 @@ export default function PartySidebar({party, refreshParties}) {
   }, [refreshParties])
   if(loading) {
     return (
-      <Loader />
+      <ChatLoader />
     )
   }
 
