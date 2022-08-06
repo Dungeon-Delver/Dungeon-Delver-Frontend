@@ -12,7 +12,7 @@
 
 .party-sidebar.navbar-is-open {
   top: 179px;
-  max-height: calc(100vh - 186px);
+  max-height: calc(100vh - 179px);
 }
 
 
