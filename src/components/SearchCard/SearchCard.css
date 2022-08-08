@@ -11,13 +11,13 @@
 }
 
 .search-party-card div {
-padding: 3px;
+  padding: 3px;
 }
 
 .search-party-card .search-party-image {
-grid-column: 1 / span 1;
-grid-row: 1 / span 2;
-max-height: 100%;
+  grid-column: 1 / span 1;
+  grid-row: 1 / span 2;
+  max-height: 100%;
 }
 
 .search-party-card .search-party-image img {
@@ -27,108 +27,109 @@ max-height: 100%;
 }
 
 .search-party-card .search-party-title {
-grid-column: 2 / span 1;
-grid-row: 1 / span 1;
-font-weight: bold;
-font-size: 22px;
-font-family: "Palatino";
-margin-top: 10px;
+  grid-column: 2 / span 1;
+  grid-row: 1 / span 1;
+  font-weight: bold;
+  font-size: 22px;
+  font-family: "Palatino";
+  margin-top: 10px;
 }
 
 .search-party-card .search-party-status {
-grid-column: 2 / span 1;
-grid-row: 2 / span 1;
+  grid-column: 2 / span 1;
+  grid-row: 2 / span 1;
 }
 
 .search-params-list {
-grid-column: 3 / span 1;
-grid-row: 1 / span 2;
-background-color: #d5d5d5;
-border-radius: 10px;
+  grid-column: 3 / span 1;
+  grid-row: 1 / span 2;
+  background-color: #d5d5d5;
+  border-radius: 10px;
 }
 
 .enter-dungeon-button-container {
-grid-column: 4 / span 1;
-grid-row: 1 / span 2;
+  grid-column: 4 / span 1;
+  grid-row: 1 / span 2;
 }
 
 .noselect {
--webkit-touch-callout: none;
+  -webkit-touch-callout: none;
   -webkit-user-select: none;
-   -khtml-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   -webkit-tap-highlight-color: transparent;
 }
 
 .enter-dungeon-button {
-	width: 150px;
-	height: 50px;
-	cursor: pointer;
-	border: 0px solid #5b3f69;
-	background: #34283b;
-	transition: 200ms;
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  border: 0px solid #5b3f69;
+  background: #34283b;
+  transition: 200ms;
   border-radius: 10px;
 }
 
 .enter-dungeon-button span {
-	position: absolute;
-	transform: translateX(-50%) translateY(-50%);
-	font-family: 'Berkshire Swash', cursive;
-	color: #f0ecfc;
-	transition: 500ms;
+  position: absolute;
+  transform: translateX(-50%) translateY(-50%);
+  font-family: "Berkshire Swash", cursive;
+  color: #f0ecfc;
+  transition: 500ms;
   font-size: 22px;
 }
 
-.enter-dungeon-button::before, enter-dungeon-button::after {
-	content: '';
-	position: absolute;
-	margin-left: -75px;
-	margin-top: -25px;
-	width: 140px;
-	height: 40px;
-	z-index: 1;
+.enter-dungeon-button::before,
+enter-dungeon-button::after {
+  content: "";
+  position: absolute;
+  margin-left: -75px;
+  margin-top: -25px;
+  width: 140px;
+  height: 40px;
+  z-index: 1;
   border-radius: 10px;
 }
 
 .enter-dungeon-button::before {
-	border: 5px solid #7e5791;
-	transition: 200ms;
+  border: 5px solid #7e5791;
+  transition: 200ms;
 }
 
 .enter-dungeon-button::after {
-	border: 5px solid #b37ccf;
-	transition: 500ms;
+  border: 5px solid #b37ccf;
+  transition: 500ms;
 }
 
 .enter-dungeon-button:hover {
-	border: 5px solid #5b3f69;
+  border: 5px solid #5b3f69;
 }
 
 .enter-dungeon-button:hover span {
-	letter-spacing: 3px;
-	font-size: 16px;
+  letter-spacing: 3px;
+  font-size: 16px;
 }
 
 .enter-dungeon-button:hover::before {
-	width: 150px;
-	height: 50px;
-	margin-left: -80px;
-	margin-top: -30px;
+  width: 150px;
+  height: 50px;
+  margin-left: -80px;
+  margin-top: -30px;
   border-radius: 20px;
 }
 
 .enter-dungeon-button:hover::after {
-	width: 160px;
-	height: 60px;
-	margin-left: -85px;
-	margin-top: -35px;
+  width: 160px;
+  height: 60px;
+  margin-left: -85px;
+  margin-top: -35px;
   border-radius: 20px;
 }
 
 .enter-dungeon-button:focus {
-	outline: none;
+  outline: none;
 }
 
 .enter-dungeon-button span {
@@ -136,12 +137,12 @@ grid-row: 1 / span 2;
 }
 
 @media screen and (max-width: 600px) {
-.search-party-card {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-}
-.search-party-image {
-  width: 100px;
-}
+  .search-party-card {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+  }
+  .search-party-image {
+    width: 100px;
+  }
 }

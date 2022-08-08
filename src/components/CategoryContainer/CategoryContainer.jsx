@@ -1,7 +1,7 @@
-import * as React from "react"
-import "./CategoryContainer.css"
+import * as React from "react";
+import "./CategoryContainer.css";
 
-import CategorySelector from "../CategorySelector/CategorySelector"
+import CategorySelector from "../CategorySelector/CategorySelector";
 
 export default function CategoryContainer({ category }) {
   return (
@@ -9,11 +9,16 @@ export default function CategoryContainer({ category }) {
       What {category.category} do you want to play with?
       <div className="catergory-container">
         <ul className="ks-cboxtags">
-          {category.selectors.map(item => (
-            <CategorySelector key={item} selector={item} activeSelector={category.activeSelector} handleOnSelectorPress={() => category.setActiveSelector(item)}/>
+          {category.selectors.map((item) => (
+            <CategorySelector
+              key={item}
+              selector={item}
+              activeSelector={category.activeSelector}
+              handleOnSelectorPress={() => category.setActiveSelector(item)}
+            />
           ))}
         </ul>
       </div>
     </div>
-  )
+  );
 }

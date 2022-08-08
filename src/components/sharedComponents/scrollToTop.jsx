@@ -9,7 +9,7 @@ const ScrollToTop = (props) => {
     // eslint-disable-next-line
   }, [location]);
 
-  return <>{props.children}</>
+  return <>{props.children}</>;
 };
 
 export default ScrollToTop;

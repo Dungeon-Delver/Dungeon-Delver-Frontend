@@ -1,11 +1,11 @@
-import * as React from 'react'
-import "./Home.css"
-import MyParties from "../MyParties/MyParties"
+import * as React from "react";
+import "./Home.css";
+import MyParties from "../MyParties/MyParties";
 
 export default function Home() {
-  return(
+  return (
     <div className="home">
       <MyParties />
     </div>
-  )
+  );
 }

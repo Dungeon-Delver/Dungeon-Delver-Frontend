@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import "./ChatLoader.css"
+import "./ChatLoader.css";
 
 const loadingContainer = {
   width: "4rem",
@@ -38,38 +38,38 @@ const loadingCircleVariants = {
   },
 };
 const loadingCircleTransition = {
-  duration : 0.4,
-  repeat : Infinity,
+  duration: 0.4,
+  repeat: Infinity,
   repeatType: "reverse",
-  ease: 'easeInOut'
-}
+  ease: "easeInOut",
+};
 
 const ChatLoader = () => {
   return (
-      <div className="chat-loader-container">
-        <motion.div
-          style={loadingContainer}
-          variants={loadingContainerVariants}
-          initial="start"
-          animate="end"
-        >
-          <motion.span
-            style={loadingCircle}
-            variants={loadingCircleVariants}
-            transition={loadingCircleTransition}
-          ></motion.span>
-          <motion.span
-            style={loadingCircle}
-            variants={loadingCircleVariants}
-            transition={loadingCircleTransition}
-          ></motion.span>
-          <motion.span
-            style={loadingCircle}
-            variants={loadingCircleVariants}
-            transition={loadingCircleTransition}
-          ></motion.span>
-        </motion.div>
-      </div>
+    <div className="chat-loader-container">
+      <motion.div
+        style={loadingContainer}
+        variants={loadingContainerVariants}
+        initial="start"
+        animate="end"
+      >
+        <motion.span
+          style={loadingCircle}
+          variants={loadingCircleVariants}
+          transition={loadingCircleTransition}
+        ></motion.span>
+        <motion.span
+          style={loadingCircle}
+          variants={loadingCircleVariants}
+          transition={loadingCircleTransition}
+        ></motion.span>
+        <motion.span
+          style={loadingCircle}
+          variants={loadingCircleVariants}
+          transition={loadingCircleTransition}
+        ></motion.span>
+      </motion.div>
+    </div>
   );
 };
 

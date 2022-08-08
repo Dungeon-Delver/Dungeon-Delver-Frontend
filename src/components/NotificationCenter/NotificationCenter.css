@@ -1,17 +1,16 @@
 .notifications-popup {
- position: absolute;
- 
- max-width: 300px;
- right: 1px;
- background-color: #FAF9F6;
- z-index: 50;
+  position: absolute;
+
+  max-width: 300px;
+  right: 1px;
+  background-color: #faf9f6;
+  z-index: 50;
 }
 
 .notifications-menu {
   max-height: 500px;
   overflow-y: scroll;
 }
-
 
 .notification-bell {
   position: relative;
@@ -45,7 +44,7 @@
 }
 
 .arrow-wrapper .arrow {
-  color: #4933ab;;
+  color: #4933ab;
   cursor: pointer;
   display: block;
   align-items: flex-start;
@@ -61,49 +60,49 @@
   transition: opacity 0.3s 0s;
   padding: 0 0.5em;
 }
-  
+
 .arrow-wrapper .arrow:hover span {
-    opacity: 1;
-    transition: opacity 0.3s 0.1s;
+  opacity: 1;
+  transition: opacity 0.3s 0.1s;
 }
-  
+
 .arrow-wrapper .arrow:before {
-    content: '';
-    display: block;
-    border: solid #4933ab;;
-    border-width: 2px 2px 0 0;
-    position: absolute;
-    top: 4px;
-    width: 10px;
-    height: 10px;
+  content: "";
+  display: block;
+  border: solid #4933ab;
+  border-width: 2px 2px 0 0;
+  position: absolute;
+  top: 4px;
+  width: 10px;
+  height: 10px;
 }
-  
+
 .arrow-wrapper .arrow.arrow--left:before {
-    transform: rotate(-135deg);
-    right: 0;
-    transition: right 0.3s 0.2s;
-  }
-  .arrow-wrapper .arrow.arrow--left:hover:before {
-    right: 100%;
-    transition: right 0.3s;
-  }
-    
-  .arrow-wrapper .arrow.arrow--right {
-    text-align: right;
-  }
-  .arrow-wrapper .arrow.arrow--right:before {
-    left: 0;
-    transform: rotate(45deg);
-    transition: left 0.3s 0.2s;
-  }
-  .arrow-wrapper .arrow.arrow--right:hover:before {
-    left: 100%;
-    transition: left 0.3s;
-  }
-  
-  .arrow-wrapper .arrow:hover {
-    transform: none;
-  }
-  .arrow-wrapper .arrow.disabled {
-    visibility: hidden;
-  }
+  transform: rotate(-135deg);
+  right: 0;
+  transition: right 0.3s 0.2s;
+}
+.arrow-wrapper .arrow.arrow--left:hover:before {
+  right: 100%;
+  transition: right 0.3s;
+}
+
+.arrow-wrapper .arrow.arrow--right {
+  text-align: right;
+}
+.arrow-wrapper .arrow.arrow--right:before {
+  left: 0;
+  transform: rotate(45deg);
+  transition: left 0.3s 0.2s;
+}
+.arrow-wrapper .arrow.arrow--right:hover:before {
+  left: 100%;
+  transition: left 0.3s;
+}
+
+.arrow-wrapper .arrow:hover {
+  transform: none;
+}
+.arrow-wrapper .arrow.disabled {
+  visibility: hidden;
+}

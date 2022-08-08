@@ -9,7 +9,7 @@
 .search-results {
   margin-top: 20px;
   display: grid;
-  grid-template-columns: repeat( auto-fit, 600px );
+  grid-template-columns: repeat(auto-fit, 600px);
   grid-template-rows: 1fr;
   grid-gap: 10px;
   justify-content: space-around;
@@ -29,25 +29,31 @@
 /* CSS */
 .button-20 {
   appearance: button;
-  background-color: #4D4AE8;
-  background-image: linear-gradient(180deg, rgba(255, 255, 255, .15), rgba(255, 255, 255, 0));
-  border: 1px solid #4D4AE8;
+  background-color: #4d4ae8;
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.15),
+    rgba(255, 255, 255, 0)
+  );
+  border: 1px solid #4d4ae8;
   border-radius: 1rem;
-  box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset,rgba(46, 54, 80, 0.075) 0 1px 1px;
+  box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset,
+    rgba(46, 54, 80, 0.075) 0 1px 1px;
   box-sizing: border-box;
-  color: #FFFFFF;
+  color: #ffffff;
   cursor: pointer;
   display: inline-block;
-  font-family: Inter,sans-serif;
+  font-family: Inter, sans-serif;
   font-size: 1rem;
   font-weight: 500;
   line-height: 1.5;
   margin: 0;
   width: 100px;
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   text-align: center;
   text-transform: none;
-  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
@@ -60,31 +66,33 @@
 }
 
 .button-20:hover {
-  background-color: #3733E5;
-  border-color: #3733E5;
+  background-color: #3733e5;
+  border-color: #3733e5;
 }
 
 .button-20:focus {
-  background-color: #413FC5;
-  border-color: #3E3BBA;
-  box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset, rgba(46, 54, 80, 0.075) 0 1px 1px, rgba(104, 101, 235, 0.5) 0 0 0 .2rem;
+  background-color: #413fc5;
+  border-color: #3e3bba;
+  box-shadow: rgba(255, 255, 255, 0.15) 0 1px 0 inset,
+    rgba(46, 54, 80, 0.075) 0 1px 1px, rgba(104, 101, 235, 0.5) 0 0 0 0.2rem;
 }
 
 .button-20:active {
-  background-color: #3E3BBA;
+  background-color: #3e3bba;
   background-image: none;
-  border-color: #3A38AE;
+  border-color: #3a38ae;
   box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset;
 }
 
 .button-20:active:focus {
-  box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset, rgba(104, 101, 235, 0.5) 0 0 0 .2rem;
+  box-shadow: rgba(46, 54, 80, 0.125) 0 3px 5px inset,
+    rgba(104, 101, 235, 0.5) 0 0 0 0.2rem;
 }
 
 .button-20:disabled {
   background-image: none;
   box-shadow: none;
-  opacity: .65;
+  opacity: 0.65;
   pointer-events: none;
 }
 
@@ -106,8 +114,6 @@
   padding: 7px 0;
   background: transparent;
   transition: border-color 0.2s;
-
-  
 }
 .form__field::placeholder {
   color: transparent;
@@ -129,7 +135,7 @@
 }
 
 .form__field:focus {
-  padding-bottom: 6px;  
+  padding-bottom: 6px;
   font-weight: 700;
   border-width: 1px;
   border-image-source: linear-gradient(to right, #7f00f5, black);
@@ -142,11 +148,11 @@
   transition: 0.2s;
   font-size: 1rem;
   color: #4933ab;
-  font-weight:700;    
+  font-weight: 700;
 }
 /* reset input */
-.form__field:required .form__field:invalid { 
-  box-shadow:none; 
+.form__field:required .form__field:invalid {
+  box-shadow: none;
 }
 
 .search-party-status {
@@ -191,6 +197,6 @@
 
 @media screen and (max-width: 600px) {
   .search-results {
-    grid-template-columns: repeat( auto-fit, 100% );
+    grid-template-columns: repeat(auto-fit, 100%);
   }
 }

@@ -1,6 +1,6 @@
 .parties {
   display: grid;
-  grid-template-columns: repeat( auto-fit, 600px );
+  grid-template-columns: repeat(auto-fit, 600px);
   grid-template-rows: 1fr;
   grid-gap: 10px;
   justify-content: space-around;
@@ -23,24 +23,23 @@
   border-radius: 10px;
 }
 .create-new-party-button::after {
-    content: "→";
-    font-size: 20px;
-    font-weight: 400;
-    position: absolute;
-    left: 85%;
-    top: 31%;
-    right: 5%;
-    bottom: 0;
-    opacity: 0;
-
+  content: "→";
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  left: 85%;
+  top: 31%;
+  right: 5%;
+  bottom: 0;
+  opacity: 0;
 }
 
 .create-new-party-button:hover {
-    background: #9966cc;
-    transition: all 0.5s;
-    box-shadow: 0px 6px 15px #0000ff61;
-    padding:  15px;
-    padding-right: 40px;
+  background: #9966cc;
+  transition: all 0.5s;
+  box-shadow: 0px 6px 15px #0000ff61;
+  padding: 15px;
+  padding-right: 40px;
 }
 .create-new-party-button:hover::after {
   opacity: 1;
@@ -49,6 +48,6 @@
 
 @media screen and (max-width: 600px) {
   .parties {
-    grid-template-columns: repeat( auto-fit, 100% );
+    grid-template-columns: repeat(auto-fit, 100%);
   }
 }
