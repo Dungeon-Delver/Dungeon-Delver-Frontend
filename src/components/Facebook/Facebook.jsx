@@ -50,6 +50,8 @@ export default function FacebookOAuth() {
           .linkWith('facebook', {
             authData: {id: userId, access_token: userAccessToken},
           });
+          userToLogin.set("picture", response.picture.data.url)
+          await userToLogin.save();
           // logIn returns the corresponding ParseUser object
           const user = await getCurrentUser();
           localStorage.setItem('user', JSON.stringify(user));
