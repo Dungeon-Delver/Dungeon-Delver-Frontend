@@ -17,7 +17,7 @@ export default function NotificationCard( {notification, handleCloseNavbar, unre
     message = `${notification.sourceUser.username} has accepted your request to join ${notification.party.name}`
   }
   else if (notification.type === "reject") {
-    message = `${notification.sourceUser.username} has rejected your request to join ${notification.party.name}`
+    message = `You have been rejected from ${notification.party.name}`
   }
   else if (notification.type === "delete") {
     message = `${notification.sourceUser.username} has deleted ${notification.party.name}`

@@ -1,13 +1,13 @@
 .party-chat {
   width: calc(100vw - 250px - 200px);
-  height: calc(100vh - 106px);
+  height: calc(100vh - 76px);
   margin-top: 30px;
   display: flex;
   flex-direction: column;
 }
 
 .party-chat.navbar-is-open {
-  height: calc(100vh - 216px);
+  height: calc(100vh - 179px);
 }
 
 .chat-img-container {

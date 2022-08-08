@@ -11,7 +11,7 @@
 }
 
 .categories-display .edit-party.navbar-is-open {
-  top: 186px;
+  top: 179px;
 }
 
 .close-modify-params {
@@ -24,7 +24,12 @@
 @media screen and (max-width: 800px) {
   .categories-display .edit-party {
     position: fixed;
-    top: 0px;
+    top: 76px;
     padding-top: 80px;
   }
+
+  .categories-display .edit-party.navbar-is-open {
+    top: 179px;
+  }
+  
 }

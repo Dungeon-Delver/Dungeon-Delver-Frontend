@@ -31,7 +31,7 @@ export default function FindParties() {
   const [queuePrev, setQueuePrev] = useState(false)
   const [queueNext, setQueueNext] = useState(false)
   const [fetchedNext, setFetchedNext] = useState(false)
-  const [fetchedPrev, setFetchedPrev] = useState(false)
+  const [fetchedPrev, setFetchedPrev] = useState(true)
   const user = useRecoilValue(currentUser)
 
   const [searchResults, setSearchResults] = useState("");
@@ -102,6 +102,7 @@ export default function FindParties() {
       setPartyFailed(false);
       setPage(1)
       setSearchMode("params")
+      setFetchedPrev(true)
     }
     catch (error){
       console.error(error)
@@ -146,6 +147,7 @@ export default function FindParties() {
       setPartyFailed(false);
       setPage(1)
       setSearchMode("name")
+      setFetchedPrev(true)
     }
     catch (error){
       console.error(error)
