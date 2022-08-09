@@ -15,9 +15,8 @@
   max-height: calc(100vh - 179px);
 }
 
-
 @media screen and (max-width: 500px) {
-  .party-sidebar ul{
+  .party-sidebar ul {
     display: none;
   }
   .party-sidebar .sidebar-icon {
@@ -42,7 +41,7 @@
     max-height: calc(100vh - 76px);
   }
 
-  .party-sidebar.responsive ul{
+  .party-sidebar.responsive ul {
     display: grid;
     z-index: 1;
   }

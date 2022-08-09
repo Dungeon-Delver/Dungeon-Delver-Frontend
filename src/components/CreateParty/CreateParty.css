@@ -62,8 +62,6 @@
   padding: 7px 0;
   background: transparent;
   transition: border-color 0.2s;
-
-  
 }
 .form__field::placeholder {
   color: transparent;
@@ -85,7 +83,7 @@
 }
 
 .form__field:focus {
-  padding-bottom: 6px;  
+  padding-bottom: 6px;
   font-weight: 700;
   border-width: 1px;
   border-image-source: linear-gradient(to right, #7f00f5, black);
@@ -98,11 +96,11 @@
   transition: 0.2s;
   font-size: 1rem;
   color: #4933ab;
-  font-weight:700;    
+  font-weight: 700;
 }
 /* reset input */
-.form__field:required .form__field:invalid { 
-  box-shadow:none; 
+.form__field:required .form__field:invalid {
+  box-shadow: none;
 }
 
 /* demo */

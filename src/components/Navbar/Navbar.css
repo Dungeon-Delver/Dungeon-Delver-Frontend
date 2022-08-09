@@ -1,12 +1,12 @@
 .nav-button-container .nav-button {
-  padding:0.35em 1.2em;
-  border:0.1em solid #FFFFFF;
-  border-radius:0.12em;
+  padding: 0.35em 1.2em;
+  border: 0.1em solid #ffffff;
+  border-radius: 0.12em;
   box-sizing: border-box;
-  text-decoration:none;
-  font-weight:300;
-  color:#FFFFFF;
-  text-align:center;
+  text-decoration: none;
+  font-weight: 300;
+  color: #ffffff;
+  text-align: center;
   transition: all 0.2s;
   background-color: #4933ab;
   align-self: center;
@@ -25,7 +25,8 @@
   margin-right: 8px;
 }
 
-.nav-button-container, .nav-button-container a {
+.nav-button-container,
+.nav-button-container a {
   display: flex;
 }
 
@@ -44,9 +45,9 @@
   border-radius: 50%;
 }
 
-.nav-button:hover{
-  color:#000000;
-  background-color:#FFFFFF;
+.nav-button:hover {
+  color: #000000;
+  background-color: #ffffff;
   cursor: pointer;
 }
 
@@ -88,8 +89,11 @@
   .navbar {
     display: inline-block;
   }
-  .navbar.responsive {position: relative;}
-  .navbar.responsive div:not(:first-child):not(:last-child):not(.notification-bell):not(.my-profile-icon) {
+  .navbar.responsive {
+    position: relative;
+  }
+  .navbar.responsive
+    div:not(:first-child):not(:last-child):not(.notification-bell):not(.my-profile-icon) {
     float: none;
     display: block;
     text-align: left;
@@ -116,7 +120,7 @@
   }
 
   .nav-button-container .nav-button {
-    margin: 0px
+    margin: 0px;
   }
 
   .nav-button {
@@ -126,7 +130,8 @@
   .logout-button {
     height: 100%;
   }
-  .nav-button-container, .nav-button-container a {
+  .nav-button-container,
+  .nav-button-container a {
     display: block;
   }
 }

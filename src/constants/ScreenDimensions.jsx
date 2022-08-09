@@ -18,4 +18,4 @@ function getHeight() {
   );
 }
 
-export {getWidth, getHeight}
+export { getWidth, getHeight };

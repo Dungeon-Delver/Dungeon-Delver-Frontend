@@ -1,65 +1,87 @@
-import {useState} from 'react'
-import './CreateParty.css'
-import CategoryContainer from "../CategoryContainer/CategoryContainer"
-import axios from 'axios';
-import FileUpload from "../FileUpload/FileUpload.jsx"
+import { useState } from "react";
+import "./CreateParty.css";
+import CategoryContainer from "../CategoryContainer/CategoryContainer";
+import axios from "axios";
+import FileUpload from "../FileUpload/FileUpload.jsx";
 
-import { useNavigate } from 'react-router-dom';
-import Keys from "../../keys.json"
+import { useNavigate } from "react-router-dom";
+import Keys from "../../keys.json";
 
-import { useRecoilValue } from 'recoil';
-import { currentUser } from '../../recoil/atoms/atoms';
-import classNames from 'classnames';
-import { BACKEND_URL, FILE_HOST_URL } from '../../constants/constants';
+import { useRecoilValue } from "recoil";
+import { currentUser } from "../../recoil/atoms/atoms";
+import classNames from "classnames";
+import { BACKEND_URL, FILE_HOST_URL } from "../../constants/constants";
 
 export default function CreateParty() {
   const [partyName, setPartyName] = useState("");
-  const [activeExperience, setActiveExperience] = useState("")
-  const [activeType, setActiveType] = useState("")
-  const [activeGenre, setActiveGenre] = useState("")
+  const [activeExperience, setActiveExperience] = useState("");
+  const [activeType, setActiveType] = useState("");
+  const [activeGenre, setActiveGenre] = useState("");
   const [activeLevel, setActiveLevel] = useState("");
   const [activeMode, setActiveMode] = useState("");
-  const [missingParams, setMissingParams] = useState([])
+  const [missingParams, setMissingParams] = useState([]);
 
   const [loadingParty, setLoadingParty] = useState(false);
   const [partyFailed, setPartyFailed] = useState(false);
   const [error, setError] = useState("");
 
   const [selectedFile, setSelectedFile] = useState();
-	const [isFilePicked, setIsFilePicked] = useState(false);
+  const [isFilePicked, setIsFilePicked] = useState(false);
 
   const id = useRecoilValue(currentUser);
   const navigate = useNavigate();
 
-  const categories = [{
+  const categories = [
+    {
       category: "experience level",
-      selectors: ["New Players Only", "New Player Friendly", "Experienced Players Only"],
+      selectors: [
+        "New Players Only",
+        "New Player Friendly",
+        "Experienced Players Only",
+      ],
       activeSelector: activeExperience,
-      setActiveSelector: setActiveExperience
-    }, {
+      setActiveSelector: setActiveExperience,
+    },
+    {
       category: "type of players",
-      selectors: ["Serious", "Casual", "Comedy", "Rules-Oriented", "Homebrew-Friendly"],
+      selectors: [
+        "Serious",
+        "Casual",
+        "Comedy",
+        "Rules-Oriented",
+        "Homebrew-Friendly",
+      ],
       activeSelector: activeType,
-      setActiveSelector: setActiveType
-      
-    }, {
+      setActiveSelector: setActiveType,
+    },
+    {
       category: "genre",
-      selectors: ["Fantasy", "Sci-Fi", "Modern", "Post-Apocalyptic", "Star Wars", "Harry Potter"],
+      selectors: [
+        "Fantasy",
+        "Sci-Fi",
+        "Modern",
+        "Post-Apocalyptic",
+        "Star Wars",
+        "Harry Potter",
+      ],
       activeSelector: activeGenre,
-      setActiveSelector: setActiveGenre
-    }, {
+      setActiveSelector: setActiveGenre,
+    },
+    {
       category: "party level",
-      selectors:["1-4", "5-8", "9-12", "13-16", "17-20"],
+      selectors: ["1-4", "5-8", "9-12", "13-16", "17-20"],
       activeSelector: activeLevel,
-      setActiveSelector: setActiveLevel
-    }, {
+      setActiveSelector: setActiveLevel,
+    },
+    {
       category: "privacy mode",
-      selectors:["Closed", "Private", "Public"],
+      selectors: ["Closed", "Private", "Public"],
       activeSelector: activeMode,
-      setActiveSelector: setActiveMode
-    }]
+      setActiveSelector: setActiveMode,
+    },
+  ];
 
-  const handleCreateParty = async() => {
+  const handleCreateParty = async () => {
     const JSON_OBJECT = {
       name: partyName,
       dm: id,
@@ -69,85 +91,125 @@ export default function CreateParty() {
         genre: activeGenre,
         level: activeLevel,
       },
-      mode: activeMode
-    }
-    if(isFilePicked) {
-      const formData = new FormData()
-      formData.set('key', Keys.imageHostAPI)
-      formData.append('image', selectedFile.split(",").pop())
+      mode: activeMode,
+    };
+    if (isFilePicked) {
+      const formData = new FormData();
+      formData.set("key", Keys.imageHostAPI);
+      formData.append("image", selectedFile.split(",").pop());
       try {
         const response = await axios({
-          method: 'post',
+          method: "post",
           url: FILE_HOST_URL,
-          data: formData
-        })
-        JSON_OBJECT.image = response.data.data.url
-      }
-      catch (err) {
-        console.error(err)
-        console.log("Unable to upload image--proceeding with party creation")
-        setLoadingParty(false)
+          data: formData,
+        });
+        JSON_OBJECT.image = response.data.data.url;
+      } catch (err) {
+        console.error(err);
+        console.log("Unable to upload image--proceeding with party creation");
+        setLoadingParty(false);
       }
     }
     try {
-      const data = await axios.post(`${BACKEND_URL}party/create-party`, JSON_OBJECT);
-      const partyId = data.data.newParty
+      const data = await axios.post(
+        `${BACKEND_URL}party/create-party`,
+        JSON_OBJECT
+      );
+      const partyId = data.data.newParty;
       setLoadingParty(false);
       setPartyFailed(false);
-      navigate(`/party/${partyId}`, {replace : false})
-    }
-    catch (error){
+      navigate(`/party/${partyId}`, { replace: false });
+    } catch (error) {
       console.error(error);
       setPartyFailed(true);
-      setLoadingParty(false)
+      setLoadingParty(false);
       setError(error);
     }
-  }
+  };
 
   const validateForm = () => {
-    const missingParamsTmp=[];
-    const states = [{value: partyName, category: "party name"}, {value: activeExperience, category: "experience"}, {value: activeType, category: "type"}, {value: activeGenre, category: "genre"}, {value: activeLevel, category: "level"}, {value: activeMode, category: "privacy mode"}]
+    const missingParamsTmp = [];
+    const states = [
+      { value: partyName, category: "party name" },
+      { value: activeExperience, category: "experience" },
+      { value: activeType, category: "type" },
+      { value: activeGenre, category: "genre" },
+      { value: activeLevel, category: "level" },
+      { value: activeMode, category: "privacy mode" },
+    ];
     states.forEach((item) => {
-      if(item.value==='') {
-        missingParamsTmp.push(<div key={item.category}className="missing-param">Please pick something for {item.category}</div>)
+      if (item.value === "") {
+        missingParamsTmp.push(
+          <div key={item.category} className="missing-param">
+            Please pick something for {item.category}
+          </div>
+        );
       }
-    })
+    });
     setMissingParams(missingParamsTmp);
-    if(missingParamsTmp.length>0) {
+    if (missingParamsTmp.length > 0) {
       return false;
     }
     return true;
-  }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if(!validateForm()) {
+    if (!validateForm()) {
       return;
     }
     setLoadingParty(true);
     handleCreateParty();
-  }
+  };
 
   return (
     <form className="create-party">
       <div className="party-name form__group field">
-        <input className="party-name-input form__field" id="name" name="Party Name" placeholder="Dungeoneers" value={partyName} onChange={(event) => setPartyName(event.target.value)}></input>
-        <label htmlFor="name" className="form__label">Party Name</label>
+        <input
+          className="party-name-input form__field"
+          id="name"
+          name="Party Name"
+          placeholder="Dungeoneers"
+          value={partyName}
+          onChange={(event) => setPartyName(event.target.value)}
+        ></input>
+        <label htmlFor="name" className="form__label">
+          Party Name
+        </label>
       </div>
       <div className="categories">
         {categories.map((item) => (
           <CategoryContainer key={item.category} category={item} />
         ))}
       </div>
-      <FileUpload setSelectedFile={setSelectedFile} setIsFilePicked={setIsFilePicked}/>
-      <button className={classNames({"button": true, "button--loading": loadingParty})} onClick={(event) => handleSubmit(event)}>
-        <div className="button__text" disabled={loadingParty} >Create Dungeon</div>
+      <FileUpload
+        setSelectedFile={setSelectedFile}
+        setIsFilePicked={setIsFilePicked}
+      />
+      <button
+        className={classNames({
+          button: true,
+          "button--loading": loadingParty,
+        })}
+        onClick={(event) => handleSubmit(event)}
+      >
+        <div className="button__text" disabled={loadingParty}>
+          Create Dungeon
+        </div>
       </button>
       <div className="missing-params">{missingParams}</div>
-      {partyFailed ?<div className="party-failed"> 
-        <h1 className="party-failed-message">{error.response.data ? error.response.data.error.message : error.message}</h1>
-        <h2 className="party-failed-status-text">{error.statusText}</h2>
-      </div> :""}
+      {partyFailed ? (
+        <div className="party-failed">
+          <h1 className="party-failed-message">
+            {error.response.data
+              ? error.response.data.error.message
+              : error.message}
+          </h1>
+          <h2 className="party-failed-status-text">{error.statusText}</h2>
+        </div>
+      ) : (
+        ""
+      )}
     </form>
-  )
+  );
 }

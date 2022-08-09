@@ -10,10 +10,9 @@
 }
 
 .user-image-container img {
-	object-fit: cover;
-	border-radius: 50%;
+  object-fit: cover;
+  border-radius: 50%;
 }
-
 
 .requested-user-card {
   display: grid;
@@ -47,7 +46,6 @@
 }
 
 .requested-user-card .accept-user-button {
-
   display: inline-block;
   outline: 0;
   cursor: pointer;
@@ -56,7 +54,8 @@
   color: #ffffff;
   background: #008060;
   border-radius: 4px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px,
+    rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
 }
 
 .requested-user-card .accept-user-button:hover {
@@ -64,7 +63,6 @@
 }
 
 .requested-user-card .reject-user-button {
-
   display: inline-block;
   outline: 0;
   cursor: pointer;
@@ -73,7 +71,8 @@
   color: #ffffff;
   background: #800022;
   border-radius: 4px;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px, rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 0px 0px,
+    rgba(0, 0, 0, 0.2) 0px -1px 0px 0px inset;
 }
 
 .requested-user-card .reject-user-button:hover {
