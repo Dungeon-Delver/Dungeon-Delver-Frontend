@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import GetCurrentUser from "../../constants/GetCurrentUser";
+import GetCurrentUser from "../../utils/GetCurrentUser";
 
 import "./App.css";
 import Facebook from "../Facebook/Facebook";
@@ -13,7 +13,7 @@ import FindParties from "../FindParties/FindParties";
 import MyParties from "../MyParties/MyParties";
 import PartyPage from "../PartyPage/PartyPage";
 import Logo from "../../images/Logo.png";
-import Parse from "../../constants/parseInitialize";
+import Parse from "../../utils/parseInitialize";
 
 import { useRecoilState, useRecoilValue } from "recoil";
 import { isLoggingInState, loggedInState } from "../../recoil/atoms/atoms";

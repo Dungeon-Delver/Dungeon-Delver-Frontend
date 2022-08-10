@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./MyParties.css";
-import GetCurrentUser from "../../constants/GetCurrentUser";
+import GetCurrentUser from "../../utils/GetCurrentUser";
 import Loader from "../Loader/Loader";
 import PartyCard from "../PartyCard/PartyCard.jsx";
 import { BACKEND_URL } from "../../constants/constants";

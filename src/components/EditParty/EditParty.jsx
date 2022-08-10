@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { BACKEND_URL, FILE_HOST_URL } from "../../constants/constants";
-import GetCurrentUser from "../../constants/GetCurrentUser";
+import GetCurrentUser from "../../utils/GetCurrentUser";
 import { navbarOpen } from "../../recoil/atoms/atoms";
 import CategoryContainer from "../CategoryContainer/CategoryContainer";
 import "./EditParty.css";

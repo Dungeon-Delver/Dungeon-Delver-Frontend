@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import { useRecoilValue } from "recoil";
 import socketIOClient from "socket.io-client";
 import { BACKEND_URL, SOCKET_SERVER_URL } from "../constants/constants";
-import GetCurrentUser from "../constants/GetCurrentUser";
+import GetCurrentUser from "../utils/GetCurrentUser";
 import { currentUser } from "../recoil/atoms/atoms";
 
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event
