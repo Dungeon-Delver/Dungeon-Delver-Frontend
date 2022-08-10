@@ -246,16 +246,18 @@ function ChatMessage({ message, prevMessage, pendingMessage }) {
         padTo2Digits(messageDate.getMinutes()) +
         " am";
 
-  const newSender =
-    prevMessage === undefined ||
-    prevMessage === true ||
-    prevMessage.senderId !== message.senderId;
   const newDate =
     prevMessage === undefined ||
     prevMessage === true ||
     prevMessageDate.getFullYear() !== messageDate.getFullYear() ||
     prevMessageDate.getMonth() !== messageDate.getMonth() ||
     prevMessageDate.getDate() !== messageDate.getDate();
+  
+  const newSender =
+    prevMessage === undefined ||
+    prevMessage === true ||
+    prevMessage.senderId !== message.senderId ||
+    newDate;
   const liClassNames = classNames({
     "message-item": true,
     "my-message": message.ownedByCurrentUser,
