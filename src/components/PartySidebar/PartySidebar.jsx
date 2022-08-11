@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import "./PartySidebar.css";
-import GetCurrentUser from "../../constants/GetCurrentUser";
+import GetCurrentUser from "../../utils/GetCurrentUser";
 import Loader from "../Loader/Loader";
 import PartySidebarCard from "../PartySidebarCard/PartySidebarCard";
 import classNames from "classnames";

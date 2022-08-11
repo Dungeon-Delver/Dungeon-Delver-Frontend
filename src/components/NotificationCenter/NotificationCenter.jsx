@@ -1,6 +1,5 @@
 import "./NotificationCenter.css";
 import NotificationBell from "../../images/notification-bell.svg";
-import NotificationCard from "../NotificationCard/NotificationCard";
 import useNotification from "../../hooks/useNotification";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
@@ -8,6 +7,7 @@ import { currentUser } from "../../recoil/atoms/atoms";
 import axios from "axios";
 import { BACKEND_URL } from "../../constants/constants";
 import classNames from "classnames";
+import NotificationMenu from "../NotificationMenu/NotificationMenu";
 
 export default function NotificationCenter() {
   const [unreadNotifications, setUnreadNotifications] = useState([]);
@@ -161,28 +161,7 @@ export default function NotificationCenter() {
       </div>
       {notificationsOpen ? (
         <div className="notifications-popup">
-          <ol className="notifications-menu">
-            {unreadNotifications.map((item, i) => {
-              return (
-                <NotificationCard
-                  key={i}
-                  notification={item}
-                  handleCloseNavbar={handleCloseNavbar}
-                  unread={true}
-                />
-              );
-            })}
-            {notifications.map((item, i) => {
-              return (
-                <NotificationCard
-                  key={i}
-                  notification={item}
-                  handleCloseNavbar={handleCloseNavbar}
-                  unread={false}
-                />
-              );
-            })}
-          </ol>
+          <NotificationMenu unreadNotifications={unreadNotifications} notifications={notifications} handleCloseNavbar={handleCloseNavbar}/>
           <div className="arrow-wrapper">
             <div
               className={classNames({

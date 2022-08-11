@@ -2,9 +2,9 @@ import * as React from "react";
 import "./Facebook.css";
 import FacebookLogin from "react-facebook-login"; //External library
 import Keys from "../../keys.json";
-import Parse from "../../constants/parseInitialize";
+import Parse from "../../utils/parseInitialize";
 
-import GetCurrentUser from "../../constants/GetCurrentUser";
+import GetCurrentUser from "../../utils/GetCurrentUser";
 
 import { useSetRecoilState } from "recoil";
 import { isLoggingInState, loggedInState } from "../../recoil/atoms/atoms";
