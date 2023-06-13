@@ -60,11 +60,6 @@ export default function PrivacyPolicy() {
 			<div>
 				We may collect, hold, use, and disclose information for the
 				following purposes, and personal information will not be further
-				processed in a manner that is incompatible with these purposes:{" "}
-			</div>
-			<div>
-				We may collect, hold, use, and disclose information for the
-				following purposes, and personal information will not be further
 				processed in a manner that is incompatible with these purposes:
 			</div>{" "}
 			<div>
