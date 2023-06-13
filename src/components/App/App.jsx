@@ -5,6 +5,7 @@ import {
 	Route,
 	Link,
 	useLocation,
+	useNavigate,
 } from "react-router-dom";
 import GetCurrentUser from "../../utils/GetCurrentUser";
 
@@ -30,9 +31,7 @@ import UserProfile from "../UserProfile/UserProfile";
 function App() {
 	const [loggedIn, setLoggedIn] = useRecoilState(loggedInState);
 	const isLoading = useRecoilValue(isLoggingInState);
-
 	const getCurrentUser = GetCurrentUser();
-
 	useEffect(() => {
 		const login = async (user) => {
 			try {
@@ -87,7 +86,6 @@ function App() {
 			console.error(error);
 		}
 	};
-	console.log(loggedIn, window.location.href);
 	if (isLoading) {
 		return <Loader />;
 	} else if (!loggedIn) {
@@ -100,21 +98,8 @@ function App() {
 						<img src={Logo} alt="Dungeon Delver" />
 					</div>
 					<p>To get started, authenticate with Facebook.</p>
-					<Facebook />
 					<BrowserRouter>
-						<button
-							onClick={() => {
-								window.location.reload();
-							}}
-							className="privacy-policy-button nav-button"
-							style={{
-								justifySelf: "center",
-								marginTop: "1rem",
-							}}>
-							<a href="https://dungeon-delver.vercel.app/privacy-policy">
-								Privacy Policy
-							</a>
-						</button>
+						<Facebook />
 					</BrowserRouter>
 				</div>
 			);
