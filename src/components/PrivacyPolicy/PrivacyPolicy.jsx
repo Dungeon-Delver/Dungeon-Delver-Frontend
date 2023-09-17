@@ -11,6 +11,13 @@ export default function PrivacyPolicy() {
 				operate. This policy is effective as of 5 July 2022 and was last
 				updated on 5 July 2022.
 			</div>
+			<h2>User Deletion Instructions</h2>
+			<div>
+				To delete your user data, log in to Dungeon Delver, go to your
+				profile page (accessed by clicking your user icon on the top
+				right of your screen), click the "Delete Account" button, and
+				confirm account deletion on the modal that appears.
+			</div>
 			<h2>Information We Collect</h2>
 			<div>
 				Information we collect includes both information you knowingly

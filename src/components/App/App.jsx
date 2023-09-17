@@ -148,7 +148,9 @@ function App() {
 							/>
 							<Route
 								path="user/:userId"
-								element={<UserProfile />}
+								element={
+									<UserProfile handleLogout={handleLogout} />
+								}
 							/>
 							<Route
 								path="privacy-policy"
