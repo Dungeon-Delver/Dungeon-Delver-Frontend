@@ -63,7 +63,7 @@ export default function Navbar({ handleLogout }) {
 			<NotificationCenter />
 			<Link className={"my-profile-icon"} to={`/user/${user.objectId}`}>
 				<div className="my-profile-picture-container">
-					<img src={user.picture} alt={user.username} />
+					<img src={user.picture} alt={user.name} />
 				</div>
 			</Link>
 			<div className="nav-button-container logout-button-container">

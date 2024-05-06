@@ -9,75 +9,78 @@ import { currentUser } from "../recoil/atoms/atoms";
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage"; // Name of the event
 
 export default function useChat(
-  roomId,
-  setMessages,
-  setLastMessage,
-  pendingMessages,
-  setPendingMessages,
-  onTimeout
+	roomId,
+	setMessages,
+	setLastMessage,
+	pendingMessages,
+	setPendingMessages,
+	onTimeout
 ) {
-  const socketRef = useRef();
+	const socketRef = useRef();
 
-  const getCurrentUser = GetCurrentUser();
+	const getCurrentUser = GetCurrentUser();
 
-  const curUser = useRecoilValue(currentUser);
+	const curUser = useRecoilValue(currentUser);
 
-  useEffect(() => {
-    socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
-      query: { roomId },
-    });
+	useEffect(() => {
+		socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
+			query: { roomId },
+		});
 
-    const chatMessageEvent = async () => {
-      socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, async (message) => {
-        let userSender;
-        try {
-          const response = await axios.get(
-            `${BACKEND_URL}user/${message.senderId}`
-          );
-          userSender = response.data.user;
-        } catch (err) {
-          return;
-        }
-        const incomingMessage = {
-          ...message,
-          user: userSender,
-          ownedByCurrentUser: message.senderId === curUser.id,
-        };
-        setMessages((messages) => [...messages, incomingMessage]);
-        setLastMessage(message);
-      });
-    };
-    chatMessageEvent();
+		const chatMessageEvent = async () => {
+			socketRef.current.on(NEW_CHAT_MESSAGE_EVENT, async (message) => {
+				let userSender;
+				try {
+					const response = await axios.get(
+						`${BACKEND_URL}user/${message.senderId}`
+					);
+					userSender = response.data.user;
+				} catch (err) {
+					return;
+				}
+				const incomingMessage = {
+					...message,
+					user: userSender,
+					ownedByCurrentUser: message.senderId === curUser.id,
+				};
+				setMessages((messages) => [...messages, incomingMessage]);
+				setLastMessage(message);
+			});
+		};
+		chatMessageEvent();
 
-    return () => {
-      socketRef.current.disconnect();
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [roomId, curUser.id]);
+		return () => {
+			socketRef.current.disconnect();
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [roomId, curUser.id]);
 
-  const sendMessage = async (messageBody, party, messageId) => {
-    const currentUser = await getCurrentUser();
-    const currentDate = new Date();
-    const clearTimeout = onTimeout(messageId);
-    setPendingMessages([
-      ...pendingMessages,
-      {
-        body: messageBody,
-        senderId: currentUser.id,
-        user: { username: currentUser.username, picture: currentUser.picture },
-        messageId: messageId,
-        createdAt: currentDate.toString(),
-        clearTimeout: clearTimeout,
-      },
-    ]);
+	const sendMessage = async (messageBody, party, messageId) => {
+		const currentUser = await getCurrentUser();
+		const currentDate = new Date();
+		const clearTimeout = onTimeout(messageId);
+		setPendingMessages([
+			...pendingMessages,
+			{
+				body: messageBody,
+				senderId: currentUser.id,
+				user: {
+					name: currentUser.name,
+					picture: currentUser.picture,
+				},
+				messageId: messageId,
+				createdAt: currentDate.toString(),
+				clearTimeout: clearTimeout,
+			},
+		]);
 
-    socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
-      body: messageBody,
-      senderId: currentUser.id,
-      partyId: party.party.objectId,
-      messageId: messageId,
-    });
-  };
+		socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
+			body: messageBody,
+			senderId: currentUser.id,
+			partyId: party.party.objectId,
+			messageId: messageId,
+		});
+	};
 
-  return { sendMessage };
+	return { sendMessage };
 }

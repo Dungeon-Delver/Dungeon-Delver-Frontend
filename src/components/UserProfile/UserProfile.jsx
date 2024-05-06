@@ -163,9 +163,9 @@ export default function UserProfile({ handleLogout }) {
 				<div className="user-data">
 					<div className="user-picture-and-name">
 						<div className="user-profile-image-container">
-							<img src={user.picture} alt={user.username} />
+							<img src={user.picture} alt={user.name} />
 						</div>
-						<h1 className="user-profile-name">{user.username}</h1>
+						<h1 className="user-profile-name">{user.name}</h1>
 					</div>
 					<div className="user-profile-date-joined">{`Delving since ${userDate.toLocaleDateString(
 						userDate,
@@ -176,7 +176,7 @@ export default function UserProfile({ handleLogout }) {
 			{parties.playerParties.length > 0 ||
 			parties.dmParties.length > 0 ? (
 				<>
-					<h2>{`${user.username}'s Public Parties`}</h2>
+					<h2>{`${user.name}'s Public Parties`}</h2>
 					<ul className="parties">
 						{parties.dmParties.map((item, i) => {
 							return (

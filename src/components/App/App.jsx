@@ -10,7 +10,7 @@ import {
 import GetCurrentUser from "../../utils/GetCurrentUser";
 
 import "./App.css";
-import Facebook from "../Facebook/Facebook";
+import Google from "../Google/Google";
 import Home from "../Home/Home";
 import Navbar from "../Navbar/Navbar";
 import NotFound from "../NotFound/NotFound";
@@ -97,9 +97,9 @@ function App() {
 					<div className="logo-container">
 						<img src={Logo} alt="Dungeon Delver" />
 					</div>
-					<p>To get started, authenticate with Facebook.</p>
+					<p>To get started, authenticate with Google.</p>
 					<BrowserRouter>
-						<Facebook />
+						<Google />
 					</BrowserRouter>
 				</div>
 			);
@@ -121,8 +121,8 @@ function App() {
 				<button className="enable-account" onClick={enableAccount}>
 					Enable Account
 				</button>
-				<h1>Alternatively, log in with a different facebook account</h1>
-				<Facebook />
+				<h1>Alternatively, log in with a different Google account</h1>
+				<Google />
 			</div>
 		);
 	} else {
