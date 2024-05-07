@@ -69,19 +69,22 @@ export default function Google() {
 	};
 
 	return (
-		<GoogleOAuthProvider clientId={Keys.clientId}>
-			<GoogleLogin
-				onSuccess={(credentialResponse) => {
-					handleGoogleLogin(credentialResponse);
-				}}
-				onError={() => {
-					console.log("Login Failed");
-				}}
-				onClick={componentClicked}
-				size={"medium"}
-				shape={"pill"}
-				logo_alignment={"left"}
-			/>
-		</GoogleOAuthProvider>
+		<div style={{ width: "400px", margin: "auto" }}>
+			<GoogleOAuthProvider clientId={Keys.clientId}>
+				<GoogleLogin
+					onSuccess={(credentialResponse) => {
+						handleGoogleLogin(credentialResponse);
+					}}
+					onError={() => {
+						console.log("Login Failed");
+					}}
+					onClick={componentClicked}
+					size={"medium"}
+					shape={"pill"}
+					logo_alignment={"left"}
+					width={"400"}
+				/>
+			</GoogleOAuthProvider>
+		</div>
 	);
 }
